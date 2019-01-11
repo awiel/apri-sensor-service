@@ -1,0 +1,19 @@
+{
+  "name": "apri-sensor-service",
+  "version": "1.0.0",
+  "description": "",
+  "main": "apri-sensor-service.js",
+  "dependencies": {
+    "express": "^4.16.4"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "awiel@149.210.201.210:/opt/git/SCAPE604/apri-sensor-service"
+  },
+  "author": "André van der Wiel (https://www.scapeler.com/)",
+  "license": "ISC"
+}
