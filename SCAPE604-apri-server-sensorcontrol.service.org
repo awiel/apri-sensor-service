@@ -1,9 +1,0 @@
-[Unit]
-Desription=SCAPE604-apri-server-sensorcontrol - start or restart apri-server-sensorcontrol service, respawn
-After=network.target
-[Service]
-ExecStart=/opt/SCAPE604/apri-server-service/apri-server-sensorcontrol.sh /opt/SCAPE604/log/SCAPE604-apri-server-sensorcontrol.log
-Restart=always
-
-[Install]
-WantedBy=multi-user.target
