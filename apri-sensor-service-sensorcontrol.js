@@ -86,8 +86,16 @@ app.get('/'+_systemCode+'/apri-sensor-service/v1/getCalModelData', function(req,
 		return;
 	}
 
+	var _foi = '';
+	if (req.query.sensorId != undefined) {
+		_foi = req.query.sensorId;
+	} else {
+		_foi = req.query.foi;
+	}
 
-	if (req.query.sensorId == 'SCNMA020A61B9EA5') {  // Aalten
+	console.log(_foi);
+
+	if (_foi == 'SCNMA020A61B9EA5') {  // Aalten
 		controlData = initControlData(controlData);
 		controlData.results.rawInd = true;    // PM raw values (6x)
 		controlData.results.PmInd = true;     // PM values from sensor
@@ -104,7 +112,7 @@ app.get('/'+_systemCode+'/apri-sensor-service/v1/getCalModelData', function(req,
 		controlData.cal.model.factor.temperature = -0.273 ;
 		controlData.cal.model.factor.rHum = -0.191 ;
 	}
-	if (req.query.sensorId == 'SCNM5CCF7F2F65F1') {  //prototype AAlten
+	if (_foi == 'SCNM5CCF7F2F65F1') {  //prototype AAlten
 		controlData = initControlData(controlData);
 		controlData.results.rawInd = true;    // PM raw values (6x)
 		controlData.results.PmInd = true;     // PM values from sensor
