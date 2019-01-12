@@ -129,7 +129,7 @@ app.get('/'+_systemCode+'/apri-sensor-service/v1/getCalModelData', function(req,
 		controlData.cal.model.factor.temperature = -0.273 ;
 		controlData.cal.model.factor.rHum = -0.191 ;
 	}
-	res.send(controlData);
+	res.send(JSON.stringify(controlData));
 });
 
 var initControlData = function(controlData) {
