@@ -79,6 +79,7 @@ app.all('/*', function(req, res, next) {
 
 app.get('/'+_systemCode+'/apri-sensor-service/v1/getCalModelData', function(req, res) {
 	res.contentType('application/json');
+	var ctrlDate="";
 	var controlData = {};
 	var _query = req.query;
 	if (_query == undefined) {
@@ -96,10 +97,14 @@ app.get('/'+_systemCode+'/apri-sensor-service/v1/getCalModelData', function(req,
 	console.log(_foi);
 
 	if (_foi == 'SCNMA020A61B9EA5') {  // Aalten
-		controlData = initControlData(controlData);
-		controlData.date = "2019-01-01T08:18:00Z";
-		// send date only when equal to request. No refresh of data when equal.  
-		if (controlData.date != req.query.date) {
+		ctrlDate = "2019-01-01T08:18:00Z";
+		// send date only when equal to request. No refresh of data when equal.
+		if (ctrlDate == req.query.date) {
+			controlData = {};
+			controlData.date = ctrlDate;
+		} else {
+			controlData = initControlData(controlData);
+			controlData.date = ctrlDate;
 			controlData.results.rawInd = true;    // PM raw values (6x)
 			controlData.results.PmInd = true;     // PM values from sensor
 			controlData.results.PmSecInd = true;  // secundairy PM values
@@ -117,9 +122,14 @@ app.get('/'+_systemCode+'/apri-sensor-service/v1/getCalModelData', function(req,
 		}
 	}
 	if (_foi == 'SCNM5CCF7F2F65F1') {  //prototype AAlten
-		controlData = initControlData(controlData);
-		controlData.date = "2019-01-01T08:10:00Z";
-		if (controlData.date != req.query.date) {
+		ctrlDate = "2019-01-01T08:10:00Z";
+		// send date only when equal to request. No refresh of data when equal.
+		if (ctrlDate == req.query.date) {
+			controlData = {};
+			controlData.date = ctrlDate;
+		} else {
+			controlData = initControlData(controlData);
+			controlData.date = ctrlDate;
 			controlData.results.rawInd = true;    // PM raw values (6x)
 			controlData.results.PmInd = true;     // PM values from sensor
 			controlData.results.PmSecInd = true;  // secundairy PM values
