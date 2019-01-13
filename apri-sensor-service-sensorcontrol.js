@@ -118,6 +118,8 @@ app.get('/'+_systemCode+'/apri-sensor-service/v1/getCalModelData', function(req,
 			controlData.cal.factor.raw2_5 						= 1.0 ;
 			controlData.cal.factor.raw5_0 						= 1.0 ;
 			controlData.cal.factor.raw10_0						= 1.0 ;
+			controlData.cal.factor.temperature				= 1.0 ;
+			controlData.cal.factor.rHum								= 1.0 ;
 			controlData.cal.model.constant.pm25 			= 14.295 ;
 			controlData.cal.model.factor.raw0_3 			= 0.126 ;
 			controlData.cal.model.factor.raw0_5 			= -0.398 ;
@@ -151,6 +153,8 @@ app.get('/'+_systemCode+'/apri-sensor-service/v1/getCalModelData', function(req,
 			controlData.cal.factor.raw2_5 						= 1.0 ;
 			controlData.cal.factor.raw5_0 						= 1.0 ;
 			controlData.cal.factor.raw10_0						= 1.0 ;
+			controlData.cal.factor.temperature				= 1.0 ;
+			controlData.cal.factor.rHum								= 1.0 ;
 			controlData.cal.model.constant.pm25 			= 14.295 ;
 			controlData.cal.model.factor.raw0_3 			= 0.126 ;
 			controlData.cal.model.factor.raw0_5 			= -0.398 ;
