@@ -122,7 +122,7 @@ app.get('/'+_systemCode+'/apri-sensor-service/v1/getCalModelData', function(req,
 		}
 	}
 	if (_foi == 'SCNM5CCF7F2F65F1') {  //prototype AAlten
-		ctrlDate = "2019-01-01T08:10:00Z";
+		ctrlDate = "2019-01-13T11:29:00Z";
 		// send date only when equal to request. No refresh of data when equal.
 		if (ctrlDate == req.query.date) {
 			controlData = {};
