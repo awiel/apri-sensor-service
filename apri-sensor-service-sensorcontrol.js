@@ -97,6 +97,7 @@ app.get('/'+_systemCode+'/apri-sensor-service/v1/getCalModelData', function(req,
 
 	if (_foi == 'SCNMA020A61B9EA5') {  // Aalten
 		controlData = initControlData(controlData);
+		controlData.date = "2019-01-01T08:18:00Z";
 		controlData.results.rawInd = true;    // PM raw values (6x)
 		controlData.results.PmInd = true;     // PM values from sensor
 		controlData.results.PmSecInd = true;  // secundairy PM values
@@ -114,6 +115,7 @@ app.get('/'+_systemCode+'/apri-sensor-service/v1/getCalModelData', function(req,
 	}
 	if (_foi == 'SCNM5CCF7F2F65F1') {  //prototype AAlten
 		controlData = initControlData(controlData);
+		controlData.date = "2019-01-01T08:10:00Z";
 		controlData.results.rawInd = true;    // PM raw values (6x)
 		controlData.results.PmInd = true;     // PM values from sensor
 		controlData.results.PmSecInd = true;  // secundairy PM values
@@ -134,6 +136,7 @@ app.get('/'+_systemCode+'/apri-sensor-service/v1/getCalModelData', function(req,
 
 var initControlData = function(controlData) {
 	var _controlData = controlData;
+	_controlData.date = "1900-01-01T00:00:00+00:00";
 	_controlData.cal = {};
 	_controlData.cal.factor = {};
 	_controlData.cal.model = {};
