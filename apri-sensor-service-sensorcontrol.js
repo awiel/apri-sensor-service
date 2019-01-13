@@ -98,38 +98,43 @@ app.get('/'+_systemCode+'/apri-sensor-service/v1/getCalModelData', function(req,
 	if (_foi == 'SCNMA020A61B9EA5') {  // Aalten
 		controlData = initControlData(controlData);
 		controlData.date = "2019-01-01T08:18:00Z";
-		controlData.results.rawInd = true;    // PM raw values (6x)
-		controlData.results.PmInd = true;     // PM values from sensor
-		controlData.results.PmSecInd = true;  // secundairy PM values
-		controlData.results.PmCalInd = true;  // calibrated PM values
-		controlData.cal.factor.pm25 = 1.0 ;
-		controlData.cal.model.constant.pm25 = 14.295 ;
-		controlData.cal.model.factor.raw0_3 = 0.126 ;
-		controlData.cal.model.factor.raw0_5 = -0.398 ;
-		controlData.cal.model.factor.raw1_0 = 0.04175 ;
-		controlData.cal.model.factor.raw2_5 = 0.404 ;
-		controlData.cal.model.factor.raw5_0 = -0.07618 ;
-		controlData.cal.model.factor.raw10_0 = 0.958 ;
-		controlData.cal.model.factor.temperature = -0.273 ;
-		controlData.cal.model.factor.rHum = -0.191 ;
+		// send date only when equal to request. No refresh of data when equal.  
+		if (controlData.date != req.query.date) {
+			controlData.results.rawInd = true;    // PM raw values (6x)
+			controlData.results.PmInd = true;     // PM values from sensor
+			controlData.results.PmSecInd = true;  // secundairy PM values
+			controlData.results.PmCalInd = true;  // calibrated PM values
+			controlData.cal.factor.pm25 = 1.0 ;
+			controlData.cal.model.constant.pm25 = 14.295 ;
+			controlData.cal.model.factor.raw0_3 = 0.126 ;
+			controlData.cal.model.factor.raw0_5 = -0.398 ;
+			controlData.cal.model.factor.raw1_0 = 0.04175 ;
+			controlData.cal.model.factor.raw2_5 = 0.404 ;
+			controlData.cal.model.factor.raw5_0 = -0.07618 ;
+			controlData.cal.model.factor.raw10_0 = 0.958 ;
+			controlData.cal.model.factor.temperature = -0.273 ;
+			controlData.cal.model.factor.rHum = -0.191 ;
+		}
 	}
 	if (_foi == 'SCNM5CCF7F2F65F1') {  //prototype AAlten
 		controlData = initControlData(controlData);
 		controlData.date = "2019-01-01T08:10:00Z";
-		controlData.results.rawInd = true;    // PM raw values (6x)
-		controlData.results.PmInd = true;     // PM values from sensor
-		controlData.results.PmSecInd = true;  // secundairy PM values
-		controlData.results.PmCalInd = true;  // calibrated PM values
-		controlData.cal.factor.pm25 = 1.0 ;
-		controlData.cal.model.constant.pm25 = 14.295 ;
-		controlData.cal.model.factor.raw0_3 = 0.126 ;
-		controlData.cal.model.factor.raw0_5 = -0.398 ;
-		controlData.cal.model.factor.raw1_0 = 0.04175 ;
-		controlData.cal.model.factor.raw2_5 = 0.404 ;
-		controlData.cal.model.factor.raw5_0 = -0.07618 ;
-		controlData.cal.model.factor.raw10_0 = 0.958 ;
-		controlData.cal.model.factor.temperature = -0.273 ;
-		controlData.cal.model.factor.rHum = -0.191 ;
+		if (controlData.date != req.query.date) {
+			controlData.results.rawInd = true;    // PM raw values (6x)
+			controlData.results.PmInd = true;     // PM values from sensor
+			controlData.results.PmSecInd = true;  // secundairy PM values
+			controlData.results.PmCalInd = true;  // calibrated PM values
+			controlData.cal.factor.pm25 = 1.0 ;
+			controlData.cal.model.constant.pm25 = 14.295 ;
+			controlData.cal.model.factor.raw0_3 = 0.126 ;
+			controlData.cal.model.factor.raw0_5 = -0.398 ;
+			controlData.cal.model.factor.raw1_0 = 0.04175 ;
+			controlData.cal.model.factor.raw2_5 = 0.404 ;
+			controlData.cal.model.factor.raw5_0 = -0.07618 ;
+			controlData.cal.model.factor.raw10_0 = 0.958 ;
+			controlData.cal.model.factor.temperature = -0.273 ;
+			controlData.cal.model.factor.rHum = -0.191 ;
+		}
 	}
 	res.send(JSON.stringify(controlData));
 });
