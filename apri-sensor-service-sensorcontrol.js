@@ -134,7 +134,7 @@ app.get('/'+_systemCode+'/apri-sensor-service/v1/getCalModelData', function(req,
 			controlData.results.pmInd = true;     // PM values from sensor
 			controlData.results.pmSecInd = false;  // secundairy PM values
 			controlData.results.pmCalInd = true;  // calibrated PM values
-			controlData.cal.factor.pm25 = 1.0 ;
+			controlData.cal.factor.pm25 = 1.5 ;
 			controlData.cal.model.constant.pm25 = 14.295 ;
 			controlData.cal.model.factor.raw0_3 = 0.126 ;
 			controlData.cal.model.factor.raw0_5 = -0.398 ;
