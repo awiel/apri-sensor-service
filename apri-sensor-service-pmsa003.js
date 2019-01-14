@@ -105,7 +105,7 @@ app.get('/'+sensorServiceName+'/v1/m', function(req, res) {
 		if (Number.isNaN(offset)) {
 			offset = 0;
 		}
-		dateObserved = new Date(dataRecieved.getTime()-offset);
+		dateObserved = new Date(dateRecieved.getTime()-offset);
 	} else {
 		dateObserved = dateRecieved;
 	}
