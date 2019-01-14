@@ -25,7 +25,7 @@ var self = this;
 
 // add module specific requires
 var https 						= require('https');
-//var express 						= require('express');
+var express 						= require('express');
 //var cookieParser 			= require('cookie-parser');
 //var session 					= require('express-session');
 //var uid 							= require('uid-safe');
