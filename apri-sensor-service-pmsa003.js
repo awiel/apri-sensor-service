@@ -71,6 +71,44 @@ app.get('/'+sensorServiceName+'/testservice', function(req, res ) {
 
 });
 
+app.get('/'+sensorServiceName+'/v1/m', function(req, res) {
+	res.contentType('application/json');
+	var _query = req.query;
+	if (_query == undefined) {
+		errorResult(res,NOQUERY);
+		return;
+	}
+
+	var _foi = '';
+	if (req.query.sensorId != undefined) {
+		_foi = req.query.sensorId;
+	} else {
+		_foi = req.query.foi;
+	}
+	console.log(_foi);
+
+	console.log(_query);
+	
+	var dateRecieved = new Date();
+	var fiwareObject = {};
+	fiwareObject.id=_foi+"_"+_resultTime;
+	fiwareObject.sensorId=_foi;
+	fiwareObject.type="AirQualityObserved";
+	//fiwareObject.sensorSystem=query.sensorsystem;
+	fiwareObject.dateRecieved=dateRecieved;
+	//			fiwareObject.relativeHumidity=inRecord.s_humidity/1000;
+	//			fiwareObject.temperature	= milliKelvinToCelsius(inRecord.s_temperatureambient);
+	//			fiwareObject.CO2=inRecord.s_co2/1000;
+	//			fiwareObject.lightTop=inRecord.s_lightsensortop;
+	//			fiwareObject.pressure=inRecord.s_barometer/100;
+
+	console.log(fiwareObject);
+
+
+	res.send('OK');
+});
+
+
 
 
 app.all('/*', function(req, res, next) {
