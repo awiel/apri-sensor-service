@@ -215,12 +215,13 @@ var sendFiwareData = function(data, target, res) {
 	};
 
   log(options);
-	
+
 	//console.log(options);
 	//console.log(_data);
 	var req = https.request(options, (res) => {
 		log('statusCode:' + res.statusCode);
 		//console.log('headers:', res.headers);
+		_res.send('OK');
 
 		res.on('data', (d) => {
 			process.stdout.write(d);
@@ -233,9 +234,7 @@ var sendFiwareData = function(data, target, res) {
 	});
 
 	req.write(_data);
-	req.end({
-		_res.send('OK');
-	);
+	req.end();
 
 };
 
