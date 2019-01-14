@@ -104,7 +104,43 @@ app.get('/'+sensorServiceName+'/v1/m', function(req, res) {
 
 	console.log(fiwareObject);
 
+	var _inputObservation					= query.observation;
+	var _categories							= _inputObservation.split(',');
 
+	var fiwareMap	= {};
+	fiwareMap['apri-sensor-pmsa003-concPM10_0_CF1']	= 'pm10';
+	fiwareMap['apri-sensor-pmsa003-concPM2_5_CF1']	= 'pm25';
+	fiwareMap['apri-sensor-pmsa003-concPM1_0_CF1']	= 'pm1';
+	fiwareMap['apri-sensor-pmsa003-concPM10_0_amb']	= 'pm10amb';
+	fiwareMap['apri-sensor-pmsa003-concPM2_5_amb']	= 'pm25amb';
+	fiwareMap['apri-sensor-pmsa003-concPM1_0_amb']	= 'pm1amb';
+	fiwareMap['apri-sensor-pmsa003-rawGt0_3um']	= 'raw03um';
+	fiwareMap['apri-sensor-pmsa003-rawGt0_5um']	= 'raw05um';
+	fiwareMap['apri-sensor-pmsa003-rawGt1_0um']	= 'raw1um';
+	fiwareMap['apri-sensor-pmsa003-rawGt2_5um']	= 'raw25um';
+	fiwareMap['apri-sensor-pmsa003-rawGt5_0um']	= 'raw5um';
+	fiwareMap['apri-sensor-pmsa003-rawGt10_0um']	= 'raw10um';
+
+
+
+	for (var i = 0;i<_categories.length;i++) {
+		var _category				= _categories[i];
+		var _categoryKeyValue		= _category.split(':');
+
+		var _categoryId				= _categoryKeyValue[0];
+		var _fiWareCategoryId	= _categoryKeyValue[0];
+		var _categoryResult			= parseFloat(_categoryKeyValue[1]);
+
+		// fiware attributes
+		if (fiwareMap[_fiWareCategoryId]) {
+			_fiWareCategoryId = fiwareMap[_fiWareCategoryId];
+		}
+		fiwareObject[_fiWareCategoryId] = _categoryResult;
+
+		sendFiwareData(fiwareObject);
+
+
+	}
 	res.send('OK');
 });
 
@@ -151,6 +187,26 @@ app.get('/*', function(req, res) {
 	return;
 });
 
+var sendFiwareData = function(data) {
+	var _url = 'https://orion.openiod.nl/v2/entities?options=keyValues'; //openiodUrl;
+	
+	//console.log(data);
+	var json_obj = JSON.stringify(data);
+	//console.log(_url);
+	//console.log(json_obj)
+
+	request.post({
+			headers: {'content-type': 'application/json'},
+			url: _url,
+			body: json_obj, //form: json_obj
+		}, function(error, response, body){
+			if (error) {
+				console.log(error);
+			}
+			//console.log(body);
+		}
+	);
+};
 
 
 var errorResult = function(res, message) {
