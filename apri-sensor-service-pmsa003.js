@@ -88,10 +88,10 @@ app.get('/'+sensorServiceName+'/v1/m', function(req, res) {
 	console.log(_foi);
 
 	console.log(_query);
-	
+
 	var dateRecieved = new Date();
 	var fiwareObject = {};
-	fiwareObject.id=_foi+"_"+_resultTime;
+	fiwareObject.id=_foi+"_"+dateRecieved;
 	fiwareObject.sensorId=_foi;
 	fiwareObject.type="AirQualityObserved";
 	//fiwareObject.sensorSystem=query.sensorsystem;
