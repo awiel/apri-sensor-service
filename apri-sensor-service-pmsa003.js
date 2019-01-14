@@ -192,13 +192,13 @@ var sendFiwareData = function(data, target, res) {
 	var _data = data;
 	var _res 	= res;
 	var _target = target;
-	var _url 	= _target.protocol +
-			_target.host +
-			_target.prefixPath'; //openiodUrl;
+//	var _url 	= _target.protocol +
+//			_target.host +
+//			_target.prefixPath'; //openiodUrl;
 
 	//log(data);
 	var json_obj = JSON.stringify(data);
-	log(_url);
+//	log(_url);
 	//log(json_obj)
 
 	var options = {
@@ -214,6 +214,8 @@ var sendFiwareData = function(data, target, res) {
 			 }
 	};
 
+  log(options);
+	
 	//console.log(options);
 	//console.log(_data);
 	var req = https.request(options, (res) => {
