@@ -196,7 +196,7 @@ app.get('/*', function(req, res) {
 });
 
 var sendFiwareData = function(data, target, res) {
-	var _data = data;
+	var _data = JSON.stringify(data);
 	var _res 	= res;
 	var _target = target;
 //	var _url 	= _target.protocol +
@@ -204,7 +204,7 @@ var sendFiwareData = function(data, target, res) {
 //			_target.prefixPath'; //openiodUrl;
 
 	//log(data);
-	var json_obj = JSON.stringify(data);
+//	var json_obj = JSON.stringify(data);
 //	log(_url);
 	//log(json_obj)
 
