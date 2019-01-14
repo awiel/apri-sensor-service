@@ -95,11 +95,11 @@ app.get('/'+sensorServiceName+'/v1/m', function(req, res) {
 	}
 	log(_foi);
 
-	log(_query);
+	logdir(_query);
 
 	var dateRecieved = new Date();
 	var fiwareObject = {};
-	fiwareObject.id=_foi+"_"+dateRecieved;
+	fiwareObject.id=_foi+"_"+dateRecieved.toISOString();
 	fiwareObject.sensorId=_foi;
 	fiwareObject.type="AirQualityObserved";
 	//fiwareObject.sensorSystem=query.sensorsystem;
@@ -110,7 +110,7 @@ app.get('/'+sensorServiceName+'/v1/m', function(req, res) {
 	//			fiwareObject.lightTop=inRecord.s_lightsensortop;
 	//			fiwareObject.pressure=inRecord.s_barometer/100;
 
-	log(fiwareObject);
+	logdir(fiwareObject);
 
 	var _inputObservation			= _query.observation;
 	var _categories						= _inputObservation.split(',');
