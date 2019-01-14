@@ -20,7 +20,7 @@ var self = this;
 // **********************************************************************************
 
 // add module specific requires
-//var request 					= require('request');
+var request 						= require('request');
 var express 						= require('express');
 //var cookieParser 			= require('cookie-parser');
 //var session 					= require('express-session');
