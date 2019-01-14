@@ -116,7 +116,7 @@ app.get('/'+sensorServiceName+'/v1/m', function(req, res) {
 		}
 		if (req.query.calType=='R') { // R = calibrate on Raw base (particals for PMSA003)
 			calType = 'R';
-		}	else
+		}
 	}
 	var fiwareObject = {};
 	fiwareObject.id=_foi+"_"+calType+"_"+dateRecieved.toISOString();
