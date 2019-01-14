@@ -38,7 +38,7 @@ var _systemFolderParent		= apriSensorServiceConfig.getSystemFolderParent();
 var _systemFolder					= apriSensorServiceConfig.getSystemFolder();
 var _systemListenPort			= apriSensorServiceConfig.getSystemListenPort();
 var _systemParameter			= apriSensorServiceConfig.getConfigParameter();
-var _serviceTarget				= apriSensorServiceConfig.getServiceTarget();
+var _serviceTarget				= apriSensorServiceConfig.getConfigServiceTarget();
 
 var app = express();
 
