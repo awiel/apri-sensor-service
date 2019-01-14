@@ -98,12 +98,33 @@ app.get('/'+sensorServiceName+'/v1/m', function(req, res) {
 	logdir(_query);
 
 	var dateRecieved = new Date();
+	var dateObserved;
+	var offset;
+	if (req.query.timeOffsetMillis) {
+		offset = Number.parseInt(req.query.timeOffsetMillis);
+		if (Number.isNaN(offset)) {
+			offset = 0;
+		}
+		dateObserved = new Date(dataRecieved.getTime()-offset);
+	} else {
+		dateObserved = dateRecieved;
+	}
+	var calType = 'N';
+	if (req.query.calType) {
+		if (req.query.calType=='P') { // P = calibrate on PM base
+			calType = 'P';
+		}
+		if (req.query.calType=='R') { // R = calibrate on Raw base (particals for PMSA003)
+			calType = 'R';
+		}	else
+	}
 	var fiwareObject = {};
-	fiwareObject.id=_foi+"_"+dateRecieved.toISOString();
+	fiwareObject.id=_foi+"_"+calType+"_"+dateRecieved.toISOString();
 	fiwareObject.sensorId=_foi;
 	fiwareObject.type="AirQualityObserved";
 	//fiwareObject.sensorSystem=query.sensorsystem;
-	fiwareObject.dateRecieved=dateRecieved;
+	fiwareObject.dateRecieved=dateRecieved.toISOString();
+	fiwareObject.dateObserved=dateObserved.toISOString();
 	//			fiwareObject.relativeHumidity=inRecord.s_humidity/1000;
 	//			fiwareObject.temperature	= milliKelvinToCelsius(inRecord.s_temperatureambient);
 	//			fiwareObject.CO2=inRecord.s_co2/1000;
