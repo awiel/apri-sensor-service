@@ -1,7 +1,7 @@
 /*
-** Module: apri-sensor-service-pmsa003.js
+** Module: apri-sensor-service-bme280.js
 **   ApriSensorService server
-**			inbox service for pmsa003 sensor data
+**			inbox service for bme280 sensor data
 **
 **
 */
@@ -15,7 +15,7 @@ var logdir = function(object){
 	console.log(object);
 }
 
-var service 		= 'apri-sensor-service-pmsa003';
+var service 		= 'apri-sensor-service-bme280';
 	log("Path: " + service);
 var modulePath = require('path').resolve(__dirname, '.');
 	log("Modulepath: " + modulePath);
@@ -45,7 +45,7 @@ var _serviceTarget				= apriSensorServiceConfig.getConfigServiceTarget();
 
 var app = express();
 
-var sensorServiceName = "pmsa003";
+var sensorServiceName = "bme280";
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -71,7 +71,7 @@ app.all('/favicon.ico', function(req, res) {
 });
 
 app.get('/'+sensorServiceName+'/testservice', function(req, res ) {
-	log("ApriSensorService pmsa003 testservice: " + req.url );
+	log("ApriSensorService bme280 testservice: " + req.url );
 
 	res.contentType('text/plain');
 	var result = 'testservice active';
@@ -114,7 +114,7 @@ app.get('/'+sensorServiceName+'/v1/m', function(req, res) {
 		if (req.query.calType=='P') { // P = calibrate on PM base
 			calType = 'P';
 		}
-		if (req.query.calType=='R') { // R = calibrate on Raw base (particals for PMSA003)
+		if (req.query.calType=='R') { // R = calibrate on Raw base (particals for bme280)
 			calType = 'R';
 		}
 	}
@@ -139,18 +139,9 @@ app.get('/'+sensorServiceName+'/v1/m', function(req, res) {
 
 	var fiwareMap	= {};
 	fiwareMap.unknown_obs 		= {};
-	fiwareMap['pm1']					= 'pm1';
-	fiwareMap['pm25']					= 'pm25';
-	fiwareMap['pm10']					= 'pm10';
-	fiwareMap['pm1amb']				= 'pm1amb';
-	fiwareMap['pm25amb']			= 'pm25amb';
-	fiwareMap['pm10amb']			= 'pm10amb';
-	fiwareMap['raw0_3']				= 'raw0_3';
-	fiwareMap['raw0_5']				= 'raw0_5';
-	fiwareMap['raw1_0']				= 'raw0_1';
-	fiwareMap['raw2_5']				= 'raw2_5';
-	fiwareMap['raw5_0']				= 'raw5_0';
-	fiwareMap['raw10_0']			= 'raw10_0';
+	fiwareMap['pressure']			= 'pressure';
+	fiwareMap['temperature']	= 'temperature';
+	fiwareMap['rHum']					= 'rHum';
 
 	for (var i = 0;i<_categories.length;i++) {
 		var _category				= _categories[i];
@@ -207,7 +198,7 @@ app.get('/'+_systemCode+'/apri-sensor-service/v1/getCalModelData', function(req,
 */
 
 app.get('/*', function(req, res) {
-	log("Apri-Sensor-service pmsa003 request url error: " + req.url );
+	log("Apri-Sensor-service bme280 request url error: " + req.url );
 	var _message = errorMessages.URLERROR
 	_message.message += " API error, wrong parameters?";
 	//errorResult(res, _message);
