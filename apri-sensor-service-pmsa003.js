@@ -11,6 +11,9 @@
 var log = function(message){
 	console.log(new Date().toISOString()+' | '+message);
 }
+var logdir = function(object){
+	console.log(object);
+}
 
 var service 		= 'apri-sensor-service-pmsa003';
 	log("Path: " + service);
@@ -218,7 +221,7 @@ var sendFiwareData = function(data, target, res) {
 			 }
 	};
 
-  log(options);
+  logdir(options);
 
 	//console.log(options);
 	//console.log(_data);
