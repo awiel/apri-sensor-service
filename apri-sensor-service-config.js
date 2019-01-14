@@ -30,7 +30,8 @@
 		systemVersion,
 		systemVersionL1,
 		systemVersionL2,
-		systemVersionL3;
+		systemVersionL3,
+		serviceTarget;
 
 module.exports = {
 
@@ -61,6 +62,8 @@ module.exports = {
 		systemVersion 				= systemVersionL1 + '.' + systemVersionL2 + '.' + systemVersionL3;
 		systemServiceType 		= systemConfig.system.serviceType;
 
+
+
 		// context(s) for token
 		systemContext				  = systemConfig.context;
 
@@ -78,6 +81,9 @@ module.exports = {
 					if (_service.systemListenPort) {
 						systemListenPort = _service.systemListenPort;
 					}
+					if (_service.target) {
+						serviceTarget = _service.target;
+					}
 					break;
 				}
 			}
@@ -94,6 +100,7 @@ module.exports = {
 		console.log(' System config folder    :', systemConfigLocalPath);
 		console.log(' System servicename      :', systemServiceName);
 		console.log(' Servicetype             :', systemServiceType);
+		console.log(' Servicetarget           :', serviceTarget.name);
 		console.log(' Listening port          :', systemListenPort);
 		console.log(' System start            :', systemStart.toISOString());
 		console.log('=================================================================\n');
@@ -128,6 +135,10 @@ module.exports = {
 
 	getConfigLocalPath: function () {
 		return systemConfigLocalPath;
+	},
+
+	getConfigServiceTarget: function () {
+		return serviceTarget;
 	}
 
 
