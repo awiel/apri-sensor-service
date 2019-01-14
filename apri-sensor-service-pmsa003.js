@@ -104,7 +104,7 @@ app.get('/'+sensorServiceName+'/v1/m', function(req, res) {
 
 	console.log(fiwareObject);
 
-	var _inputObservation					= query.observation;
+	var _inputObservation					= _query.observation;
 	var _categories							= _inputObservation.split(',');
 
 	var fiwareMap	= {};
@@ -189,7 +189,7 @@ app.get('/*', function(req, res) {
 
 var sendFiwareData = function(data) {
 	var _url = 'https://orion.openiod.nl/v2/entities?options=keyValues'; //openiodUrl;
-	
+
 	//console.log(data);
 	var json_obj = JSON.stringify(data);
 	//console.log(_url);
