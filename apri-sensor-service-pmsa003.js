@@ -8,6 +8,10 @@
 
 "use strict";
 
+var log = function(message){
+	console.log(new Date().toISOString()+' | '+message);
+}
+
 var service 		= 'apri-sensor-service-pmsa003';
 	log("Path: " + service);
 var modulePath = require('path').resolve(__dirname, '.');
@@ -245,10 +249,6 @@ var errorResult = function(res, message) {
 	res.status(message.returnCode).send(message.message);
 	log('Error: %s - %s', message.returnCode, message.message );
 };
-
-var log = function(message){
-	console.log(new Date().toISOString()+' | '+message);
-}
 
 var startListen = function() {
 	app.listen(_systemListenPort);
