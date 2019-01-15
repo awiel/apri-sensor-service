@@ -100,7 +100,9 @@ module.exports = {
 		console.log(' System config folder    :', systemConfigLocalPath);
 		console.log(' System servicename      :', systemServiceName);
 		console.log(' Servicetype             :', systemServiceType);
-		console.log(' Servicetarget           :', serviceTarget.name);
+		if (serviceTarget) {
+			console.log(' Servicetarget           :', serviceTarget.name);
+		}
 		console.log(' Listening port          :', systemListenPort);
 		console.log(' System start            :', systemStart.toISOString());
 		console.log('=================================================================\n');
