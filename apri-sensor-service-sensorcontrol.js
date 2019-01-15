@@ -213,6 +213,7 @@ var initControlData = function(controlData) {
 	_controlData.cPm 				= {};
 	_controlData.cPm.pm25		= {};
 	_controlData.cPm.pm10 	= {};
+	_controlData.cRaw				= {};
 	_controlData.cRaw.pm25 	= {};
 	_controlData.cRaw.pm10 	= {};
 	return _controlData;
