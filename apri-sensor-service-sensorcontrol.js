@@ -105,11 +105,11 @@ app.get('/'+_systemCode+'/apri-sensor-service/v1/getCalModelData', function(req,
 		} else {
 			controlData = initControlData(controlData);
 			controlData.date = ctrlDate;
-			controlData.results.rawInd								= true;    // PM raw values (6x)
-			controlData.results.pmInd 								= true;     // PM values from sensor
-			controlData.results.pmSecInd							= true;  // secundairy PM values
-			controlData.results.pmCalInd							= true;  // calibrated PM values based on raw measurements
-			controlData.results.pmCalPmInd						= true;  // calibrated PM values based on sensor PM values
+			controlData.res.rawInd										= true;    // PM raw values (6x)
+			controlData.res.pmInd 										= true;     // PM values from sensor
+			controlData.res.pmSecInd									= true;  // secundairy PM values
+			controlData.res.pmCalInd									= true;  // calibrated PM values based on raw measurements
+			controlData.res.pmCalPmInd								= true;  // calibrated PM values based on sensor PM values
 			controlData.cF.pm1												= 1.0 ;
 			controlData.cF.pm25 											= 1.0 ;
 			controlData.cF.pm10 											= 1.0 ;
@@ -158,11 +158,11 @@ app.get('/'+_systemCode+'/apri-sensor-service/v1/getCalModelData', function(req,
 		} else {
 			controlData = initControlData(controlData);
 			controlData.date = ctrlDate;
-			controlData.results.rawInd								= true;    // PM raw values (6x)
-			controlData.results.pmInd 								= true;     // PM values from sensor
-			controlData.results.pmSecInd							= true;  // secundairy PM values
-			controlData.results.pmCalInd							= true;  // calibrated PM values based on raw measurements
-			controlData.results.pmCalPmInd						= true;  // calibrated PM values based on sensor PM values
+			controlData.res.rawInd										= true;    // PM raw values (6x)
+			controlData.res.pmInd 										= true;     // PM values from sensor
+			controlData.res.pmSecInd									= true;  // secundairy PM values
+			controlData.res.pmCalInd									= true;  // calibrated PM values based on raw measurements
+			controlData.res.pmCalPmInd								= true;  // calibrated PM values based on sensor PM values
 			controlData.cF.pm1												= 1.0 ;
 			controlData.cF.pm25 											= 1.0 ;
 			controlData.cF.pm10 											= 1.0 ;
@@ -206,14 +206,15 @@ app.get('/'+_systemCode+'/apri-sensor-service/v1/getCalModelData', function(req,
 });
 
 var initControlData = function(controlData) {
-	var _controlData = controlData;
-	_controlData.date = "1900-01-01T00:00:00+00:00";
-	_controlData.cal = {};
-	_controlData.cal.factor = {};
-	_controlData.cal.model = {};
-	_controlData.cal.model.constant = {};
-	_controlData.cal.model.factor = {};
-	_controlData.results = {};
+	var _controlData 				= controlData;
+	_controlData.date 			= "1900-01-01T00:00:00+00:00";
+	_controlData.res 				= {};
+	_controlData.cF 				= {};
+	_controlData.cPm 				= {};
+	_controlData.cPm.pm25		= {};
+	_controlData.cPm.pm10 	= {};
+	_controlData.cRaw.pm25 	= {};
+	_controlData.cRaw.pm10 	= {};
 	return _controlData;
 }
 
