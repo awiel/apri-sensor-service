@@ -79,35 +79,39 @@ app.all('/*', function(req, res, next) {
 
 app.get('/'+_systemCode+'/apri-sensor-service/v1/getCalModelData', function(req, res) {
 	res.contentType('application/json');
-	var ctrlDate="";
+
+	var params = {};
 	var controlData = {};
+
+	var sensorCtrlDate = '';
+
 	var _query = req.query;
 	if (_query == undefined) {
   	res.send(calModel);
 		return;
 	}
 
-	var _foi = '';
-	if (req.query.sensorId != undefined) {
-		_foi = req.query.sensorId;
+	params.foi = '';
+	if (_query.sensorId != undefined) {
+		params.foi = _query.sensorId;
 	} else {
-		_foi = req.query.foi;
+		params.foi = _query.foi;
 	}
 
-	var _ctrlDate = '';
+	params.ctrlDate = '';
 	if (req.query.sensorId != undefined) {
-		_ctrlDate = req.query.date;
+		params.ctrlDate = _query.date;
 	}
 	console.log(_foi);
 
 
 
 	if (_foi == 'SCNM2C3AE84FB02A') {  //
-		ctrlDate = "2019-01-16T23:22:00Z";
+		sensorCtrlDate = "2019-01-16T23:22:00Z";
 		// send date only when equal to request. No refresh of data when equal.
-		if (ctrlDate == _ctrlDate) {  // do nothing
+		if (sensorCtrlDate == params.ctrlDate) {  // do nothing
 			controlData = {};
-			controlData.date = ctrlDate;
+			controlData.date = params.ctrlDate;
 		} else {
 			controlData = setDefaultControlData(controlData);
 			controlData.res.otaInd 										= true;
@@ -120,29 +124,29 @@ app.get('/'+_systemCode+'/apri-sensor-service/v1/getCalModelData', function(req,
 		}
 	}
 	if (_foi == 'SCNMA020A61B9EA5') {  // Aalten
-		ctrlDate = "2019-01-01T08:18:00Z";
+		sensorCtrlDate = "2019-01-01T08:18:00Z";
 		// send date only when equal to request. No refresh of data when equal.
-		if (ctrlDate == _ctrlDate) { // do nothing
+		if (sensorCtrlDate == params.ctrlDate) { // do nothing
 			controlData = {};
-			controlData.date = ctrlDate;
+			controlData.date = params.ctrlDate;
 		} else {
 			controlData = setDefaultControlData(controlData);
 		}
 	}
 	if (_foi == 'SCNM5CCF7F2F65F1') {  //prototype AAlten
-		ctrlDate = "2019-01-13T12:36:00Z";
+		sensorCtrlDate = "2019-01-13T12:36:00Z";
 		// send date only when equal to request. No refresh of data when equal.
-		if (ctrlDate == _ctrlDate) { // do nothing
+		if (sensorCtrlDate == params.ctrlDate) { // do nothing
 			controlData = {};
-			controlData.date = ctrlDate;
+			controlData.date = params.ctrlDate;
 		} else {
-			controlData = setDefaultControlData(controlData);
+			controlData = setDefaultControlData(controlData,params);
 		}
 	}
 
 	if (controlData.date == undefined) {   // there is no controlData config for this sensor, send minimum functionality.
 		controlData = {};
-		controlData.date 													= ctrlDate;
+		controlData.date 													= params.ctrlDate;
 		controlData.res 													= {};
 		controlData.res.pmInd 										= true;     // only PM values from sensor
 	}
@@ -163,10 +167,10 @@ var initControlData = function(controlData) {
 	_controlData.cRaw.pm10 	= {};
 	return _controlData;
 }
-var setDefaultControlData = function(controlData) {
+var setDefaultControlData = function(controlData.params) {
 	var _controlData = controlData;
 	_controlData = initControlData(_controlData);
-	_controlData.date = ctrlDate;
+	_controlData.date = params.ctrlDate;
 	_controlData.res.rawInd										= true;    // PM raw values (6x)
 	_controlData.res.pmInd 										= true;     // PM values from sensor
 	_controlData.res.pmSecInd									= true;  // secundairy PM values
