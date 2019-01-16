@@ -167,7 +167,7 @@ var initControlData = function(controlData) {
 	_controlData.cRaw.pm10 	= {};
 	return _controlData;
 }
-var setDefaultControlData = function(controlData.params) {
+var setDefaultControlData = function(controlData,params) {
 	var _controlData = controlData;
 	_controlData = initControlData(_controlData);
 	_controlData.date = params.ctrlDate;
