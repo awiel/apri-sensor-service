@@ -113,7 +113,7 @@ app.get('/'+_systemCode+'/apri-sensor-service/v1/getCalModelData', function(req,
 			controlData = {};
 			controlData.date = params.ctrlDate;
 		} else {
-			controlData = setDefaultControlData(controlData);
+			controlData = setDefaultControlData(controlData,params);
 			controlData.res.otaInd 										= true;
 			controlData.res.rawInd										= false;    // PM raw values (6x)
 			controlData.res.pmInd 										= true;     // PM values from sensor
@@ -130,7 +130,7 @@ app.get('/'+_systemCode+'/apri-sensor-service/v1/getCalModelData', function(req,
 			controlData = {};
 			controlData.date = params.ctrlDate;
 		} else {
-			controlData = setDefaultControlData(controlData);
+			controlData = setDefaultControlData(controlData,params);
 		}
 	}
 	if (params.foi == 'SCNM5CCF7F2F65F1') {  //prototype AAlten
