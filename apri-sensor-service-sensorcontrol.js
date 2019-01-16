@@ -103,50 +103,7 @@ app.get('/'+_systemCode+'/apri-sensor-service/v1/getCalModelData', function(req,
 			controlData = {};
 			controlData.date = ctrlDate;
 		} else {
-			controlData = initControlData(controlData);
-			controlData.date = ctrlDate;
-			controlData.res.rawInd										= true;    // PM raw values (6x)
-			controlData.res.pmInd 										= true;     // PM values from sensor
-			controlData.res.pmSecInd									= true;  // secundairy PM values
-			controlData.res.pmCalInd									= true;  // calibrated PM values based on raw measurements
-			controlData.res.pmCalPmInd								= true;  // calibrated PM values based on sensor PM values
-			controlData.cF.pm1												= 1.0 ;
-			controlData.cF.pm25 											= 1.0 ;
-			controlData.cF.pm10 											= 1.0 ;
-			controlData.cF.raw0_3 										= 1.0 ;
-			controlData.cF.raw0_5 										= 1.0 ;
-			controlData.cF.raw1_0 										= 1.0 ;
-			controlData.cF.raw2_5 										= 1.0 ;
-			controlData.cF.raw5_0 										= 1.0 ;
-			controlData.cF.raw10_0										= 1.0 ;
-			controlData.cF.temp												= 1.0 ;
-			controlData.cF.rHum												= 1.0 ;
-			controlData.cPm.pm25.B0 									= 14.540174 ;
-			controlData.cPm.pm25.pm25		 							= 0.388 ;
-			controlData.cPm.pm25.temp									= -0.177 ;
-			controlData.cPm.pm25.rHum 								= -0.158 ;
-			controlData.cPm.pm10.B0 									= 7.231944 ;
-			controlData.cPm.pm10.pm10		 							= 0.349 ;
-			controlData.cPm.pm10.temp									= 0.437 ;
-			controlData.cPm.pm10.rHum 								= -0.04959 ;
-			controlData.cRaw.pm25.B0			 						= 10.745691 ;
-			controlData.cRaw.pm25.raw0_3 							= 0.172 ;
-			controlData.cRaw.pm25.raw0_5 							= -0.553 ;
-			controlData.cRaw.pm25.raw1_0 							= 0.08856 ;
-			controlData.cRaw.pm25.raw2_5 							= -0.0005707 ;
-			controlData.cRaw.pm25.raw5_0 							= 0.163 ;
-			controlData.cRaw.pm25.raw10_0							= 2.071 ;
-			controlData.cRaw.pm25.temp 								= -0.215 ;
-			controlData.cRaw.pm25.rHum 								= -0.165 ;
-			controlData.cRaw.pm10.B0			 						= 10.342340 ;
-			controlData.cRaw.pm10.raw0_3 							= 0.282 ;
-			controlData.cRaw.pm10.raw0_5 							= -0.907 ;
-			controlData.cRaw.pm10.raw1_0 							= 0.147 ;
-			controlData.cRaw.pm10.raw2_5 							= -0.649 ;
-			controlData.cRaw.pm10.raw5_0 							= 0.08193 ;
-			controlData.cRaw.pm10.raw10_0							= 11.600 ;
-			controlData.cRaw.pm10.temp 								= 0.115 ;
-			controlData.cRaw.pm10.rHum 								= -0.226 ;
+			controlData = setDefaultControlData(controlData);
 		}
 	}
 	if (_foi == 'SCNM5CCF7F2F65F1') {  //prototype AAlten
@@ -156,52 +113,17 @@ app.get('/'+_systemCode+'/apri-sensor-service/v1/getCalModelData', function(req,
 			controlData = {};
 			controlData.date = ctrlDate;
 		} else {
-			controlData = initControlData(controlData);
-			controlData.date = ctrlDate;
-			controlData.res.rawInd										= true;    // PM raw values (6x)
-			controlData.res.pmInd 										= true;     // PM values from sensor
-			controlData.res.pmSecInd									= true;  // secundairy PM values
-			controlData.res.pmCalInd									= true;  // calibrated PM values based on raw measurements
-			controlData.res.pmCalPmInd								= true;  // calibrated PM values based on sensor PM values
-			controlData.cF.pm1												= 1.0 ;
-			controlData.cF.pm25 											= 1.0 ;
-			controlData.cF.pm10 											= 1.0 ;
-			controlData.cF.raw0_3 										= 1.0 ;
-			controlData.cF.raw0_5 										= 1.0 ;
-			controlData.cF.raw1_0 										= 1.0 ;
-			controlData.cF.raw2_5 										= 1.0 ;
-			controlData.cF.raw5_0 										= 1.0 ;
-			controlData.cF.raw10_0										= 1.0 ;
-			controlData.cF.temp												= 1.0 ;
-			controlData.cF.rHum												= 1.0 ;
-			controlData.cPm.pm25.B0 									= 14.540174 ;
-			controlData.cPm.pm25.pm25		 							= 0.388 ;
-			controlData.cPm.pm25.temp									= -0.177 ;
-			controlData.cPm.pm25.rHum 								= -0.158 ;
-			controlData.cPm.pm10.B0 									= 7.231944 ;
-			controlData.cPm.pm10.pm10		 							= 0.349 ;
-			controlData.cPm.pm10.temp									= 0.437 ;
-			controlData.cPm.pm10.rHum 								= -0.04959 ;
-			controlData.cRaw.pm25.B0			 						= 10.745691 ;
-			controlData.cRaw.pm25.raw0_3 							= 0.172 ;
-			controlData.cRaw.pm25.raw0_5 							= -0.553 ;
-			controlData.cRaw.pm25.raw1_0 							= 0.08856 ;
-			controlData.cRaw.pm25.raw2_5 							= -0.0005707 ;
-			controlData.cRaw.pm25.raw5_0 							= 0.163 ;
-			controlData.cRaw.pm25.raw10_0							= 2.071 ;
-			controlData.cRaw.pm25.temp 								= -0.215 ;
-			controlData.cRaw.pm25.rHum 								= -0.165 ;
-			controlData.cRaw.pm10.B0			 						= 10.342340 ;
-			controlData.cRaw.pm10.raw0_3 							= 0.282 ;
-			controlData.cRaw.pm10.raw0_5 							= -0.907 ;
-			controlData.cRaw.pm10.raw1_0 							= 0.147 ;
-			controlData.cRaw.pm10.raw2_5 							= -0.649 ;
-			controlData.cRaw.pm10.raw5_0 							= 0.08193 ;
-			controlData.cRaw.pm10.raw10_0							= 11.600 ;
-			controlData.cRaw.pm10.temp 								= 0.115 ;
-			controlData.cRaw.pm10.rHum 								= -0.226 ;
+			controlData = setDefaultControlData(controlData);
 		}
 	}
+
+	if (controlData.date == undefined) {   // there is no controlData config for this sensor, send minimum functionality.
+		controlData = {};
+		controlData.date 													= ctrlDate;
+		controlData.res 													= {};
+		controlData.res.pmInd 										= true;     // only PM values from sensor
+	}
+	--SCNM2C3AE84FB02A
 	res.send(JSON.stringify(controlData));
 });
 
@@ -216,6 +138,55 @@ var initControlData = function(controlData) {
 	_controlData.cRaw				= {};
 	_controlData.cRaw.pm25 	= {};
 	_controlData.cRaw.pm10 	= {};
+	return _controlData;
+}
+var setDefaultControlData = function(controlData) {
+	var _controlData = controlData;
+	_controlData = initControlData(_controlData);
+	_controlData.date = ctrlDate;
+	_controlData.res.rawInd										= true;    // PM raw values (6x)
+	_controlData.res.pmInd 										= true;     // PM values from sensor
+	_controlData.res.pmSecInd									= true;  // secundairy PM values
+	_controlData.res.pmCalInd									= true;  // calibrated PM values based on raw measurements
+	_controlData.res.pmCalPmInd								= true;  // calibrated PM values based on sensor PM values
+	_controlData.cF.pm1												= 1.0 ;
+	_controlData.cF.pm25 											= 1.0 ;
+	_controlData.cF.pm10 											= 1.0 ;
+	_controlData.cF.raw0_3 										= 1.0 ;
+	_controlData.cF.raw0_5 										= 1.0 ;
+	_controlData.cF.raw1_0 										= 1.0 ;
+	_controlData.cF.raw2_5 										= 1.0 ;
+	_controlData.cF.raw5_0 										= 1.0 ;
+	_controlData.cF.raw10_0										= 1.0 ;
+	_controlData.cF.temp											= 1.0 ;
+	_controlData.cF.rHum											= 1.0 ;
+	_controlData.cPm.pm25.B0 									= 14.540174 ;
+	_controlData.cPm.pm25.pm25		 						= 0.388 ;
+	_controlData.cPm.pm25.temp								= -0.177 ;
+	_controlData.cPm.pm25.rHum 								= -0.158 ;
+	_controlData.cPm.pm10.B0 									= 7.231944 ;
+	_controlData.cPm.pm10.pm10		 						= 0.349 ;
+	_controlData.cPm.pm10.temp								= 0.437 ;
+	_controlData.cPm.pm10.rHum 								= -0.04959 ;
+	_controlData.cRaw.pm25.B0			 						= 10.745691 ;
+	_controlData.cRaw.pm25.raw0_3 						= 0.172 ;
+	_controlData.cRaw.pm25.raw0_5 						= -0.553 ;
+	_controlData.cRaw.pm25.raw1_0 						= 0.08856 ;
+	_controlData.cRaw.pm25.raw2_5 						= -0.0005707 ;
+	_controlData.cRaw.pm25.raw5_0 						= 0.163 ;
+	_controlData.cRaw.pm25.raw10_0						= 2.071 ;
+	_controlData.cRaw.pm25.temp 							= -0.215 ;
+	_controlData.cRaw.pm25.rHum 							= -0.165 ;
+	_controlData.cRaw.pm10.B0			 						= 10.342340 ;
+	_controlData.cRaw.pm10.raw0_3 						= 0.282 ;
+	_controlData.cRaw.pm10.raw0_5 						= -0.907 ;
+	_controlData.cRaw.pm10.raw1_0 						= 0.147 ;
+	_controlData.cRaw.pm10.raw2_5 						= -0.649 ;
+	_controlData.cRaw.pm10.raw5_0 						= 0.08193 ;
+	_controlData.cRaw.pm10.raw10_0						= 11.600 ;
+	_controlData.cRaw.pm10.temp 							= 0.115 ;
+	_controlData.cRaw.pm10.rHum 							= -0.226 ;
+
 	return _controlData;
 }
 
