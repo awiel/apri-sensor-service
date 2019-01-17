@@ -99,7 +99,7 @@ app.get('/'+_systemCode+'/apri-sensor-service/v1/getCalModelData', function(req,
 	}
 
 	params.ctrlDate = '';
-	if (req.query.sensorId != undefined) {
+	if (_query.date != undefined) {
 		params.ctrlDate = _query.date;
 	}
 	console.log(params.foi);
