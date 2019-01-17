@@ -113,7 +113,7 @@ app.get('/'+_systemCode+'/apri-sensor-service/v1/getCalModelData', function(req,
 			controlData = {};
 			controlData.date = params.sensorCtrlDate;
 		} else {
-			console.log(controlData.date);
+			console.log(params.ctrlDate);
 			console.log(params.sensorCtrlDate);
 
 			controlData = setDefaultControlData(controlData,params);
