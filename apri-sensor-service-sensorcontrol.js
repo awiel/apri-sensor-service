@@ -107,11 +107,11 @@ app.get('/'+_systemCode+'/apri-sensor-service/v1/getCalModelData', function(req,
 
 
 	if (params.foi == 'SCNM2C3AE84FB02A') {  //
-		sensorCtrlDate = "2019-01-16T23:22:00Z";
+		params.sensorCtrlDate = "2019-01-16T23:22:00Z";
 		// send date only when equal to request. No refresh of data when equal.
-		if (sensorCtrlDate == params.ctrlDate) {  // do nothing
+		if (params.sensorCtrlDate == params.ctrlDate) {  // do nothing
 			controlData = {};
-			controlData.date = sensorCtrlDate;
+			controlData.date = params.sensorCtrlDate;
 		} else {
 			controlData = setDefaultControlData(controlData,params);
 			controlData.res.otaInd 										= true;
@@ -124,21 +124,21 @@ app.get('/'+_systemCode+'/apri-sensor-service/v1/getCalModelData', function(req,
 		}
 	}
 	if (params.foi == 'SCNMA020A61B9EA5') {  // Aalten
-		sensorCtrlDate = "2019-01-01T08:18:00Z";
+		params.sensorCtrlDate = "2019-01-01T08:18:00Z";
 		// send date only when equal to request. No refresh of data when equal.
-		if (sensorCtrlDate == params.ctrlDate) { // do nothing
+		if (params.sensorCtrlDate == params.ctrlDate) { // do nothing
 			controlData = {};
-			controlData.date = params.ctrlDate;
+			controlData.date = params.sensorCtrlDate;
 		} else {
 			controlData = setDefaultControlData(controlData,params);
 		}
 	}
 	if (params.foi == 'SCNM5CCF7F2F65F1') {  //prototype AAlten
-		sensorCtrlDate = "2019-01-13T12:36:00Z";
+		params.sensorCtrlDate = "2019-01-13T12:36:00Z";
 		// send date only when equal to request. No refresh of data when equal.
-		if (sensorCtrlDate == params.ctrlDate) { // do nothing
+		if (params.sensorCtrlDate == params.ctrlDate) { // do nothing
 			controlData = {};
-			controlData.date = params.ctrlDate;
+			controlData.date = params.sensorCtrlDate;
 		} else {
 			controlData = setDefaultControlData(controlData,params);
 		}
@@ -170,7 +170,7 @@ var initControlData = function(controlData) {
 var setDefaultControlData = function(controlData,params) {
 	var _controlData = controlData;
 	_controlData = initControlData(_controlData);
-	_controlData.date = params.ctrlDate;
+	_controlData.date = params.sensorCtrlDate;
 	_controlData.res.rawInd										= true;    // PM raw values (6x)
 	_controlData.res.pmInd 										= true;     // PM values from sensor
 	_controlData.res.pmSecInd									= true;  // secundairy PM values
