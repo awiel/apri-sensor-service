@@ -111,7 +111,7 @@ app.get('/'+_systemCode+'/apri-sensor-service/v1/getCalModelData', function(req,
 		// send date only when equal to request. No refresh of data when equal.
 		if (sensorCtrlDate == params.ctrlDate) {  // do nothing
 			controlData = {};
-			controlData.date = params.ctrlDate;
+			controlData.date = sensorCtrlDate;
 		} else {
 			controlData = setDefaultControlData(controlData,params);
 			controlData.res.otaInd 										= true;
