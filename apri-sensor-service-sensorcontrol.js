@@ -151,6 +151,8 @@ app.get('/'+_systemCode+'/apri-sensor-service/v1/getCalModelData', function(req,
 		controlData.res.pmInd 										= true;     // only PM values from sensor
 	}
 
+	console.dir(controlData);
+
 	res.send(JSON.stringify(controlData));
 });
 
