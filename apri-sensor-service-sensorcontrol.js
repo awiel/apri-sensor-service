@@ -113,6 +113,9 @@ app.get('/'+_systemCode+'/apri-sensor-service/v1/getCalModelData', function(req,
 			controlData = {};
 			controlData.date = params.sensorCtrlDate;
 		} else {
+			console.log(controlData.date);
+			console.log(params.sensorCtrlDate);
+
 			controlData = setDefaultControlData(controlData,params);
 			controlData.res.otaInd 										= true;
 			controlData.res.rawInd										= false;    // PM raw values (6x)
