@@ -69,7 +69,7 @@ var readMd5File = function(md5Bin) {
 			console.log(err);
 		}
 		_md5Bin = data;
-		console.log(_md5);
+		console.log(_md5Bin);
 	})
 
 	return;
