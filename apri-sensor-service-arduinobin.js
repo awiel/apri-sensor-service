@@ -90,6 +90,13 @@ app.get('/arduino-bin/', function(req, res) {
   console.log(req.get('x-esp8266-mode'));
 
 	console.log(md5Sensor);
+	if ( md5Sensor == undefined) {
+    var status = 501; // not modified
+    res.status(status);
+  //  res.send(status);
+  //  res.send('304 not modified');
+  }
+
   if ( md5Sensor == md5Bin) {
     var status = 304; // not modified
     res.status(status);
