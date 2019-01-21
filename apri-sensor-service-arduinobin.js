@@ -58,6 +58,7 @@ var errorMessages = {
 var arduinobinLocalPath = systemFolderParent +'/arduinobin/';
 console.log (arduinobinLocalPath);
 
+var md5Bin = "";
 
 var readMd5File = function(md5Bin) {
 	var fileName = arduinobinLocalPath+"arduinobin.md5";
