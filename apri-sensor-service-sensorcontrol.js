@@ -148,8 +148,11 @@ app.get('/'+_systemCode+'/apri-sensor-service/v1/getCalModelData', function(req,
 
 			// addition or overrule defaults
 			controlData.res.otaInd 										= true;
-			controlData.bin.prot											= 'https';
-			controlData.bin.host											= 'aprisensor-bin.openiod.org';
+//			controlData.bin.prot											= 'https';
+//			controlData.bin.host											= 'aprisensor-bin.openiod.org';
+//			controlData.bin.path											= '/arduino-bin/test/';
+			controlData.bin.prot											= 'http';
+			controlData.bin.host											= '37.97.135.211:5003';  //web
 			controlData.bin.path											= '/arduino-bin/test/';
 			controlData.res.rawInd										= false;    // PM raw values (6x)
 			controlData.res.pmInd 										= true;     // PM values from sensor
@@ -167,6 +170,13 @@ app.get('/'+_systemCode+'/apri-sensor-service/v1/getCalModelData', function(req,
 			controlData.date = params.sensorCtrlDate;
 		} else {
 			controlData = setDefaultControlData(controlData,params);
+			controlData.res.otaInd 										= true;
+//			controlData.bin.prot											= 'https';
+//			controlData.bin.host											= 'aprisensor-bin.openiod.org';
+//			controlData.bin.path											= '/arduino-bin/test/';
+			controlData.bin.prot											= 'http';
+			controlData.bin.host											= '37.97.135.211:5003';  //web
+			controlData.bin.path											= '/arduino-bin/test/';
 		}
 	}
 
