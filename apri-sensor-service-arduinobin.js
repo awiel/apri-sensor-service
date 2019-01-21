@@ -134,7 +134,7 @@ var _jsFile = 'abcdefgh';
 var readMd5File = function() {
 	console.log("MD5 file: ");
 	var _md5 = "";
-	fs.readFile(arduinobinLocalPath, function(err, data){
+	fs.readFile(arduinobinLocalPath+"arduinobin.md5", function(err, data){
 		if (err) {
 			console.log(err);
 		}
