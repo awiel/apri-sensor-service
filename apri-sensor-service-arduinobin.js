@@ -72,6 +72,66 @@ app.get('/'+systemCode+'/apri-sensor-service/testservice', function(req, res ) {
 
 });
 
+app.get('/arduino-bin/test/', function(req, res) {
+  var md5Sensor = req.get('x-esp8266-sketch-md5');
+  var md5Bin = readMd5File(); //'93f764cb8dd72a2b43ad5927be7e8a1f';
+  console.log(JSON.stringify(req.headers));
+  console.log(req.headers['content-type']);
+  console.log(req.get('host'));
+  console.log(req.get('user-agent'));
+  console.log(req.get('x-esp8266-sta-mac'));
+  console.log(req.get('x-esp8266-ap-mac'));
+  console.log(req.get('x-esp8266-sketch-size'));
+
+  console.log(req.get('x-esp8266-free-space'));
+  console.log(md5Sensor);
+  console.log(req.get('x-esp8266-chip-size'));
+  console.log(req.get('x-esp8266-sdk-version'));
+  console.log(req.get('x-esp8266-mode'));
+
+	console.log(md5Sensor);
+	if ( md5Sensor == undefined) {
+    var status = 401; // not modified
+    res.status(status);
+  //  res.send(status);
+  //  res.send('304 not modified');
+  }
+
+  if ( md5Sensor == md5Bin) {
+    var status = 304; // not modified
+    res.status(status);
+  //  res.send(status);
+  //  res.send('304 not modified');
+  }
+
+
+
+  //console.log("YUI request: " + req.url );
+
+//  console.dir(req);
+//  try {
+    //var url = req.url.replace(/\.\./gi,'');
+    //var url="apri-sensor-nodemcu-meteo.ino.nodemcu.bin";
+//    var _jsFile=fs.readFileSync(systemFolderRoot + url);
+var _jsFile = 'abcdefgh';
+    //res.contentType('application/octet-stream',true);
+    res.contentType('application/octet-stream',true);
+    res.setHeader('Content-Disposition','attachment; filename=apri-sensor-nodemcu-meteo.ino.nodemcu.bin');
+  //  res.setHeader('x-MD5','cfbc6bb28926ce99fb75c554d75f49cd');
+    res.setHeader('x-MD5',md5Bin);
+
+    //res.send(_jsFile);
+    res.sendFile(arduinobinLocalPath+'apri-sensor-nodemcu-meteo.ino.nodemcu.bin');
+//  }
+//  catch(error) {
+    //console.error(error);
+//    console.error('image not found: '+ systemFolderRoot+req.url);
+//    res.send('Image not found');
+//  }
+
+});
+
+
 app.get('/arduino-bin/', function(req, res) {
   var md5Sensor = req.get('x-esp8266-sketch-md5');
   var md5Bin = readMd5File(); //'93f764cb8dd72a2b43ad5927be7e8a1f';
