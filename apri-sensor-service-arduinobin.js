@@ -58,109 +58,83 @@ var errorMessages = {
 var arduinobinLocalPath = systemFolderParent +'/arduinobin/';
 console.log (arduinobinLocalPath);
 
-app.all('/favicon.ico', function(req, res) {
-	res.contentType('text/plain');
-	res.send('');
+app.all('/*', function(req, res, next) {
+	console.log("app.all/: " + req.url + " ; systemCode: " + systemCode );
+	next();
 });
 
 app.get('/'+systemCode+'/apri-sensor-service/testservice', function(req, res ) {
 	console.log("ApriSensorService testservice: " + req.url );
 
 	res.contentType('text/plain');
-	var result = 'testrun started';
+	var result = 'testrun OK';
  	res.send(result);
 
 });
 
+app.get('/arduinobin/', function(req, res) {
+  var md5Sensor = req.get('x-esp8266-sketch-md5');
+  var md5Bin = readMd5File(); //'93f764cb8dd72a2b43ad5927be7e8a1f';
+  console.log(JSON.stringify(req.headers));
+  console.log(req.headers['content-type']);
+  console.log(req.get('host'));
+  console.log(req.get('user-agent'));
+  console.log(req.get('x-esp8266-sta-mac'));
+  console.log(req.get('x-esp8266-ap-mac'));
+  console.log(req.get('x-esp8266-sketch-size'));
+
+  console.log(req.get('x-esp8266-free-space'));
+  console.log(md5Sensor);
+  console.log(req.get('x-esp8266-chip-size'));
+  console.log(req.get('x-esp8266-sdk-version'));
+  console.log(req.get('x-esp8266-mode'));
+
+  if ( md5Sensor == md5Bin) {
+    var status = 304; // not modified
+    res.status(status);
+  //  res.send(status);
+  //  res.send('304 not modified');
+  }
 
 
-app.all('/*', function(req, res, next) {
-	console.log("app.all/: " + req.url + " ; systemCode: " + systemCode );
-	next();
+
+  //console.log("YUI request: " + req.url );
+
+//  console.dir(req);
+//  try {
+    //var url = req.url.replace(/\.\./gi,'');
+    //var url="apri-sensor-nodemcu-meteo.ino.nodemcu.bin";
+//    var _jsFile=fs.readFileSync(systemFolderRoot + url);
+var _jsFile = 'abcdefgh';
+    //res.contentType('application/octet-stream',true);
+    res.contentType('application/octet-stream',true);
+    res.setHeader('Content-Disposition','attachment; filename=apri-sensor-nodemcu-meteo.ino.nodemcu.bin');
+  //  res.setHeader('x-MD5','cfbc6bb28926ce99fb75c554d75f49cd');
+    res.setHeader('x-MD5',md5Bin);
+
+    //res.send(_jsFile);
+    res.sendFile(arduinobinLocalPath+'apri-sensor-nodemcu-meteo.ino.nodemcu.bin');
+//  }
+//  catch(error) {
+    //console.error(error);
+//    console.error('image not found: '+ systemFolderRoot+req.url);
+//    res.send('Image not found');
+//  }
+
 });
 
-app.get('/'+systemCode+'/apri-sensor-service/v1/getCalModelData', function(req, res) {
-	res.contentType('application/json');
-
-	var params = {};
-	var controlData = {};
-
-	var sensorCtrlDate = '';
-
-	var _query = req.query;
-	if (_query == undefined) {
-  	res.send(calModel);
-		return;
-	}
-
-	params.foi = '';
-	if (_query.sensorId != undefined) {
-		params.foi = _query.sensorId;
-	} else {
-		params.foi = _query.foi;
-	}
-
-	params.ctrlDate = '';
-	if (_query.date != undefined) {
-		params.ctrlDate = _query.date;
-	}
-	console.log(params.foi);
-
-
-
-	if (params.foi == 'SCNM2C3AE84FB02A') {  //
-		params.sensorCtrlDate = "2019-01-16T23:22:00Z";
-		// send date only when equal to request. No refresh of data when equal.
-		if (params.sensorCtrlDate == params.ctrlDate) {  // do nothing
-			controlData = {};
-			controlData.date = params.sensorCtrlDate;
-		} else {
-			console.log(params.ctrlDate);
-			console.log(params.sensorCtrlDate);
-
-			controlData = setDefaultControlData(controlData,params);
-			controlData.res.otaInd 										= true;
-			controlData.res.rawInd										= false;    // PM raw values (6x)
-			controlData.res.pmInd 										= true;     // PM values from sensor
-			controlData.res.pmSecInd									= false;  // secundairy PM values
-			controlData.res.pmCalInd									= false;  // calibrated PM values based on raw measurements
-			controlData.res.pmCalPmInd								= false;  // calibrated PM values based on sensor PM values
-
+var readMd5File = function() {
+	console.log("MD5 file: " + req.url );
+	var _md5 = "";
+	fs.readFile(arduinobinLocalPath, function(err, data){
+		if (err) {
+			console.log(err);
 		}
-	}
-	if (params.foi == 'SCNMA020A61B9EA5') {  // Aalten
-		params.sensorCtrlDate = "2019-01-01T08:18:00Z";
-		// send date only when equal to request. No refresh of data when equal.
-		if (params.sensorCtrlDate == params.ctrlDate) { // do nothing
-			controlData = {};
-			controlData.date = params.sensorCtrlDate;
-		} else {
-			controlData = setDefaultControlData(controlData,params);
-		}
-	}
-	if (params.foi == 'SCNM5CCF7F2F65F1') {  //prototype AAlten
-		params.sensorCtrlDate = "2019-01-13T12:36:00Z";
-		// send date only when equal to request. No refresh of data when equal.
-		if (params.sensorCtrlDate == params.ctrlDate) { // do nothing
-			controlData = {};
-			controlData.date = params.sensorCtrlDate;
-		} else {
-			controlData = setDefaultControlData(controlData,params);
-		}
-	}
-
-	if (controlData.date == undefined) {   // there is no controlData config for this sensor, send minimum functionality.
-		controlData = {};
-		controlData.date 													= params.ctrlDate;
-		controlData.res 													= {};
-		controlData.res.pmInd 										= true;     // only PM values from sensor
-	}
-
-	console.dir(controlData);
-
-	res.send(JSON.stringify(controlData));
-});
-
+		_md5 = data;
+	})
+  console.log(_md5);
+	return _md5
+};
 
 app.get('/*', function(req, res) {
 	console.log("Apri-Sensor-service request url error: " + req.url );
