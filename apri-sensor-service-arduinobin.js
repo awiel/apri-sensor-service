@@ -72,7 +72,7 @@ app.get('/'+systemCode+'/apri-sensor-service/testservice', function(req, res ) {
 
 });
 
-app.get('/arduinobin/', function(req, res) {
+app.get('/arduino-bin/', function(req, res) {
   var md5Sensor = req.get('x-esp8266-sketch-md5');
   var md5Bin = readMd5File(); //'93f764cb8dd72a2b43ad5927be7e8a1f';
   console.log(JSON.stringify(req.headers));
