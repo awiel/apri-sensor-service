@@ -89,6 +89,7 @@ app.get('/arduino-bin/', function(req, res) {
   console.log(req.get('x-esp8266-sdk-version'));
   console.log(req.get('x-esp8266-mode'));
 
+	console.log(md5Sensor);
   if ( md5Sensor == md5Bin) {
     var status = 304; // not modified
     res.status(status);
