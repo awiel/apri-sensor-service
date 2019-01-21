@@ -192,7 +192,8 @@ var _jsFile = 'abcdefgh';
 });
 
 var readMd5File = function() {
-	console.log("MD5 file: ");
+	var fileName = arduinobinLocalPath+"arduinobin.md5";
+	console.log("MD5 file: " + fileName);
 	var _md5 = "";
 	fs.readFile(arduinobinLocalPath+"arduinobin.md5", function(err, data){
 		if (err) {
