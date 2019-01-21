@@ -58,6 +58,10 @@ var errorMessages = {
 var arduinobinLocalPath = systemFolderParent +'/arduinobin/';
 console.log (arduinobinLocalPath);
 
+var md5Bin = readMd5File(); //'93f764cb8dd72a2b43ad5927be7e8a1f';
+
+
+
 app.all('/*', function(req, res, next) {
 	console.log("app.all/: " + req.url + " ; systemCode: " + systemCode );
 	next();
@@ -74,7 +78,7 @@ app.get('/'+systemCode+'/apri-sensor-service/testservice', function(req, res ) {
 
 app.get('/arduino-bin/test/', function(req, res) {
   var md5Sensor = req.get('x-esp8266-sketch-md5');
-  var md5Bin = readMd5File(); //'93f764cb8dd72a2b43ad5927be7e8a1f';
+
   console.log(JSON.stringify(req.headers));
   console.log(req.headers['content-type']);
   console.log(req.get('host'));
@@ -134,7 +138,6 @@ var _jsFile = 'abcdefgh';
 
 app.get('/arduino-bin/', function(req, res) {
   var md5Sensor = req.get('x-esp8266-sketch-md5');
-  var md5Bin = readMd5File(); //'93f764cb8dd72a2b43ad5927be7e8a1f';
   console.log(JSON.stringify(req.headers));
   console.log(req.headers['content-type']);
   console.log(req.get('host'));
@@ -191,20 +194,6 @@ var _jsFile = 'abcdefgh';
 
 });
 
-var readMd5File = function() {
-	var fileName = arduinobinLocalPath+"arduinobin.md5";
-	console.log("MD5 file: " + fileName);
-	var _md5 = "";
-	fs.readFile(arduinobinLocalPath+"arduinobin.md5", function(err, data){
-		if (err) {
-			console.log(err);
-		}
-		_md5 = data;
-	})
-  console.log(_md5);
-	return _md5
-};
-
 app.get('/*', function(req, res) {
 	console.log("Apri-Sensor-service request url error: " + req.url );
 	var _message = errorMessages.URLERROR
@@ -221,6 +210,20 @@ var errorResult = function(res, message) {
 	res.contentType('text/plain');
 	res.status(message.returnCode).send(message.message);
 	console.log('Error: %s - %s', message.returnCode, message.message );
+};
+
+var readMd5File = function() {
+	var fileName = arduinobinLocalPath+"arduinobin.md5";
+	console.log("MD5 file: " + fileName);
+	var _md5 = "";
+	fs.readFile(arduinobinLocalPath+"arduinobin.md5", function(err, data){
+		if (err) {
+			console.log(err);
+		}
+		_md5 = data;
+	})
+  console.log(_md5);
+	return _md5
 };
 
 var startListen = function() {
