@@ -59,22 +59,23 @@ var arduinobinLocalPath = systemFolderParent +'/arduinobin/';
 console.log (arduinobinLocalPath);
 
 
-var readMd5File = function() {
+var readMd5File = function(md5Bin) {
 	var fileName = arduinobinLocalPath+"arduinobin.md5";
 	console.log("MD5 file: " + fileName);
-	var _md5 = "";
+	var _md5Bin = md5Bin;
 	fs.readFile(arduinobinLocalPath+"arduinobin.md5", function(err, data){
 		if (err) {
 			console.log(err);
 		}
-		_md5 = data;
+		_md5Bin = data;
+		console.log(_md5);
 	})
-  console.log(_md5);
-	return _md5
+
+	return;
 };
 
 
-var md5Bin = readMd5File(); //'93f764cb8dd72a2b43ad5927be7e8a1f';
+readMd5File(md5Bin); //'93f764cb8dd72a2b43ad5927be7e8a1f';
 
 
 
@@ -94,7 +95,7 @@ app.get('/'+systemCode+'/apri-sensor-service/testservice', function(req, res ) {
 
 app.get('/arduino-bin/test/', function(req, res) {
   var md5Sensor = req.get('x-esp8266-sketch-md5');
-
+  console.log(md5Bin);
   console.log(JSON.stringify(req.headers));
   console.log(req.headers['content-type']);
   console.log(req.get('host'));
