@@ -105,8 +105,7 @@ app.get('/'+_systemCode+'/apri-sensor-service/v1/getCalModelData', function(req,
 	console.log(params.foi);
 
 
-
-	if (params.foi == 'SCNM2C3AE84FB02A') {  //
+	if (params.foi == 'SCNM5CCF7F2F65F1') {  //
 		params.sensorCtrlDate = "2019-01-16T23:22:00Z";
 		// send date only when equal to request. No refresh of data when equal.
 		if (params.sensorCtrlDate == params.ctrlDate) {  // do nothing
@@ -117,7 +116,38 @@ app.get('/'+_systemCode+'/apri-sensor-service/v1/getCalModelData', function(req,
 			console.log(params.sensorCtrlDate);
 
 			controlData = setDefaultControlData(controlData,params);
+
+			// addition or overrule defaults
+			//controlData.res.otaInd 										= true;
+			//controlData.bin.prot											= 'https';
+			//controlData.bin.host											= 'arduino-bin.openiod.org';
+			//controlData.bin.path											= '/arduino-bin/test/';
+			controlData.res.rawInd										= false;    // PM raw values (6x)
+			controlData.res.pmInd 										= true;     // PM values from sensor
+			controlData.res.pmSecInd									= false;  // secundairy PM values
+			controlData.res.pmCalInd									= false;  // calibrated PM values based on raw measurements
+			controlData.res.pmCalPmInd								= false;  // calibrated PM values based on sensor PM values
+
+		}
+	}
+
+	if (params.foi == 'SCNM2C3AE84FB02A' ) {  //
+		params.sensorCtrlDate = "2019-01-21T11:34:00Z";
+		// send date only when equal to request. No refresh of data when equal.
+		if (params.sensorCtrlDate == params.ctrlDate) {  // do nothing
+			controlData = {};
+			controlData.date = params.sensorCtrlDate;
+		} else {
+			console.log(params.ctrlDate);
+			console.log(params.sensorCtrlDate);
+
+			controlData = setDefaultControlData(controlData,params);
+
+			// addition or overrule defaults
 			controlData.res.otaInd 										= true;
+			controlData.bin.prot											= 'https';
+			controlData.bin.host											= 'arduino-bin.openiod.org';
+			controlData.bin.path											= '/arduino-bin/test/';
 			controlData.res.rawInd										= false;    // PM raw values (6x)
 			controlData.res.pmInd 										= true;     // PM values from sensor
 			controlData.res.pmSecInd									= false;  // secundairy PM values
@@ -128,16 +158,6 @@ app.get('/'+_systemCode+'/apri-sensor-service/v1/getCalModelData', function(req,
 	}
 	if (params.foi == 'SCNMA020A61B9EA5') {  // Aalten
 		params.sensorCtrlDate = "2019-01-01T08:18:00Z";
-		// send date only when equal to request. No refresh of data when equal.
-		if (params.sensorCtrlDate == params.ctrlDate) { // do nothing
-			controlData = {};
-			controlData.date = params.sensorCtrlDate;
-		} else {
-			controlData = setDefaultControlData(controlData,params);
-		}
-	}
-	if (params.foi == 'SCNM5CCF7F2F65F1') {  //prototype AAlten
-		params.sensorCtrlDate = "2019-01-13T12:36:00Z";
 		// send date only when equal to request. No refresh of data when equal.
 		if (params.sensorCtrlDate == params.ctrlDate) { // do nothing
 			controlData = {};
@@ -162,6 +182,7 @@ app.get('/'+_systemCode+'/apri-sensor-service/v1/getCalModelData', function(req,
 var initControlData = function(controlData) {
 	var _controlData 				= controlData;
 	_controlData.date 			= "1900-01-01T00:00:00+00:00";
+	_controlData.bin				= {};
 	_controlData.res 				= {};
 	_controlData.cF 				= {};
 	_controlData.cPm 				= {};
