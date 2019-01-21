@@ -29,6 +29,8 @@ var express 							= require('express');
 var bodyParser 						= require('body-parser');
 var fs 										= require('fs');
 
+var readline 							= require('readline');
+
 var systemCode 						= apriSensorServiceConfig.getSystemCode();
 var systemFolderParent		= apriSensorServiceConfig.getSystemFolderParent();
 var systemFolder					= apriSensorServiceConfig.getSystemFolder();
@@ -57,9 +59,20 @@ var errorMessages = {
 
 var arduinobinLocalPath = systemFolderParent +'/arduinobin/';
 console.log (arduinobinLocalPath);
-
 var md5Bin = "";
 
+const rl = readline.createInterface({
+  input: require('fs').createReadStream(arduinobinLocalPath+"arduinobin.md5")
+});
+
+rl.on('line', function (line) {
+  console.log('Line from file:', line);
+	md5Bin = line;
+});
+
+
+
+/*
 var readMd5File = function(md5Bin) {
 	var fileName = arduinobinLocalPath+"arduinobin.md5";
 	console.log("MD5 file: " + fileName);
@@ -76,9 +89,9 @@ var readMd5File = function(md5Bin) {
 };
 
 
-readMd5File(md5Bin); //'93f764cb8dd72a2b43ad5927be7e8a1f';
+//readMd5File(md5Bin); //'93f764cb8dd72a2b43ad5927be7e8a1f';
 
-
+*/
 
 app.all('/*', function(req, res, next) {
 	console.log("app.all/: " + req.url + " ; systemCode: " + systemCode );
