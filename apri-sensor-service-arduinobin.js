@@ -58,6 +58,22 @@ var errorMessages = {
 var arduinobinLocalPath = systemFolderParent +'/arduinobin/';
 console.log (arduinobinLocalPath);
 
+
+var readMd5File = function() {
+	var fileName = arduinobinLocalPath+"arduinobin.md5";
+	console.log("MD5 file: " + fileName);
+	var _md5 = "";
+	fs.readFile(arduinobinLocalPath+"arduinobin.md5", function(err, data){
+		if (err) {
+			console.log(err);
+		}
+		_md5 = data;
+	})
+  console.log(_md5);
+	return _md5
+};
+
+
 var md5Bin = readMd5File(); //'93f764cb8dd72a2b43ad5927be7e8a1f';
 
 
@@ -212,19 +228,6 @@ var errorResult = function(res, message) {
 	console.log('Error: %s - %s', message.returnCode, message.message );
 };
 
-var readMd5File = function() {
-	var fileName = arduinobinLocalPath+"arduinobin.md5";
-	console.log("MD5 file: " + fileName);
-	var _md5 = "";
-	fs.readFile(arduinobinLocalPath+"arduinobin.md5", function(err, data){
-		if (err) {
-			console.log(err);
-		}
-		_md5 = data;
-	})
-  console.log(_md5);
-	return _md5
-};
 
 var startListen = function() {
 	app.listen(systemListenPort);
