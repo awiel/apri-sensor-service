@@ -91,7 +91,7 @@ app.get('/arduino-bin/', function(req, res) {
 
 	console.log(md5Sensor);
 	if ( md5Sensor == undefined) {
-    var status = 501; // not modified
+    var status = 401; // not modified
     res.status(status);
   //  res.send(status);
   //  res.send('304 not modified');
