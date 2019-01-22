@@ -105,7 +105,7 @@ app.get('/'+_systemCode+'/apri-sensor-service/v1/getCalModelData', function(req,
 	console.log(params.foi);
 
 
-	if (params.foi == 'SCNM5CCF7F2F65F1') {  //
+	if (params.foi == 'SCNM5CCF7F2F65F1') {  // test sensor (los) SCNM5CCF7F2F65F1
 		params.sensorCtrlDate = "2019-01-16T23:22:00Z";
 		// send date only when equal to request. No refresh of data when equal.
 		if (params.sensorCtrlDate == params.ctrlDate) {  // do nothing
@@ -118,13 +118,13 @@ app.get('/'+_systemCode+'/apri-sensor-service/v1/getCalModelData', function(req,
 			controlData = setDefaultControlData(controlData,params);
 
 			// addition or overrule defaults
-			controlData.res.otaInd 										= true;
+//			controlData.res.otaInd 										= true;
 //			controlData.bin.prot											= 'https';
 //			controlData.bin.host											= 'aprisensor-bin.openiod.org';
 //			controlData.bin.path											= '/arduino-bin/test/';
-			controlData.bin.prot											= 'http';
-			controlData.bin.host											= '37.97.135.211:5003';  //web
-			controlData.bin.path											= '/arduino-bin/test/';
+			//controlData.bin.prot											= 'http';
+			//controlData.bin.host											= '37.97.135.211:5003';  //web
+			//controlData.bin.path											= '/arduino-bin/test/';
 			controlData.res.rawInd										= false;    // PM raw values (6x)
 			controlData.res.pmInd 										= true;     // PM values from sensor
 			controlData.res.pmSecInd									= false;  // secundairy PM values
