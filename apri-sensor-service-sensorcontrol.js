@@ -185,7 +185,8 @@ app.get('/'+_systemCode+'/apri-sensor-service/v1/getCalModelData', function(req,
 
 	if (controlData.date == undefined) {   // there is no controlData config for this sensor, send minimum functionality.
 		controlData = {};
-		controlData.date 													= params.ctrlDate;
+		params.sensorCtrlDate = "2019-01-01T00:00:00Z";  // default for unkonow sensorID's
+		controlData.date 													= params.sensorCtrlDate;
 		controlData.res 													= {};
 		controlData.res.pmInd 										= true;     // only PM values from sensor
 	}
