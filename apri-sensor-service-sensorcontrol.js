@@ -102,7 +102,7 @@ app.get('/'+_systemCode+'/apri-sensor-service/v1/getCalModelData', function(req,
 	if (_query.date != undefined) {
 		params.ctrlDate = _query.date;
 		if (_query.date.substr(19,1)==' ') {   //1899-12-31T00:00:00 00:00  -> 1899-12-31T00:00:00+00:00
-			params.ctrlDate = _query.date.substr(0,18) + '+' + _query.date.substr(20);
+			params.ctrlDate = _query.date.substr(0,19) + '+' + _query.date.substr(20);
 		} else params.ctrlDate = _query.date;
 	}
 	console.log(params.foi);
