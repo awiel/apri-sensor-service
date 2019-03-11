@@ -155,15 +155,22 @@ app.get('/apri-sensor-service/v1/getSelectionData', function(req, res) {
 	params.dateFrom = '';
 	if (_query.dateFrom != undefined) {
 		if (_query.dateFrom.substr(19,1)==' ') {   //1899-12-31T00:00:00 00:00  -> 1899-12-31T00:00:00+00:00
-			params.dateFrom = _query.dateFrom.substr(0,19) + '+' + _query.dateFrom.substr(20);
-		} else params.dateFrom = _query.dateFrom;
+			params.dateFrom 			= _query.dateFrom.substr(0,19) + '+' + _query.dateFrom.substr(20);
+		} else params.dateFrom	= _query.dateFrom;
+	} else {
+		var dateFromDate 				= new Date(new Date().getTime()-(24*60*60*1000));
+		params.dateFrom					= dateFromDate.toISOString();
 	}
 	params.dateTo = '';
 	if (_query.dateTo != undefined) {
 		if (_query.dateTo.substr(19,1)==' ') {   //1899-12-31T00:00:00 00:00  -> 1899-12-31T00:00:00+00:00
 			params.dateTo = _query.dateTo.substr(0,19) + '+' + _query.dateTo.substr(20);
 		} else params.dateTo = _query.dateTo;
+	} else {
+		var dateToDate 					= new Date(new Date().getTime());
+		params.dateTo						= dateToDate.toISOString();
 	}
+
 	params.selection = selection;
 
 	if (selection.foiId) {
