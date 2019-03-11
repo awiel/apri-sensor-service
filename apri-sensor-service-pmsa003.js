@@ -109,7 +109,7 @@ app.get('/'+sensorServiceName+'/v1/m', function(req, res) {
 	} else {
 		dateObserved = dateReceived;
 	}
-	var calType = 'N';
+	var calType = 'N';  // No calibration
 	if (req.query.calType) {
 		if (req.query.calType=='P') { // P = calibrate on PM base
 			calType = 'P';
