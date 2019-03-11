@@ -178,7 +178,9 @@ app.get('/apri-sensor-service/v1/getSelectionData', function(req, res) {
 		res.writeHead(200, {
 	    'Content-Type': 'text/plain',
 	    'Transfer-Encoding': 'chunked'
-	  })
+	  });
+		// csv header
+		res.write('foi;dateObserved;sensorType;sensorValue\n');
 		retrieveData(params, res);
 	} else {
 		res.send('[])'); // nothing asked, empty array returned.
