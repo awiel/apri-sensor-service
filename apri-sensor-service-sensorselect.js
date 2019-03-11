@@ -273,7 +273,9 @@ var callAxios = function(options,res) {
 			var csvrec = _options.foiIdAlias+';'+rec.dateObserved+';';
 			for (var j=0;j<_options.ops.length;j++) {
 				var op = _options.ops[j];
-				res.write(csvrec+op.opIdAlias+';'+rec[op.opId]+'\n');
+				if (rec[op.opId]!=undefined) {
+					res.write(csvrec+op.opIdAlias+';'+rec[op.opId]+'\n');
+				}
 			}
 			//_res.write(JSON.stringify(response.data[i]));
 //			_res.write('"'+rec.pm25+'";'+'"'+rec.pm25+'";'+));
