@@ -116,6 +116,10 @@ app.get('/apri-sensor-service/v1/getSelectionData', function(req, res) {
 		return;
 	}
 */
+	params.opPerRow = true;  // defaults to true, for every observable property one output record. when false one record for all observable properties
+	if (_query.opPerRow == 'false') {
+		params.opPerRow = false;
+	}
 	params.key = 'sensorId';  // defaults to sensorId as key attribute
 	if (_query.key != undefined) {
 		params.key = _query.key;
@@ -184,7 +188,16 @@ app.get('/apri-sensor-service/v1/getSelectionData', function(req, res) {
 	    'Transfer-Encoding': 'chunked'
 	  });
 		// csv header
-		res.write(params.key+';dateObserved;sensorType;sensorValue\n');
+		if (params.opPerRow == 'false') {
+			res.write(params.key+';dateObserved');
+			for (var j=0;j<_options.ops.length;j++) {
+				var opRow = _options.ops[j];
+				res.write(';'+opRow.opIdAlias+';'+opRow.opIdAlias+'Value');
+			}
+			res.write('\n');
+		} else {
+			res.write(params.key+';dateObserved;sensorType;sensorValue\n');
+		}
 		retrieveData(params, res);
 	} else {
 		res.send('[])'); // nothing asked, empty array returned.
@@ -233,6 +246,7 @@ var retrieveData 	= function(params, res) {
 					options.fiwareServicePath = thisParams.fiwareServicePath;
 					options.host 						= _serviceTarget.host;
 					options.prefixPath			= _serviceTarget.prefixPath;
+					options.opPerRow				= thisParams.opPerRow;
 
 					callAxios(options,res)
 				}
@@ -276,11 +290,21 @@ var callAxios = function(options,res) {
 		for (var i=0;i<response.data.length;i++) {
 			rec = response.data[i];
 			var csvrec = _options.foiIdAlias+';'+rec.dateObserved+';';
-			for (var j=0;j<_options.ops.length;j++) {
-				var op = _options.ops[j];
-				if (rec[op.opId]!=undefined) {
-					res.write(csvrec+op.opIdAlias+';'+rec[op.opId]+'\n');
+			if (_options.opPerRow) {
+				for (var j=0;j<_options.ops.length;j++) {
+					var op = _options.ops[j];
+					if (rec[op.opId]!=undefined) {
+						res.write(csvrec+op.opIdAlias+';'+rec[op.opId]+'\n');
+					}
 				}
+			} else {
+				for (var j=0;j<_options.ops.length;j++) {
+					var opRow = _options.ops[j];
+					if (rec[opRow.opId]!=undefined) {
+						csvrec=csvrec+';'+opRow.opIdAlias+';'+rec[opRow.opId];
+					}
+				}
+				res.write(csvrec+'\n');
 			}
 			//_res.write(JSON.stringify(response.data[i]));
 //			_res.write('"'+rec.pm25+'";'+'"'+rec.pm25+'";'+));
