@@ -116,9 +116,9 @@ app.get('/apri-sensor-service/v1/getSelectionData', function(req, res) {
 		return;
 	}
 */
-	params.opPerRow = true;  // defaults to true, for every observable property one output record. when false one record for all observable properties
+	params.opPerRow = 'true';  // defaults to true, for every observable property one output record. when false one record for all observable properties
 	if (_query.opPerRow == 'false') {
-		params.opPerRow = false;
+		params.opPerRow = 'false';
 	}
 	params.key = 'sensorId';  // defaults to sensorId as key attribute
 	if (_query.key != undefined) {
