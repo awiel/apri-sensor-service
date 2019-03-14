@@ -1,4 +1,4 @@
-logDir/*
+/*
 ** Module: apri-sensor-service-sensorselect.js
 **   ApriSensorService server
 **
@@ -116,6 +116,10 @@ app.get('/apri-sensor-service/v1/getSelectionData', function(req, res) {
 		return;
 	}
 */
+	params.key = 'sensorId';  // defaults to sensorId as key attribute
+	if (_query.key != undefined) {
+		params.key = _query.key;
+	}
 	params.foiOps = '';
 	if (_query.foiOps != undefined) {
 		params.foiOps = _query.foiOps;
@@ -180,7 +184,7 @@ app.get('/apri-sensor-service/v1/getSelectionData', function(req, res) {
 	    'Transfer-Encoding': 'chunked'
 	  });
 		// csv header
-		res.write('sensorId;dateObserved;sensorType;sensorValue\n');
+		res.write(params.key+';dateObserved;sensorType;sensorValue\n');
 		retrieveData(params, res);
 	} else {
 		res.send('[])'); // nothing asked, empty array returned.
@@ -215,19 +219,20 @@ var retrieveData 	= function(params, res) {
 					}
 					//console.dir(thisParams.selection);
 					var options = {};
-					options.foiId					= thisParams.selection.foiId;
-					options.foiIdAlias		= thisParams.selection.foiIdAlias;
-					options.ops						= thisParams.selection.ops;
-					options.urlParamsAttrs = urlParamsAttrs;
-					options.limit					= 1000;
-					options.dateFrom 			= thisParams.dateFrom;
-					options.dateFromDate 	= new Date(options.dateFrom);
-					options.dateTo 				= thisParams.dateTo;
-					options.dateToDate 		= new Date(options.dateTo);
-					options.fiwareService = thisParams.fiwareService;
+					options.key							= thisParams.key;
+					options.foiId						= thisParams.selection.foiId;
+					options.foiIdAlias			= thisParams.selection.foiIdAlias;
+					options.ops							= thisParams.selection.ops;
+					options.urlParamsAttrs 	= urlParamsAttrs;
+					options.limit						= 1000;
+					options.dateFrom 				= thisParams.dateFrom;
+					options.dateFromDate		= new Date(options.dateFrom);
+					options.dateTo 					= thisParams.dateTo;
+					options.dateToDate			= new Date(options.dateTo);
+					options.fiwareService 	= thisParams.fiwareService;
 					options.fiwareServicePath = thisParams.fiwareServicePath;
-					options.host 					= _serviceTarget.host;
-					options.prefixPath		= _serviceTarget.prefixPath;
+					options.host 						= _serviceTarget.host;
+					options.prefixPath			= _serviceTarget.prefixPath;
 
 					callAxios(options,res)
 				}
@@ -254,8 +259,8 @@ var retrieveData 	= function(params, res) {
 var callAxios = function(options,res) {
 	var _options 	= options;
 	var _res			= res;
-	var urlParams					= _options.urlParamsAttrs+",sensorId,dateObserved";
-	urlParams							= urlParams+"&limit="+_options.limit+"&q=sensorId=='"+_options.foiId+"'";
+	var urlParams					= _options.urlParamsAttrs+","+options.key+",dateObserved";
+	urlParams							= urlParams+"&limit="+_options.limit+"&q="+options.key+"=='"+_options.foiId+"'";
 	urlParams							= urlParams + ";dateObserved=='"+_options.dateFrom+"'..'"+_options.dateTo+"'";
 
 	var url = 'https://'+ _options.host + _options.prefixPath + urlParams;
