@@ -290,7 +290,7 @@ var callAxios = function(options,res) {
 		for (var i=0;i<response.data.length;i++) {
 			rec = response.data[i];
 			var csvrec = _options.foiIdAlias+';'+rec.dateObserved+';';
-			if (_options.opPerRow) {
+			if (_options.opPerRow=='true') {
 				for (var j=0;j<_options.ops.length;j++) {
 					var op = _options.ops[j];
 					if (rec[op.opId]!=undefined) {
