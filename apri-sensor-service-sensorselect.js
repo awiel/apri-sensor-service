@@ -192,7 +192,7 @@ app.get('/apri-sensor-service/v1/getSelectionData', function(req, res) {
 			res.write(params.key+';dateObserved');
 			for (var j=0;j<params.selection.ops.length;j++) {
 				var opRow = params.selection.ops[j];
-				res.write(';'+opRow.opIdAlias+';'+opRow.opIdAlias+'Value');
+				res.write(';'+opRow.opIdAlias);
 			}
 			res.write('\n');
 		} else {
@@ -301,7 +301,7 @@ var callAxios = function(options,res) {
 				for (var j=0;j<_options.ops.length;j++) {
 					var opRow = _options.ops[j];
 					if (rec[opRow.opId]!=undefined) {
-						csvrec=csvrec+';'+opRow.opIdAlias+';'+rec[opRow.opId];
+						csvrec=csvrec+';'+rec[opRow.opId];
 					}
 				}
 				res.write(csvrec+'\n');
