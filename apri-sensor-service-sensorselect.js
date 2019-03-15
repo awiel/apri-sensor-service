@@ -289,12 +289,12 @@ var callAxios = function(options,res) {
 		var rec = '';
 		for (var i=0;i<response.data.length;i++) {
 			rec = response.data[i];
-			var csvrec = _options.foiIdAlias+';'+rec.dateObserved+';';
+			var csvrec = _options.foiIdAlias+';'+rec.dateObserved;
 			if (_options.opPerRow=='true') {
 				for (var j=0;j<_options.ops.length;j++) {
 					var op = _options.ops[j];
 					if (rec[op.opId]!=undefined) {
-						res.write(csvrec+op.opIdAlias+';'+rec[op.opId]+'\n');
+						res.write(csvrec+';'+op.opIdAlias+';'+rec[op.opId]+'\n');
 					}
 				}
 			} else {
