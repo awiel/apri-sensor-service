@@ -293,25 +293,33 @@ var callAxios = function(options,res) {
 			if (_options.opPerRow=='true') {
 				for (var j=0;j<_options.ops.length;j++) {
 					var op = _options.ops[j];
-					if (rec[op.opId]!=undefined & rec[op.opId]!= 'NA') {
-						var _value = rec[op.opId];
-						if (_value.value) {
-							_value = _value.value;
+					//console.log('y'+rec[op.opId]+'x');
+					//console.dir(rec[op.opId]);
+					if (rec[op.opId]!=undefined) {
+						if(rec[op.opId]!= 'NA' & rec[op.opId].value!= 'NA') {
+							var _value = rec[op.opId];
+							if (_value.value) {
+								_value = _value.value;
+							}
+							res.write(csvrec+';'+op.opIdAlias+';'+_value+'\n');
 						}
-						res.write(csvrec+';'+op.opIdAlias+';'+_value+'\n');
 					}
 				}
 			} else {
 				var valuesInd = false;
 				for (var j=0;j<_options.ops.length;j++) {
 					var opRow = _options.ops[j];
-					if (rec[opRow.opId]!=undefined & rec[opRow.opId]!= 'NA' ) {
-						valuesInd = true;
-						var _value = rec[opRow.opId];
-						if (_value.value) {
-							_value = _value.value;
+					if (rec[opRow.opId]!=undefined ) {
+						if(rec[opRow.opId]!= 'NA' & rec[opRow.opId].value!= 'NA' ) {
+							valuesInd = true;
+							var _value = rec[opRow.opId];
+							if (_value.value) {
+								_value = _value.value;
+							}
+							csvrec=csvrec+';'+_value;
+						} else {
+							csvrec=csvrec+';'+'NA';
 						}
-						csvrec=csvrec+';'+_value;
 					} else {
 						csvrec=csvrec+';'+'NA';
 					}
