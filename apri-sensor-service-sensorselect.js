@@ -293,26 +293,32 @@ var callAxios = function(options,res) {
 			if (_options.opPerRow=='true') {
 				for (var j=0;j<_options.ops.length;j++) {
 					var op = _options.ops[j];
-					var _value = rec[op.opId];
-					if (_value.value) {
-						_value = _value.value;
-					}
 					if (rec[op.opId]!=undefined) {
+						var _value = rec[op.opId];
+						if (_value.value) {
+							_value = _value.value;
+						}
 						res.write(csvrec+';'+op.opIdAlias+';'+_value+'\n');
 					}
 				}
 			} else {
+				var valuesInd = false;
 				for (var j=0;j<_options.ops.length;j++) {
 					var opRow = _options.ops[j];
 					if (rec[opRow.opId]!=undefined) {
+						valuesInd = true;
 						var _value = rec[opRow.opId];
 						if (_value.value) {
 							_value = _value.value;
 						}
 						csvrec=csvrec+';'+_value;
+					} else {
+						csvrec=csvrec+';'+'NA';
 					}
 				}
-				res.write(csvrec+'\n');
+				if (valuesInd) {
+					res.write(csvrec+'\n');					
+				}
 			}
 			//_res.write(JSON.stringify(response.data[i]));
 //			_res.write('"'+rec.pm25+'";'+'"'+rec.pm25+'";'+));
