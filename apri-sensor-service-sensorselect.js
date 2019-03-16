@@ -293,7 +293,7 @@ var callAxios = function(options,res) {
 			if (_options.opPerRow=='true') {
 				for (var j=0;j<_options.ops.length;j++) {
 					var op = _options.ops[j];
-					if (rec[op.opId]!=undefined) {
+					if (rec[op.opId]!=undefined & rec[op.opId]!= 'NA') {
 						var _value = rec[op.opId];
 						if (_value.value) {
 							_value = _value.value;
@@ -305,7 +305,7 @@ var callAxios = function(options,res) {
 				var valuesInd = false;
 				for (var j=0;j<_options.ops.length;j++) {
 					var opRow = _options.ops[j];
-					if (rec[opRow.opId]!=undefined) {
+					if (rec[opRow.opId]!=undefined & rec[opRow.opId]!= 'NA' ) {
 						valuesInd = true;
 						var _value = rec[opRow.opId];
 						if (_value.value) {
@@ -317,7 +317,7 @@ var callAxios = function(options,res) {
 					}
 				}
 				if (valuesInd) {
-					res.write(csvrec+'\n');					
+					res.write(csvrec+'\n');
 				}
 			}
 			//_res.write(JSON.stringify(response.data[i]));
