@@ -100,14 +100,18 @@ app.get('/'+sensorServiceName+'/v1/m', function(req, res) {
 	var dateReceived = new Date();
 	var dateObserved;
 	var offset;
-	if (req.query.timeOffsetMillis) {
-		offset = Number.parseInt(req.query.timeOffsetMillis);
-		if (Number.isNaN(offset)) {
-			offset = 0;
-		}
-		dateObserved = new Date(dateReceived.getTime()-offset);
+	if (req.query.dateObserved) {
+		dateObserved = new Date(req.query.dateObserved);
 	} else {
-		dateObserved = dateReceived;
+		if (req.query.timeOffsetMillis) {
+			offset = Number.parseInt(req.query.timeOffsetMillis);
+			if (Number.isNaN(offset)) {
+				offset = 0;
+			}
+			dateObserved = new Date(dateReceived.getTime()-offset);
+		}	else {
+			dateObserved = dateReceived;
+		}
 	}
 	var calType = 'N';
 	if (req.query.calType) {
