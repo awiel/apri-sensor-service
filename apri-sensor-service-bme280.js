@@ -123,7 +123,7 @@ app.get('/'+sensorServiceName+'/v1/m', function(req, res) {
 		}
 	}
 	var fiwareObject = {};
-	fiwareObject.id=_foi+"_"+calType+"_"+dateReceived.toISOString();
+	fiwareObject.id=_foi+"_"+calType+"_"+dateObserved.toISOString();
 	fiwareObject.sensorId=_foi;
 	fiwareObject.type="AirQualityObserved";
 	fiwareObject.calType=calType;
@@ -245,7 +245,9 @@ var sendFiwareData = function(data, target, res) {
 	var req = https.request(options, (res) => {
 		log('statusCode:' + res.statusCode);
 		//console.log('headers:', res.headers);
-		_res.send('OK');
+//		_res.send('OK');
+		_res.send('{"statusCode":"'+res.statusCode+'"}');
+
 
 		res.on('data', (d) => {
 			process.stdout.write(d);
