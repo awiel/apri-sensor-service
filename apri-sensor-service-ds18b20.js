@@ -273,7 +273,7 @@ var sendFiwareData = function(data, target, res) {
 	var axiosParams = {
 			url:url,
 	    method: 'post',
-	    data: bodyFormData,
+	    data: _data,
 	    config: { headers: headers}
 	}
 	console.log(axiosParams);
