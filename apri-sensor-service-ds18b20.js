@@ -270,7 +270,7 @@ var sendFiwareData = function(data, target, res) {
 		'Fiware-ServicePath': 	_target.FiwareServicePath
 	}
 
-	var axiosParams {
+	var axiosParams = {
 			url:url,
 	    method: 'post',
 	    data: bodyFormData,
