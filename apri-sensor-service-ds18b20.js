@@ -265,7 +265,7 @@ var sendFiwareData = function(data, target, res) {
 
 	var url = 'https://'+_target.host+':'+_target.port+'/'+_target.prefixPath+_target.path
 	var headers = {
-		'Content-Type': 				'application/json',
+		//'Content-Type': 				'application/json',
 		//'Content-Length': 			_data.length,
 		'Fiware-Service': 			_target.FiwareService,
 		'Fiware-ServicePath': 	_target.FiwareServicePath
@@ -278,7 +278,7 @@ var sendFiwareData = function(data, target, res) {
 	    config: { headers: headers}
 	}
 	console.log(axiosParams);
-	axios(axiosParams)
+	axios.post(url, _data, { 'headers': headers})
 	.then(function(response) {
 		//const jsonText = JSON.stringify(response);
 		//const objResponse = JSON.parse(jsonText);
