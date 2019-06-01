@@ -288,16 +288,40 @@ var sendFiwareData = function(data, target, res) {
 		_res.send(response.response);
 	 })
 	 .catch(function(error) {
-		logDir(error.response);
-		logDir(error.response.status)
-		logDir(error.response.statusTekst)
-		logDir(error.response.data)
+		 result = {};
+		 if (error.response) {
+			// logDir(error.response);
+			logDir(error.response.status)
+			logDir(error.response.statusTekst)
+			logDir(error.response.data)
+			result.status = error.response.status
+			result.statusDesc = error.response.statusDesc
+			result.statusData = error.response.data
+      // The request was made and the server responded with a status code
+      // that falls out of the range of 2xx
+//      console.log(error.response.data);
+//      console.log(error.response.status);
+//      console.log(error.response.headers);
+    } else if (error.request) {
+			result.request = error.request;
+      // The request was made but no response was received
+      // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+      // http.ClientRequest in node.js
+      console.log('Error request: '+ error.request);
+    } else {
+      // Something happened in setting up the request that triggered an Error
+      console.log('Error message', error.message);
+			result.message = error.message;
+    }
+//    console.log(error.config);
+
+
 		_res.contentType('application/json');
-		_res.send({
-			 'serviceStatus': error.response.status,
-			 'serviceStatusTekst': error.response.statusTekst,
-			 'serviceStatusData': error.response.data
-	 	});
+		_res.send(result);
+//			 'serviceStatus': error.response.status,
+//			 'serviceStatusTekst': error.response.statusTekst,
+//			 'serviceStatusData': error.response.data
+//	 	});
 		 //_res.send(JSON.stringfy(error));
 	 });
 };
