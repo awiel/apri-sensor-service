@@ -27,7 +27,8 @@ var self = this;
 // **********************************************************************************
 
 // add module specific requires
-var https 						= require('https');
+//var https 						= require('https');
+var axios 							= require('axios');
 var express 						= require('express');
 //var cookieParser 			= require('cookie-parser');
 //var session 					= require('express-session');
