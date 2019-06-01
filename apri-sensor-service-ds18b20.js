@@ -285,6 +285,7 @@ var sendFiwareData = function(data, target, res) {
 		//log('Response recieved');
 		logDir(response.response)
 		//_res.send('{"statusCode":"'+res.statusCode+'",""}');
+		_res.contentType('application/json')
 		_res.send(response.response);
 	 })
 	 .catch(function(error) {
