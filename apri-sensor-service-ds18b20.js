@@ -283,10 +283,10 @@ var sendFiwareData = function(data, target, res) {
 		//const jsonText = JSON.stringify(response);
 		//const objResponse = JSON.parse(jsonText);
 		//log('Response recieved');
-		logDir(response.response)
+		logDir(response)
 		//_res.send('{"statusCode":"'+res.statusCode+'",""}');
 		_res.contentType('application/json')
-		_res.send(response.response);
+		_res.send(response);
 	 })
 	 .catch(function(error) {
 		 result = {};
