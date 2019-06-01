@@ -289,7 +289,7 @@ var sendFiwareData = function(data, target, res) {
 		_res.send(response);
 	 })
 	 .catch(function(error) {
-		 result = {};
+		 var result = {};
 		 if (error.response) {
 			// logDir(error.response);
 			logDir(error.response.status)
