@@ -288,7 +288,7 @@ var sendFiwareData = function(data, target, res) {
 		_res.send(response.response);
 	 })
 	 .catch(function(error) {
-		 log(error);
+		 log(error.response);
 		 //_res.contentType('application/json');
 		 _res.send('error');
 		 //_res.send(JSON.stringfy(error));
