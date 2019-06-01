@@ -217,7 +217,7 @@ var sendFiwareData = function(data, target, res) {
 //	var json_obj = JSON.stringify(data);
 //	log(_url);
 	//log(json_obj)
-
+/*
 	var options = {
 		hostname: _target.host,
 		port: 		_target.port,
@@ -233,14 +233,19 @@ var sendFiwareData = function(data, target, res) {
 
   logdir(options);
 
+	var result = {}
 	//console.log(options);
 	//console.log(_data);
 	var req = https.request(options, (res) => {
 		log('statusCode:' + res.statusCode);
 		//console.log('headers:', res.headers);
-		_res.send('{"statusCode":"'+res.statusCode+'"}');
+		var result = {
+			statusCode: res.statusCode
+		}
+		_res.send('{"statusCode":"'+res.statusCode+'",""}');
 
 		res.on('data', (d) => {
+
 			process.stdout.write(d);
 			log(d);
 		});
@@ -252,6 +257,33 @@ var sendFiwareData = function(data, target, res) {
 
 	req.write(_data);
 	req.end();
+
+*/
+
+
+	var url = 'https://'+_target.host+':'_target.port+'/'+_target.prefixPath+_target.path
+	var headers = {
+		'Content-Type': 				'application/json',
+		'Content-Length': 			_data.length,
+		'Fiware-Service': 			_target.FiwareService,
+		'Fiware-ServicePath': 	_target.FiwareServicePath
+	}
+
+	console.log(url);
+
+	axios.get(url,{ headers: headers
+	})
+	.then(response => {
+		//log('Response recieved');
+		logDir(response)
+		//_res.send('{"statusCode":"'+res.statusCode+'",""}');
+		_res.send(response);
+	 })
+	 .catch(error => {
+		 log('Error config code: '+ error.code);
+		 _res.send(error);
+	 });
+
 
 };
 
