@@ -207,7 +207,8 @@ app.get('/*', function(req, res) {
 });
 
 var sendFiwareData = function(data, target, res) {
-	var _data = JSON.stringify(data);
+	//var _data = JSON.stringify(data);
+	var _data = data;
 	var _res 	= res;
 	var _target = target;
 //	var _url 	= _target.protocol +
@@ -279,12 +280,12 @@ var sendFiwareData = function(data, target, res) {
 	console.log(axiosParams);
 	axios(axiosParams)
 	.then(function(response) {
-		const jsonText = JSON.stringify(response);
-		const objResponse = JSON.parse(jsonText);
+		//const jsonText = JSON.stringify(response);
+		//const objResponse = JSON.parse(jsonText);
 		//log('Response recieved');
-		logDir(objResponse)
+		logDir(response)
 		//_res.send('{"statusCode":"'+res.statusCode+'",""}');
-		_res.send(objResponse);
+		_res.send(response);
 	 })
 	 .catch(function(error) {
 		 logDir('Error: '+ error);
