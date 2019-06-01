@@ -266,7 +266,7 @@ var sendFiwareData = function(data, target, res) {
 	var url = 'https://'+_target.host+':'+_target.port+'/'+_target.prefixPath+_target.path
 	var headers = {
 		'Content-Type': 				'application/json',
-		'Content-Length': 			_data.length,
+		//'Content-Length': 			_data.length,
 		'Fiware-Service': 			_target.FiwareService,
 		'Fiware-ServicePath': 	_target.FiwareServicePath
 	}
