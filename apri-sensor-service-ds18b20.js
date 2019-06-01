@@ -270,10 +270,14 @@ var sendFiwareData = function(data, target, res) {
 		'Fiware-ServicePath': 	_target.FiwareServicePath
 	}
 
-	console.log(url);
-
-	axios.get(url,{ headers: headers
-	})
+	var axiosParams {
+			url:url,
+	    method: 'post',
+	    data: bodyFormData,
+	    config: { headers: headers}
+	}
+	console.log(axiosParams);
+	axios(axiosParams)
 	.then(response => {
 		//log('Response recieved');
 		logDir(response)
