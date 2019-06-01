@@ -288,9 +288,16 @@ var sendFiwareData = function(data, target, res) {
 		_res.send(response.response);
 	 })
 	 .catch(function(error) {
-		 logDir(error.response);
-		 //_res.contentType('application/json');
-		 _res.send('error');
+		logDir(error.response);
+		logDir(error.response.status)
+		logDir(error.response.statusTekst)
+		logDir(error.response.data)
+		_res.contentType('application/json');
+		_res.send({
+			 'serviceStatus': error.response.status,
+			 'serviceStatusTekst': error.response.statusTekst,
+			 'serviceStatusData': error.response.data
+	 	});
 		 //_res.send(JSON.stringfy(error));
 	 });
 };
