@@ -278,18 +278,18 @@ var sendFiwareData = function(data, target, res) {
 	}
 	console.log(axiosParams);
 	axios(axiosParams)
-	.then(response => {
+	.then(function(response) {
+		const jsonText = JSON.stringify(response);
+		const objResponse = JSON.parse(jsonText);
 		//log('Response recieved');
-		logDir(response)
+		logDir(objResponse)
 		//_res.send('{"statusCode":"'+res.statusCode+'",""}');
-		_res.send(response);
+		_res.send(objResponse);
 	 })
-	 .catch(error => {
-		 log('Error config code: '+ error.code);
+	 .catch(function(error) {
+		 logDir('Error: '+ error);
 		 _res.send(error);
 	 });
-
-
 };
 
 
