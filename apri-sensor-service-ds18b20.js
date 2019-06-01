@@ -288,9 +288,10 @@ var sendFiwareData = function(data, target, res) {
 		_res.send(response);
 	 })
 	 .catch(function(error) {
-		 logDir('Error: '+ error);
+		 logDir(error);
 		 _res.contentType('application/json');
 		 _res.send(error);
+		 //_res.send(JSON.stringfy(error));
 	 });
 };
 
