@@ -45,6 +45,7 @@ var _systemFolder					= apriSensorServiceConfig.getSystemFolder();
 var _systemListenPort			= apriSensorServiceConfig.getSystemListenPort();
 var _systemParameter			= apriSensorServiceConfig.getConfigParameter();
 var _serviceTarget				= apriSensorServiceConfig.getConfigServiceTarget();
+var _serviceTarget2				= apriSensorServiceConfig.getConfigServiceTarget2();
 
 
 var app = express();
@@ -140,6 +141,11 @@ app.get('/apri-sensor-service/v1/getSelectionData', function(req, res) {
 		params.fiwareServicePath = _query.fiwareServicePath;
 	}
 
+	params.format = '';
+	if (_query.format != undefined) {
+		params.format = _query.format;
+	}
+
 	var foiOps 							= params.foiOps;
 	var tmpFoiOpsMembers 		= foiOps.split(',');
 	var tmpFoiIds 					= tmpFoiOpsMembers[0].split(':');
@@ -179,24 +185,37 @@ app.get('/apri-sensor-service/v1/getSelectionData', function(req, res) {
 		params.dateTo						= dateToDate.toISOString();
 	}
 
+	params.aggregate = 'false';
+	params.dateOrPeriod = 'dateObserved';
+	if (_query.aggregate != undefined && _query.aggregate=='true') {
+		params.aggregate = _query.aggregate;
+		params.dateOrPeriod = 'period';
+		console.log('Aggregate: '+params.aggregate);
+	}
+
 	params.selection = selection;
 
 	if (selection.foiId) {
-		//start stream for response
-		res.writeHead(200, {
-	    'Content-Type': 'text/plain',
-	    'Transfer-Encoding': 'chunked'
-	  });
-		// csv header
-		if (params.opPerRow == 'false') {
-			res.write(params.key+';dateObserved');
-			for (var j=0;j<params.selection.ops.length;j++) {
-				var opRow = params.selection.ops[j];
-				res.write(';'+opRow.opIdAlias);
+		if (params.format=='' || params.format == 'csv') {
+			//start stream for response
+			res.writeHead(200, {
+		    'Content-Type': 'text/plain',
+		    'Transfer-Encoding': 'chunked'
+		  });
+
+			// csv header
+			if (params.opPerRow == 'false') {
+
+				var dateOrPeriod =
+				res.write(params.key+';'+params.dateOrPeriod+';count');
+				for (var j=0;j<params.selection.ops.length;j++) {
+					var opRow = params.selection.ops[j];
+					res.write(';'+opRow.opIdAlias);
+				}
+				res.write('\n');
+			} else {
+				res.write(params.key+';'+params.dateOrPeriod+';count;sensorType;sensorValue\n');
 			}
-			res.write('\n');
-		} else {
-			res.write(params.key+';dateObserved;sensorType;sensorValue\n');
 		}
 		retrieveData(params, res);
 	} else {
@@ -237,17 +256,25 @@ var retrieveData 	= function(params, res) {
 					options.foiIdAlias			= thisParams.selection.foiIdAlias;
 					options.ops							= thisParams.selection.ops;
 					options.urlParamsAttrs 	= urlParamsAttrs;
+					options.format 					= thisParams.format;
 					options.limit						= 1000;
 					options.dateFrom 				= thisParams.dateFrom;
 					options.dateFromDate		= new Date(options.dateFrom);
 					options.dateTo 					= thisParams.dateTo;
 					options.dateToDate			= new Date(options.dateTo);
+					options.aggregate				= thisParams.aggregate;
 					options.fiwareService 	= thisParams.fiwareService;
 					options.fiwareServicePath = thisParams.fiwareServicePath;
+					options.protocol				= _serviceTarget.protocol;
 					options.host 						= _serviceTarget.host;
+					options.port						= _serviceTarget.port;
 					options.prefixPath			= _serviceTarget.prefixPath;
+					options.protocol2				= _serviceTarget2.protocol;
+					options.host2 					= _serviceTarget2.host;
+					options.port2						= _serviceTarget2.port;
+					options.prefixPath2			= _serviceTarget2.prefixPath;
 					options.opPerRow				= thisParams.opPerRow;
-
+					res.axiosResults = [];
 					callAxios(options,res)
 				}
 			)
@@ -277,69 +304,93 @@ var callAxios = function(options,res) {
 	urlParams							= urlParams+"&limit="+_options.limit+"&q="+options.key+"=='"+_options.foiId+"'";
 	urlParams							= urlParams + ";dateObserved=='"+_options.dateFrom+"'..'"+_options.dateTo+"'";
 
-	var url = 'https://'+ _options.host + _options.prefixPath + urlParams;
+	var url = '';
+	if (options.aggregate=='true') {
+		url = _options.protocol2+'://'+ _options.host2 +':'+_options.port2+ _options.prefixPath2 + urlParams+ '&aggregate=true';
+	} else {
+		url = _options.protocol+'://'+ _options.host +':'+_options.port+ _options.prefixPath + urlParams;
+	}
 	log(url);
 	var headers = {
 		 "Fiware-Service": _options.fiwareService?_options.fiwareService:_serviceTarget.FiwareService
 			, "Fiware-ServicePath": _options.fiwareServicePath?_options.fiwareServicePath:_serviceTarget.FiwareServicePath
 	};
+//	console.dir(headers);
+
 	axios.get(url,{ headers: headers })
 	.then(response => {
 		log("Records: "+response.data.length);
-		var rec = '';
-		for (var i=0;i<response.data.length;i++) {
-			rec = response.data[i];
-			var csvrec = _options.foiIdAlias+';'+rec.dateObserved;
-			if (_options.opPerRow=='true') {
-				for (var j=0;j<_options.ops.length;j++) {
-					var op = _options.ops[j];
-					//console.log('y'+rec[op.opId]+'x');
-					//console.dir(rec[op.opId]);
-					if (rec[op.opId]!=undefined) {
-						if(rec[op.opId]!= 'NA' & rec[op.opId].value!= 'NA') {
-							var _value = rec[op.opId];
-							if (_value.value) {
-								_value = _value.value;
+		if (options.format == 'json') {
+		} else { // csv output
+			var rec = '';
+			for (var i=0;i<response.data.length;i++) {
+				rec = response.data[i];
+				console.dir(rec);
+				var _dateOrPeriod = rec.dateObserved?rec.dateObserved:rec._id.period; // period in case of aggregation;
+				var csvrec = '"'+_options.foiIdAlias+'";"'+_dateOrPeriod+'";'+rec.count;
+				if (_options.opPerRow=='true') {
+					for (var j=0;j<_options.ops.length;j++) {
+						var op = _options.ops[j];
+						//console.log('y'+rec[op.opId]+'x');
+						//console.dir(rec[op.opId]);
+						if (rec[op.opId]!=undefined) {
+							if(rec[op.opId]!= 'NA' & rec[op.opId].value!= 'NA') {
+								var _value = rec[op.opId];
+								if (_value.value) {
+									_value = _value.value;
+								}
+								res.write(csvrec+';'+op.opIdAlias+';'+_value+'\n');
 							}
-							res.write(csvrec+';'+op.opIdAlias+';'+_value+'\n');
 						}
 					}
-				}
-			} else {
-				var valuesInd = false;
-				for (var j=0;j<_options.ops.length;j++) {
-					var opRow = _options.ops[j];
-					if (rec[opRow.opId]!=undefined ) {
-						if(rec[opRow.opId]!= 'NA' & rec[opRow.opId].value!= 'NA' ) {
-							valuesInd = true;
-							var _value = rec[opRow.opId];
-							if (_value.value) {
-								_value = _value.value;
+				} else {
+					var valuesInd = false;
+					for (var j=0;j<_options.ops.length;j++) {
+						var opRow = _options.ops[j];
+						if (rec[opRow.opId]!=undefined ) {
+							if(rec[opRow.opId]!= 'NA' & rec[opRow.opId].value!= 'NA' ) {
+								valuesInd = true;
+								var _value = rec[opRow.opId];
+								if (_value.value) {
+									_value = _value.value;
+								}
+								csvrec=csvrec+';'+_value;
+							} else {
+								csvrec=csvrec+';'+'NA';
 							}
-							csvrec=csvrec+';'+_value;
 						} else {
 							csvrec=csvrec+';'+'NA';
 						}
-					} else {
-						csvrec=csvrec+';'+'NA';
+					}
+					if (valuesInd) {
+						res.write(csvrec+'\n');
 					}
 				}
-				if (valuesInd) {
-					res.write(csvrec+'\n');
-				}
+				//_res.write(JSON.stringify(response.data[i]));
+	//			_res.write('"'+rec.pm25+'";'+'"'+rec.pm25+'";'+));
 			}
-			//_res.write(JSON.stringify(response.data[i]));
-//			_res.write('"'+rec.pm25+'";'+'"'+rec.pm25+'";'+));
 		}
-		if ( response.data.length>0 & response.data.length>=_options.limit ) { // not all data retrieved
+
+		// more after limit?
+		if (options.format == 'json') {
+			res.contentType('application/json');
+			res.send(response.data);
+		} else {
+			if ( response.data.length>0 & response.data.length>=_options.limit ) { // not all data retrieved
 				//console.log(lastDateDate);
 				//console.log(_options.dateToDate);
-			var lastDate = response.data[response.data.length-1].dateObserved;
-			var lastDateDate = new Date(lastDate);
-			_options.dateFromDate = new Date(lastDateDate.getTime()+1);
-			_options.dateFrom			= _options.dateFromDate.toISOString();
-			callAxios(_options,_res);
-		} else _res.end();
+				var _lastRecord = response.data[response.data.length-1];
+				var lastDate;
+				// period in case of aggregation
+				if (_lastRecord._id != undefined && _lastRecord._id.period != undefined) {
+					lastDate = _lastRecord._id.period;
+				} else lastDate = _lastRecord.dateObserved;
+				var lastDateDate = new Date(lastDate);
+				_options.dateFromDate = new Date(lastDateDate.getTime()+1);
+				_options.dateFrom			= _options.dateFromDate.toISOString();
+				callAxios(_options,_res);
+			} else _res.end();
+		}
 //		log('end of read');
 //      type: "stream" //,
       //chunk: count++
