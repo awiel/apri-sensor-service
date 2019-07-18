@@ -31,7 +31,8 @@
 		systemVersionL1,
 		systemVersionL2,
 		systemVersionL3,
-		serviceTarget;
+		serviceTarget,
+		serviceTarget2;
 
 module.exports = {
 
@@ -84,6 +85,9 @@ module.exports = {
 					if (_service.target) {
 						serviceTarget = _service.target;
 					}
+					if (_service.target2) {
+						serviceTarget2 = _service.target2;
+					}
 					break;
 				}
 			}
@@ -102,6 +106,9 @@ module.exports = {
 		console.log(' Servicetype             :', systemServiceType);
 		if (serviceTarget) {
 			console.log(' Servicetarget           :', serviceTarget.name);
+		}
+		if (serviceTarget2) {
+			console.log(' Servicetarget2          :', serviceTarget2.name);
 		}
 		console.log(' Listening port          :', systemListenPort);
 		console.log(' System start            :', systemStart.toISOString());
@@ -141,6 +148,9 @@ module.exports = {
 
 	getConfigServiceTarget: function () {
 		return serviceTarget;
+	},
+	getConfigServiceTarget2: function () {
+		return serviceTarget2;
 	}
 
 
