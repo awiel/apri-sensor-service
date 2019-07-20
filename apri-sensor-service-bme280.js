@@ -11,7 +11,7 @@
 var log = function(message){
 	console.log(new Date().toISOString()+' | '+message);
 }
-var logdir = function(object){
+var logDir = function(object){
 	console.log(object);
 }
 
@@ -96,7 +96,7 @@ app.get('/'+sensorServiceName+'/v1/m', function(req, res) {
 	}
 	log(_foi);
 
-	logdir(_query);
+	logDir(_query);
 
 	var dateReceived = new Date();
 	var dateObserved;
@@ -137,7 +137,7 @@ app.get('/'+sensorServiceName+'/v1/m', function(req, res) {
 	//			fiwareObject.lightTop=inRecord.s_lightsensortop;
 	//			fiwareObject.pressure=inRecord.s_barometer/100;
 
-	logdir(fiwareObject);
+	logDir(fiwareObject);
 
 	var _inputObservation			= _query.observation;
 	var _categories						= _inputObservation.split(',');
@@ -240,7 +240,7 @@ var sendFiwareData = function(data, target, res) {
 			 }
 	};
 
-  logdir(options);
+  logDir(options);
 
 	//console.log(options);
 	//console.log(_data);
