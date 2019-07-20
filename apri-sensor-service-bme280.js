@@ -27,7 +27,8 @@ var self = this;
 // **********************************************************************************
 
 // add module specific requires
-var https 						= require('https');
+//var https 						= require('https');
+var axios 							= require('axios');
 var express 						= require('express');
 //var cookieParser 			= require('cookie-parser');
 //var session 					= require('express-session');
@@ -213,7 +214,8 @@ app.get('/*', function(req, res) {
 });
 
 var sendFiwareData = function(data, target, res) {
-	var _data = JSON.stringify(data);
+//	var _data = JSON.stringify(data);
+	var _data = data;
 	var _res 	= res;
 	var _target = target;
 //	var _url 	= _target.protocol +
@@ -224,7 +226,7 @@ var sendFiwareData = function(data, target, res) {
 //	var json_obj = JSON.stringify(data);
 //	log(_url);
 	//log(json_obj)
-
+/*
 	var options = {
 		hostname: _target.host,
 		port: 		_target.port,
@@ -261,7 +263,73 @@ var sendFiwareData = function(data, target, res) {
 
 	req.write(_data);
 	req.end();
+*/
+var url = 'https://'+_target.host+':'+_target.port+_target.prefixPath+_target.path
+var headers = {
+	//'Content-Type': 				'application/json',
+	//'Content-Length': 			_data.length,
+	'Fiware-Service': 			_target.FiwareService,
+	'Fiware-ServicePath': 	_target.FiwareServicePath
+}
 
+var axiosParams = {
+		url:url,
+		method: 'post',
+		data: _data,
+		config: { headers: headers}
+}
+console.log(axiosParams);
+axios.post(url, _data, { 'headers': headers})
+.then(function(response) {
+	//const jsonText = JSON.stringify(response);
+	//const objResponse = JSON.parse(jsonText);
+	//log('Response recieved');
+	logDir(response.status)
+	var result = {}
+	result.status = response.status,
+	result.statusDesc = response.statusDesc
+	result.statusData = response.data
+	_res.contentType('application/json')
+	_res.send(result);
+ })
+ .catch(function(error) {
+	 var result = {};
+	 if (error.response) {
+		// logDir(error.response);
+		logDir(error.response.status)
+		logDir(error.response.statusTekst)
+		logDir(error.response.data)
+		result.status = error.response.status
+		result.statusDesc = error.response.statusDesc
+		result.statusData = error.response.data
+		// The request was made and the server responded with a status code
+		// that falls out of the range of 2xx
+//      console.log(error.response.data);
+//      console.log(error.response.status);
+//      console.log(error.response.headers);
+	} else if (error.request) {
+		result.request = error.request;
+		// The request was made but no response was received
+		// `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+		// http.ClientRequest in node.js
+		console.log('Error request: '+ error.request);
+	} else {
+		// Something happened in setting up the request that triggered an Error
+		console.log('Error message', error.message);
+		result.message = error.message;
+	}
+//    console.log(error.config);
+
+
+	_res.contentType('application/json');
+	logDir(result)
+	_res.send(result);
+//			 'serviceStatus': error.response.status,
+//			 'serviceStatusTekst': error.response.statusTekst,
+//			 'serviceStatusData': error.response.data
+//	 	});
+	 //_res.send(JSON.stringfy(error));
+ });
 };
 
 
