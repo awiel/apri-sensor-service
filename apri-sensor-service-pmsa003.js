@@ -224,7 +224,7 @@ app.get('/*', function(req, res) {
 
 var sendFiwareData = function(data, target, res) {
 	//var _data = JSON.stringify(data);
-	var _data = JSON.stringify(data);
+	var _data = data;
 	var _res 	= res;
 	var _target = target;
 //	var _url 	= _target.protocol +
