@@ -1,4 +1,9 @@
 /*
+
+Replaced by apri-sensor-service-sensormain.js !!!!
+
+
+
 ** Module: apri-sensor-service-bme280.js
 **   ApriSensorService server
 **			inbox service for bme280 sensor data
