@@ -1,4 +1,8 @@
 /*
+
+Replaced by apri-sensor-service-sensormain.js !!!!
+
+
 ** Module: apri-sensor-service-ds18b20.js
 **   ApriSensorService server
 **			inbox service for ds18b20 sensor data
