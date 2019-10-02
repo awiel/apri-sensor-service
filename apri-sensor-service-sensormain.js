@@ -163,7 +163,7 @@ app.get('/'+sensorServiceName+'/v1/m', function(req, res) {
   	fiwareMap['pm10amb']			= 'pm10amb';
   	fiwareMap['raw0_3']				= 'raw0_3';
   	fiwareMap['raw0_5']				= 'raw0_5';
-  	fiwareMap['raw1_0']				= 'raw0_1';
+  	fiwareMap['raw1_0']				= 'raw1_0';
   	fiwareMap['raw2_5']				= 'raw2_5';
   	fiwareMap['raw5_0']				= 'raw5_0';
   	fiwareMap['raw10_0']			= 'raw10_0';
