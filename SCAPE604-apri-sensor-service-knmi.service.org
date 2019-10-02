@@ -1,0 +1,9 @@
+[Unit]
+Desription=SCAPE604-apri-sensor-service-knmi - start or restart apri-sensor-service-knmi service, respawn
+After=network.target
+[Service]
+ExecStart=/opt/SCAPE604/apri-sensor-service/apri-sensor-service-knmi.sh /opt/SCAPE604/log/SCAPE604-apri-sensor-service-knmi.log
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
