@@ -9,7 +9,7 @@
 // http://localhost:5050/apri-sensor-service/v1/getSelectionData/?fiwareService=aprisensor_in&fiwareServicePath=/pmsa003&foiOps=SCNM5CCF7F2F62F3:SCNM5CCF7F2F62F3_alias,pm25:pm25_alias&dateFrom=2019-03-03T22:55:55.000Z&dateTo=2019-03-04T22:55:55.999Z
 "use strict";
 
-var service 		= 'apri-sensor-service-sensorselect';
+var moduleName 		= 'apri-sensor-service-sensorselect';
 	//log("Path: " + service);
 var modulePath = require('path').resolve(__dirname, '.');
 	//log("Modulepath: " + modulePath);
@@ -47,7 +47,7 @@ var _serviceTarget2				= apriSensorServiceConfig.getConfigServiceTarget2();
 //})
 var winstonLogFileName = process.env.LOG_FILE
 if (winstonLogFileName==undefined) {
-	winstonLogFileName = _systemFolder + '/../log/'+service+'_'+ _systemListenPort + '.log'
+	winstonLogFileName = _systemFolder + '/../log/'+moduleName+'_'+ _systemListenPort + '.log'
 }
 console.log(winstonLogFileName)
 winston.add(new winston.transports.File({ filename: winstonLogFileName }))
