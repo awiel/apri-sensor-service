@@ -14,7 +14,7 @@ var moduleName 		= 'apri-sensor-service-sensorselect';
 var modulePath = require('path').resolve(__dirname, '.');
 	//log("Modulepath: " + modulePath);
 var apriSensorServiceConfig 		= require(modulePath + '/apri-sensor-service-config');
-apriSensorServiceConfig.init(service);
+apriSensorServiceConfig.init(moduleName);
 
 var self = this;
 
