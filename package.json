@@ -4,10 +4,12 @@
   "description": "",
   "main": "apri-sensor-service.js",
   "dependencies": {
-    "axios": "^0.18.0",
+    "axios": "^0.19.0",
     "express": "^4.16.4",
     "https": "^1.0.0",
-    "request": "^2.88.0"
+    "mongodb": "^3.2.3",
+    "request": "^2.88.0",
+    "winston": "^3.2.1"
   },
   "devDependencies": {},
   "scripts": {

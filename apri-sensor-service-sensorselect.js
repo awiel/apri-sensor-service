@@ -9,17 +9,10 @@
 // http://localhost:5050/apri-sensor-service/v1/getSelectionData/?fiwareService=aprisensor_in&fiwareServicePath=/pmsa003&foiOps=SCNM5CCF7F2F62F3:SCNM5CCF7F2F62F3_alias,pm25:pm25_alias&dateFrom=2019-03-03T22:55:55.000Z&dateTo=2019-03-04T22:55:55.999Z
 "use strict";
 
-var log = function(message){
-	console.log(new Date().toISOString()+' | '+message);
-}
-var logDir = function(object){
-	console.log(object);
-}
-
 var service 		= 'apri-sensor-service-sensorselect';
-	console.log("Path: " + service);
+	//log("Path: " + service);
 var modulePath = require('path').resolve(__dirname, '.');
-	console.log("Modulepath: " + modulePath);
+	//log("Modulepath: " + modulePath);
 var apriSensorServiceConfig 		= require(modulePath + '/apri-sensor-service-config');
 apriSensorServiceConfig.init(service);
 
@@ -38,6 +31,8 @@ var express 						= require('express');
 ////var bodyParser 			= require('connect-busboy');
 var bodyParser 					= require('body-parser');
 //var fs 								  = require('fs');
+const winston = require('winston')
+
 
 var _systemCode 					= apriSensorServiceConfig.getSystemCode();
 var _systemFolderParent		= apriSensorServiceConfig.getSystemFolderParent();
@@ -46,6 +41,27 @@ var _systemListenPort			= apriSensorServiceConfig.getSystemListenPort();
 var _systemParameter			= apriSensorServiceConfig.getConfigParameter();
 var _serviceTarget				= apriSensorServiceConfig.getConfigServiceTarget();
 var _serviceTarget2				= apriSensorServiceConfig.getConfigServiceTarget2();
+
+//winston.log('info', 'Hello log files!', {
+//  someKey: 'some-value'
+//})
+var winstonLogFileName = process.env.LOG_FILE
+if (winstonLogFileName==undefined) {
+	winstonLogFileName = _systemFolder + '/../log/'+service+'_'+ _systemListenPort + '.log'
+}
+console.log(winstonLogFileName)
+winston.add(new winston.transports.File({ filename: winstonLogFileName }))
+winston.level = process.env.LOG_LEVEL
+
+if (winston.level==undefined) winston.level='info'
+var log = function(message){
+	winston.log('info', new Date().toISOString()+' | '+message, {});
+}
+var logDir = function(object){
+	winston.log('info',object,{});
+}
+log(winston.level)
+
 
 
 var app = express();
@@ -77,7 +93,7 @@ app.all('/favicon.ico', function(req, res) {
 });
 
 app.get('/'+_systemCode+'/apri-sensor-service/testservice', function(req, res ) {
-	console.log("ApriSensorService testservice: " + req.url );
+	log("ApriSensorService testservice: " + req.url );
 
 	res.contentType('text/plain');
 	var result = 'testrun started';
@@ -88,12 +104,12 @@ app.get('/'+_systemCode+'/apri-sensor-service/testservice', function(req, res ) 
 
 
 app.all('/*', function(req, res, next) {
-	console.log("app.all/: " + req.url + " ; systemCode: " + _systemCode );
+	log("app.all/: " + req.url + " ; systemCode: " + _systemCode );
 	next();
 });
 
 app.get('/apri-sensor-service/v1/getSelectionData', function(req, res) {
-	console.log('/apri-sensor-service/v1/getSelectionData');
+	log('/apri-sensor-service/v1/getSelectionData');
 	res.contentType('application/json');
 
 	var params = {};
@@ -190,7 +206,7 @@ app.get('/apri-sensor-service/v1/getSelectionData', function(req, res) {
 	if (_query.aggregate != undefined && _query.aggregate=='true') {
 		params.aggregate = _query.aggregate;
 		params.dateOrPeriod = 'period';
-		console.log('Aggregate: '+params.aggregate);
+		log('Aggregate: '+params.aggregate);
 	}
 
 	params.selection = selection;
@@ -377,8 +393,8 @@ var callAxios = function(options,res) {
 			res.send(response.data);
 		} else {
 			if ( response.data.length>0 & response.data.length>=_options.limit ) { // not all data retrieved
-				//console.log(lastDateDate);
-				//console.log(_options.dateToDate);
+				//log(lastDateDate);
+				//log(_options.dateToDate);
 				var _lastRecord = response.data[response.data.length-1];
 				var lastDate;
 				// period in case of aggregation
@@ -407,11 +423,11 @@ var callAxios = function(options,res) {
 }
 
 app.get('/*', function(req, res) {
-	console.log("Apri-Sensor-service request url error: " + req.url );
+	log("Apri-Sensor-service request url error: " + req.url );
 	var _message = errorMessages.URLERROR
 	_message.message += " API error, wrong parameters?";
 	//errorResult(res, _message);
-	console.log('Error: %s - %s', _message.returnCode, _message.message );
+	log('Error: %s - %s', _message.returnCode, _message.message );
 	res.contentType('text/plain');
 	res.status(_message.returnCode).send(_message.message);
 	return;
@@ -423,13 +439,13 @@ var errorResult = function(res, message) {
 	res.returncode = message.returnCode;
 	res.contentType('text/plain');
 	res.status(message.returnCode).send(message.message);
-	console.log('Error: %s - %s', message.returnCode, message.message );
+	log('Error: %s - %s', message.returnCode, message.message );
 };
 
 
 var startListen = function() {
 	app.listen(_systemListenPort);
-	console.log('listening to http://proxyintern: ' + _systemListenPort );
+	log('listening to http://proxyintern: ' + _systemListenPort );
 }
 
 
