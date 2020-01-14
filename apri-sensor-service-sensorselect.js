@@ -49,7 +49,7 @@ var winstonLogFileName = process.env.LOG_FILE
 if (winstonLogFileName==undefined) {
 	winstonLogFileName = _systemFolder + '/../log/'+moduleName+'_'+ _systemListenPort + '.log'
 }
-console.log(winstonLogFileName)
+//console.log(winstonLogFileName)
 winston.add(new winston.transports.File({ filename: winstonLogFileName }))
 winston.level = process.env.LOG_LEVEL
 
@@ -206,8 +206,14 @@ app.get('/apri-sensor-service/v1/getSelectionData', function(req, res) {
 	if (_query.aggregate != undefined && _query.aggregate=='true') {
 		params.aggregate = _query.aggregate;
 		params.dateOrPeriod = 'period';
-		log('Aggregate: '+params.aggregate);
+//		log('Aggregate: '+params.aggregate);
 	}
+
+	params.latest = 'false';
+	if (_query.latest != undefined && _query.latest=='true') {
+		params.latest = _query.latest;
+	}
+
 
 	params.selection = selection;
 
@@ -255,12 +261,12 @@ var retrieveData 	= function(params, res) {
 		// The resolver function is called with the ability to resolve or
 		// reject the promise
 		function(resolve, reject) {
-			log('Start of callCB promise ' + thisParams.selection.foiId);
+			//log('Start of callCB promise ' + thisParams.selection.foiId);
 			var callCNPromise = new Promise(
 				function(resolve, reject) {
 					var urlParamsAttrs = "&attrs=";
 					var seperator = '';
-					log('foi alias: ' + thisParams.selection.foiIdAlias);
+					//log('foi alias: ' + thisParams.selection.foiIdAlias);
 					for (var i=0;i<thisParams.selection.ops.length;i++) {
 						urlParamsAttrs=urlParamsAttrs+seperator+thisParams.selection.ops[i].opId;
 						seperator = ',';
@@ -279,6 +285,7 @@ var retrieveData 	= function(params, res) {
 					options.dateTo 					= thisParams.dateTo;
 					options.dateToDate			= new Date(options.dateTo);
 					options.aggregate				= thisParams.aggregate;
+					options.latest				= thisParams.latest;
 					options.fiwareService 	= thisParams.fiwareService;
 					options.fiwareServicePath = thisParams.fiwareServicePath;
 					options.protocol				= _serviceTarget.protocol;
@@ -296,7 +303,7 @@ var retrieveData 	= function(params, res) {
 			)
 			callCNPromise.then(
 				function() {
-					log('End of callCB promise ' + thisParams.selection.foiId );
+					//log('End of callCB promise ' + thisParams.selection.foiId );
 					resolve();
 				}
 			);
@@ -307,7 +314,7 @@ var retrieveData 	= function(params, res) {
 		function() {
 			//retrieveData(thisParams, thisRes)	// Just log the message and a value
 			thisRes.end();
-			log('End of retrieveData promise '+thisParams.selection.foiId);
+			//log('End of retrieveData promise '+thisParams.selection.foiId);
 		}
 	);
 
