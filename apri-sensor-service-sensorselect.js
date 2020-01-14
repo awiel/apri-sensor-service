@@ -348,7 +348,7 @@ var callAxios = function(options,res) {
 			var rec = '';
 			for (var i=0;i<response.data.length;i++) {
 				rec = response.data[i];
-				console.dir(rec);
+				//console.dir(rec);
 				var _dateOrPeriod = rec.dateObserved?rec.dateObserved:rec._id.period; // period in case of aggregation;
 				var csvrec = '"'+_options.foiIdAlias+'";"'+_dateOrPeriod+'";'+rec.count;
 				if (_options.opPerRow=='true') {
