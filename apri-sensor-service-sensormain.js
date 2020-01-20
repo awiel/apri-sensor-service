@@ -168,6 +168,45 @@ app.get('/'+sensorServiceName+'/v1/m', function(req, res) {
   	fiwareMap['raw5_0']				= 'raw5_0';
   	fiwareMap['raw10_0']			= 'raw10_0';
   }
+  if (sensorServiceName=='pmsa003-hour') {
+  	fiwareMap['count']					= 'count';
+  	fiwareMap['pm1']					= 'pm1';
+  	fiwareMap['pm1_min']					= 'pm1_min';
+  	fiwareMap['pm1_max']					= 'pm1_max';
+  	fiwareMap['pm25']					= 'pm25';
+  	fiwareMap['pm25_min']					= 'pm25_min';
+  	fiwareMap['pm25_max']					= 'pm25_max';
+  	fiwareMap['pm10']					= 'pm10';
+  	fiwareMap['pm10_min']					= 'pm10_min';
+  	fiwareMap['pm10_max']					= 'pm10_max';
+  	fiwareMap['pm1amb']				= 'pm1amb';
+  	fiwareMap['pm1amb_min']					= 'pm1amb_min';
+  	fiwareMap['pm1amb_max']					= 'pm1amb_max';
+  	fiwareMap['pm25amb']			= 'pm25amb';
+  	fiwareMap['pm25amb_min']					= 'pm25amb_min';
+  	fiwareMap['pm25amb_max']					= 'pm25amb_max';
+  	fiwareMap['pm10amb']			= 'pm10amb';
+  	fiwareMap['pm10amb_min']					= 'pm10amb_min';
+  	fiwareMap['pm10amb_max']					= 'pm10amb_max';
+  	fiwareMap['raw0_3']				= 'raw0_3';
+  	fiwareMap['raw0_3_min']					= 'raw0_3_min';
+  	fiwareMap['raw0_3_max']					= 'raw0_3_max';
+  	fiwareMap['raw0_5']				= 'raw0_5';
+  	fiwareMap['raw0_5_min']					= 'raw0_5_min';
+  	fiwareMap['raw0_5_max']					= 'raw0_5_max';
+  	fiwareMap['raw1_0']				= 'raw1_0';
+  	fiwareMap['raw1_0_min']					= 'raw1_0_min';
+  	fiwareMap['raw1_0_max']					= 'raw1_0_max';
+  	fiwareMap['raw2_5']				= 'raw2_5';
+  	fiwareMap['raw2_5_min']					= 'raw2_5_min';
+  	fiwareMap['raw2_5_max']					= 'raw2_5_max';
+  	fiwareMap['raw5_0']				= 'raw5_0';
+  	fiwareMap['raw5_0_min']					= 'raw5_0_min';
+  	fiwareMap['raw5_0_max']					= 'raw5_0_max';
+  	fiwareMap['raw10_0']			= 'raw10_0';
+  	fiwareMap['raw10_0_min']					= 'raw10_0_min';
+  	fiwareMap['raw10_0_max']					= 'raw10_0_max';
+  }
   if (sensorServiceName=='ds18b20') {
     fiwareMap['temperature']	= 'temperature';
   }
@@ -227,7 +266,7 @@ app.get('/'+_systemCode+'/apri-sensor-service/v1/getCalModelData', function(req,
 */
 
 app.get('/*', function(req, res) {
-	log("Apri-Sensor-service ds18b20 request url error: " + req.url );
+	log("Apri-Sensor-service "+sensorServiceName+" request url error: " + req.url );
 	var _message = errorMessages.URLERROR
 	_message.message += " API error, wrong parameters?";
 	//errorResult(res, _message);
