@@ -168,7 +168,7 @@ app.get('/'+sensorServiceName+'/v1/m', function(req, res) {
   	fiwareMap['raw5_0']				= 'raw5_0';
   	fiwareMap['raw10_0']			= 'raw10_0';
   }
-  if (sensorServiceName=='pmsa003-hour') {
+  if (sensorServiceName=='pmsa003_hour') {
   	fiwareMap['count']					= 'count';
   	fiwareMap['pm1']					= 'pm1';
   	fiwareMap['pm1_min']					= 'pm1_min';
