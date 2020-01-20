@@ -148,7 +148,7 @@ app.get('/'+sensorServiceName+'/v1/m', function(req, res) {
 	var _categories						= _inputObservation.split(',');
 
 	var fiwareMap	= {};
-	fiwareMap.unknown_obs 		= {};
+//	fiwareMap.unknown_obs 		= {};
   if (sensorServiceName=='bme280') {
     fiwareMap['pressure']			= 'pressure';
   	fiwareMap['temperature']	= 'temperature';
@@ -224,8 +224,9 @@ app.get('/'+sensorServiceName+'/v1/m', function(req, res) {
 			_fiWareCategoryId = fiwareMap[_fiWareCategoryId];
 			fiwareObject[_fiWareCategoryId] = _categoryResult;
 		} else {
-			_fiWareCategoryId = _fiWareCategoryId;
-			fiwareObject.unknown_obs[_fiWareCategoryId] = _categoryKeyValue[1];
+			//_fiWareCategoryId = _fiWareCategoryId;
+			//fiwareObject.unknown_obs[_fiWareCategoryId] = _categoryKeyValue[1];
+      fiwareObject[_fiWareCategoryId] = _categoryKeyValue[1];
 		}
 	}
 	sendFiwareData(fiwareObject, _serviceTarget, res);
