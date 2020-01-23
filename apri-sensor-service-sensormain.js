@@ -207,6 +207,15 @@ app.get('/'+sensorServiceName+'/v1/m', function(req, res) {
   	fiwareMap['raw10_0_min']					= 'raw10_0_min';
   	fiwareMap['raw10_0_max']					= 'raw10_0_max';
   }
+  if (sensorServiceName=='pmsa003_wsaqi') {
+  	fiwareMap['count']					= 'count';
+    fiwareMap['wsaqi']					= 'wsaqi';
+    fiwareMap['wsaqiMin']				= 'wsaqiMin';
+    fiwareMap['wsaqiQ1']				= 'wsaqiQ1';
+    fiwareMap['wsaqiMean']			= 'wsaqiMean';
+    fiwareMap['wsaqiQ3']				= 'wsaqiQ3';
+    fiwareMap['wsaqiMax']				= 'wsaqiMax';
+  }
   if (sensorServiceName=='ds18b20') {
     fiwareMap['temperature']	= 'temperature';
   }
