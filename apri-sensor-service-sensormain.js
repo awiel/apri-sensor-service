@@ -154,6 +154,17 @@ app.get('/'+sensorServiceName+'/v1/m', function(req, res) {
   	fiwareMap['temperature']	= 'temperature';
   	fiwareMap['rHum']					= 'rHum';
   }
+  if (sensorServiceName=='bme280_hour') {
+    fiwareMap['pressure']			= 'pressure';
+    fiwareMap['pressure_min']			= 'pressure_min';
+    fiwareMap['pressure_max']			= 'pressure_max';
+  	fiwareMap['temperature']	= 'temperature';
+    fiwareMap['temperature_min']	= 'temperature_min';
+    fiwareMap['temperature_max']	= 'temperature_max';
+  	fiwareMap['rHum']					= 'rHum';
+    fiwareMap['rHum_min']					= 'rHum_min';
+    fiwareMap['rHum_max']					= 'rHum_max';
+  }
   if (sensorServiceName=='pmsa003') {
     fiwareMap['pm1']					= 'pm1';
   	fiwareMap['pm25']					= 'pm25';
@@ -223,6 +234,11 @@ app.get('/'+sensorServiceName+'/v1/m', function(req, res) {
   }
   if (sensorServiceName=='ds18b20') {
     fiwareMap['temperature']	= 'temperature';
+  }
+  if (sensorServiceName=='ds18b20_hour') {
+    fiwareMap['temperature']	= 'temperature';
+    fiwareMap['temperature_min']	= 'temperature_min';
+    fiwareMap['temperature_max']	= 'temperature_max';
   }
 
 	for (var i = 0;i<_categories.length;i++) {
