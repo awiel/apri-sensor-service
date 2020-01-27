@@ -215,6 +215,11 @@ app.get('/'+sensorServiceName+'/v1/m', function(req, res) {
     fiwareMap['wsaqiMean']			= 'wsaqiMean';
     fiwareMap['wsaqiQ3']				= 'wsaqiQ3';
     fiwareMap['wsaqiMax']				= 'wsaqiMax';
+    fiwareMap['wsaqiCountOutliersLow']				= 'wsaqiCountOutliersLow';
+    fiwareMap['wsaqiCountOutliersHigh']				= 'wsaqiCountOutliersHigh';
+    fiwareMap['wsaqiOutliersHighMin']				= 'wsaqiOutliersHighMin';
+    fiwareMap['wsaqiOutliersHighMax']				= 'wsaqiOutliersHighMax';
+
   }
   if (sensorServiceName=='ds18b20') {
     fiwareMap['temperature']	= 'temperature';
