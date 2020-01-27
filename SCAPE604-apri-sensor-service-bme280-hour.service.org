@@ -1,0 +1,9 @@
+[Unit]
+Desription=SCAPE604-apri-sensor-service-bme280-hour - start or restart apri-sensor-service-bme280-hour service, respawn
+After=network.target
+[Service]
+ExecStart=/opt/SCAPE604/apri-sensor-service/apri-sensor-service-bme280-hour.sh /opt/SCAPE604/log/SCAPE604-apri-sensor-service-bme280-hour.log
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
