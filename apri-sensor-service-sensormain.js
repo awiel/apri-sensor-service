@@ -252,7 +252,7 @@ app.get('/'+sensorServiceName+'/v1/m', function(req, res) {
     //console.log('Debug ######## ' + _categoryKey +' ' + _categoryValue)
 
 		var _categoryId				= _categoryKey
-		var _fiWareCategoryId	= _categoryValue
+		var _fiWareCategoryId	= _categoryKey
 		var _categoryResult		= parseFloat(_categoryValue);
 
 		// fiware attributes
@@ -262,7 +262,7 @@ app.get('/'+sensorServiceName+'/v1/m', function(req, res) {
 		} else {
 			//_fiWareCategoryId = _fiWareCategoryId;
 			//fiwareObject.unknown_obs[_fiWareCategoryId] = _categoryKeyValue[1];
-      fiwareObject[_fiWareCategoryId] = _categoryKeyValue[1];
+      fiwareObject[_fiWareCategoryId] = _categoryValue;
 		}
 	}
 	sendFiwareData(fiwareObject, _serviceTarget, res);
