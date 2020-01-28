@@ -243,18 +243,17 @@ app.get('/'+sensorServiceName+'/v1/m', function(req, res) {
 
 	for (var i = 0;i<_categories.length;i++) {
 		var _category				= _categories[i];
-		var _categoryKeyValue		= _category.split(':');
+		//var _categoryKeyValue		= _category.split(':');
 
-    if (_categoryKeyValue.length>2) {
-      var xpos = _category.indexOf(':')
-      var x_categoryKey =_category.substr(0,xpos)
-      var x_categoryValue =_category.substr(xpos+1)
-      console.log('Debug ######## ' + x_categoryKey +' ' + x_categoryValue)
-    }
+    //if (_categoryKeyValue.length>2) {
+    var pos = _category.indexOf(':')
+    var _categoryKey =_category.substr(0,pos)
+    var _categoryValue =_category.substr(pos+1)
+    //console.log('Debug ######## ' + _categoryKey +' ' + _categoryValue)
 
-		var _categoryId				= _categoryKeyValue[0];
-		var _fiWareCategoryId	= _categoryKeyValue[0];
-		var _categoryResult		= parseFloat(_categoryKeyValue[1]);
+		var _categoryId				= _categoryKey
+		var _fiWareCategoryId	= _categoryValue
+		var _categoryResult		= parseFloat(_categoryValue);
 
 		// fiware attributes
 		if (fiwareMap[_fiWareCategoryId]) {
