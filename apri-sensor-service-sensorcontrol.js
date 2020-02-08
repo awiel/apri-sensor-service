@@ -128,7 +128,7 @@ app.get('/'+_systemCode+'/apri-sensor-service/v1/getCalModelData', function(req,
 			//controlData.bin.prot											= 'http';
 			//controlData.bin.host											= '37.97.135.211:5003';  //web
 			//controlData.bin.path											= '/arduino-bin/test/';
-			controlData.res.rawInd										= false;    // PM raw values (6x)
+			controlData.res.rawInd										= true;    // PM raw values (6x)
 			controlData.res.pmInd 										= true;     // PM values from sensor
 			controlData.res.pmSecInd									= false;  // secundairy PM values
 			controlData.res.pmCalInd									= false;  // calibrated PM values based on raw measurements
@@ -157,7 +157,7 @@ app.get('/'+_systemCode+'/apri-sensor-service/v1/getCalModelData', function(req,
 			controlData.bin.prot											= 'http';
 			controlData.bin.host											= '37.97.135.211:5003';  //web
 			controlData.bin.path											= '/arduino-bin/test/';
-			controlData.res.rawInd										= false;    // PM raw values (6x)
+			controlData.res.rawInd										= true;    // PM raw values (6x)
 			controlData.res.pmInd 										= true;     // PM values from sensor
 			controlData.res.pmSecInd									= false;  // secundairy PM values
 			controlData.res.pmCalInd									= false;  // calibrated PM values based on raw measurements
