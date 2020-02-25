@@ -1,0 +1,9 @@
+[Unit]
+Desription=SCAPE604-apri-sensor-service-tgs5042-hour - start or restart apri-sensor-service-tgs5042-hour service, respawn
+After=network.target
+[Service]
+ExecStart=/opt/SCAPE604/apri-sensor-service/apri-sensor-service-tgs5042-hour.sh /opt/SCAPE604/log/SCAPE604-apri-sensor-service-tgs5042-hour.log
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
