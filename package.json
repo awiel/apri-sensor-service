@@ -17,7 +17,8 @@
   },
   "repository": {
     "type": "git",
-    "url": "awiel@149.210.201.210:/opt/git/SCAPE604/apri-sensor-service"
+    "url": "https://github.com/awiel/apri-sensor-service.git"
+    ,"urlold": "awiel@37.97.134.165:/opt/git/SCAPE604/apri-sensor-service"
   },
   "author": "André van der Wiel (https://www.scapeler.com/)",
   "license": "ISC"
