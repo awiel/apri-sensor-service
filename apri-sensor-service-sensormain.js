@@ -142,13 +142,15 @@ app.get('/'+sensorServiceName+'/v1/m', function(req, res) {
 	var fiwareObject = {};
 	fiwareObject.id=_foi+"_"+calType+"_"+dateObserved.toISOString();
 	fiwareObject.sensorId=_foi;
-        if (projectTarget[_foi]!=undefined) fiwareObject.projectTarget = '_'+projectTarget[_foi] 
-        else fiwareObject.projectTarget = ''
+  if (projectTarget[_foi]!=undefined) fiwareObject.projectTarget = '_'+projectTarget[_foi]
+  else fiwareObject.projectTarget = ''
 	fiwareObject.type="AirQualityObserved";  // default
 	fiwareObject.calType=calType;
 	//fiwareObject.sensorSystem=query.sensorsystem;
 	fiwareObject.dateReceived=dateReceived.toISOString();
 	fiwareObject.dateObserved=dateObserved.toISOString();
+//  fiwareObject.projectTarget =
+  console.log(fiwareObject.projectTarget + fiwareObject.dateObserved.substr(0,7))
 
 	logDir(fiwareObject);
 
