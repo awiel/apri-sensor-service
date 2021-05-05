@@ -149,8 +149,7 @@ app.get('/'+sensorServiceName+'/v1/m', function(req, res) {
 	//fiwareObject.sensorSystem=query.sensorsystem;
 	fiwareObject.dateReceived=dateReceived.toISOString();
 	fiwareObject.dateObserved=dateObserved.toISOString();
-//  fiwareObject.projectTarget =
-  console.log(fiwareObject.projectTarget + fiwareObject.dateObserved.substr(0,7))
+  fiwareObject.projectTarget = fiwareObject.projectTarget + '_' + fiwareObject.dateObserved.substr(0,7))
 
 	logDir(fiwareObject);
 
