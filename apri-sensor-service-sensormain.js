@@ -56,6 +56,12 @@ var sensorServiceName = argv.sensor;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
+var projectTarget = {
+  'SCRP000000008b6eb7a5':'purm'
+  ,'SCRP000000002006f3cd':'NLNB'
+  //,'SCRP000000009f9f226c':'RIVM'
+  //,'default':'2021'
+}
 
 // **********************************************************************************
 
@@ -136,6 +142,8 @@ app.get('/'+sensorServiceName+'/v1/m', function(req, res) {
 	var fiwareObject = {};
 	fiwareObject.id=_foi+"_"+calType+"_"+dateObserved.toISOString();
 	fiwareObject.sensorId=_foi;
+        if (projectTarget[_foi]!=undefined) fiwareObject.projectTarget = '_'+projectTarget[_foi] 
+        else fiwareObject.projectTarget = ''
 	fiwareObject.type="AirQualityObserved";  // default
 	fiwareObject.calType=calType;
 	//fiwareObject.sensorSystem=query.sensorsystem;
@@ -371,10 +379,16 @@ var sendFiwareData = function(data, target, res) {
 
 
 	var url = 'https://'+_target.host+':'+_target.port+_target.prefixPath+_target.path
+//	var headers = {
+//		//'Content-Type': 				'application/json',
+//		//'Content-Length': 			_data.length,
+//		'Fiware-Service': 			_target.FiwareService,
+//		'Fiware-ServicePath': 	_target.FiwareServicePath
+//	}
 	var headers = {
 		//'Content-Type': 				'application/json',
 		//'Content-Length': 			_data.length,
-		'Fiware-Service': 			_target.FiwareService,
+		'Fiware-Service': 			_target.FiwareService+_data.projectTarget,
 		'Fiware-ServicePath': 	_target.FiwareServicePath
 	}
 
@@ -385,6 +399,7 @@ var sendFiwareData = function(data, target, res) {
 	    config: { headers: headers}
 	}
 	console.log(axiosParams);
+//	console.log(headers2);
 	axios.post(url, _data, { 'headers': headers})
 	.then(function(response) {
 		//const jsonText = JSON.stringify(response);
