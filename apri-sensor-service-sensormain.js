@@ -58,7 +58,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 var projectTarget = {
   'SCRP000000008b6eb7a5':'purm'
-  ,'SCRP000000002006f3cd':'NLNB'
+  //,'SCRP000000002006f3cd':'NLNB'
   //,'SCRP000000009f9f226c':'RIVM'
   //,'default':'2021'
 }
