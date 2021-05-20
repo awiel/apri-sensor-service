@@ -149,8 +149,18 @@ app.get('/'+sensorServiceName+'/v1/m', function(req, res) {
 	//fiwareObject.sensorSystem=query.sensorsystem;
 	fiwareObject.dateReceived=dateReceived.toISOString();
 	fiwareObject.dateObserved=dateObserved.toISOString();
+
+
+  // add yearmonth to project/servicename
   fiwareObject.projectTarget = fiwareObject.projectTarget + '_' +
-      fiwareObject.dateObserved.substr(0,4)+fiwareObject.dateObserved.substr(5,2)
+    fiwareObject.dateObserved.substr(0,4)+fiwareObject.dateObserved.substr(5,2)
+  if (_target.FiwareService.substr(-5) == '_hour') {
+    if (fiwareObject.dateObserved.substr(0,10)< '2021-05-01') {
+      console.log(_target.FiwareService)
+    } else {
+      console.log(_target.FiwareService+fiwareObject.projectTarget + '_' +fiwareObject.dateObserved.substr(0,4)+fiwareObject.dateObserved.substr(5,2))
+    }
+  }
 
 	logDir(fiwareObject);
 
@@ -276,11 +286,7 @@ app.get('/'+sensorServiceName+'/v1/m', function(req, res) {
 		}
 	}
 	sendFiwareData(fiwareObject, _serviceTarget, res);
-
-
 });
-
-
 
 
 app.all('/*', function(req, res, next) {
