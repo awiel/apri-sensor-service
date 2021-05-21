@@ -139,7 +139,8 @@ app.get('/'+sensorServiceName+'/v1/m', function(req, res) {
 
 	var fiwareMap	= {};
 	fiwareMap.unknown_obs 		= {};
-	fiwareMap['co']	= 'CO';
+	fiwareMap['co']	= 'co';
+	fiwareMap['CO']	= 'co';  // deze zal overbodig worden (nog aan te passen op de raspberry pi)
 
 	for (var i = 0;i<_categories.length;i++) {
 		var _category				= _categories[i];
