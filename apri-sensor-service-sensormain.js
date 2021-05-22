@@ -260,6 +260,7 @@ app.get('/'+sensorServiceName+'/v1/m', function(req, res) {
     fiwareMap['temperature_min']	= 'temperature_min';
     fiwareMap['temperature_max']	= 'temperature_max';
   }
+/*
   if (sensorServiceName=='tgs5042') {
     fiwareMap['co']	= 'co';
     fiwareMap['CO']	= 'co';
@@ -269,6 +270,7 @@ app.get('/'+sensorServiceName+'/v1/m', function(req, res) {
     fiwareMap['co_min']	= 'co_min';
     fiwareMap['co_max']	= 'co_max';
   }
+*/
 
 	for (var i = 0;i<_categories.length;i++) {
 		var _category				= _categories[i];
