@@ -270,7 +270,7 @@ app.get('/'+sensorServiceName+'/v1/m', function(req, res) {
     fiwareMap['co_min']	= 'co_min';
     fiwareMap['co_max']	= 'co_max';
   }
-
+// test
 
 	for (var i = 0;i<_categories.length;i++) {
 		var _category				= _categories[i];
