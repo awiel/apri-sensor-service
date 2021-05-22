@@ -154,11 +154,11 @@ app.get('/'+sensorServiceName+'/v1/m', function(req, res) {
   // add yearmonth to project/servicename
   fiwareObject.projectTarget = fiwareObject.projectTarget + '_' +
     fiwareObject.dateObserved.substr(0,4)+fiwareObject.dateObserved.substr(5,2)
-  if (_target.FiwareService.substr(-5) == '_hour') {
+  if (_serviceTarget.FiwareService.substr(-5) == '_hour') {
     if (fiwareObject.dateObserved.substr(0,10)< '2021-05-01') {
-      console.log(_target.FiwareService)
+      console.log(_serviceTarget.FiwareService)
     } else {
-      console.log(_target.FiwareService+fiwareObject.projectTarget + '_' +fiwareObject.dateObserved.substr(0,4)+fiwareObject.dateObserved.substr(5,2))
+      console.log(_serviceTarget.FiwareService+fiwareObject.projectTarget + '_' +fiwareObject.dateObserved.substr(0,4)+fiwareObject.dateObserved.substr(5,2))
     }
   }
 
@@ -262,7 +262,7 @@ app.get('/'+sensorServiceName+'/v1/m', function(req, res) {
   }
   if (sensorServiceName=='tgs5042') {
     fiwareMap['co']	= 'co';
-    fiwareMap['CO']	= 'co'; 
+    fiwareMap['CO']	= 'co';
   }
   if (sensorServiceName=='tgs5042_hour') {
     fiwareMap['co']	= 'co';
