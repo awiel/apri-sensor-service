@@ -270,7 +270,132 @@ app.get('/'+sensorServiceName+'/v1/m', function(req, res) {
     fiwareMap['co_min']	= 'co_min';
     fiwareMap['co_max']	= 'co_max';
   }
-// test2
+//  if (fiwareObject.dateObserved>'2021-06-01' {
+    if (sensorServiceName=='bme680') {
+      fiwareMap['pressure']			= 'pressure';
+    	fiwareMap['temperature']	= 'temperature';
+    	fiwareMap['rHum']					= 'rHum';
+      fiwareMap['gasResistance']					= 'gasResistance';
+    }
+    if (sensorServiceName=='bme680_hour') {
+      fiwareMap['pressure']			= 'pressure';
+      fiwareMap['pressure_min']			= 'pressure_min';
+      fiwareMap['pressure_max']			= 'pressure_max';
+    	fiwareMap['temperature']	= 'temperature';
+      fiwareMap['temperature_min']	= 'temperature_min';
+      fiwareMap['temperature_max']	= 'temperature_max';
+    	fiwareMap['rHum']					= 'rHum';
+      fiwareMap['rHum_min']					= 'rHum_min';
+      fiwareMap['rHum_max']					= 'rHum_max';
+      fiwareMap['gasResistance']					= 'gasResistance';
+      fiwareMap['gasResistance_min']					= 'gasResistance_min';
+      fiwareMap['gasResistance_max']					= 'gasResistance_max';
+    }
+    if (sensorServiceName=='sps30') {
+      fiwareMap['pm1']					= 'pm1';
+      fiwareMap['pm25']					= 'pm25';
+      fiwareMap['pm4']					= 'pm4';
+      fiwareMap['pm10']					= 'pm10';
+      fiwareMap['raw0_5']				= 'raw0_5';
+      fiwareMap['raw1_0']				= 'raw1_0';
+      fiwareMap['raw2_5']				= 'raw2_5';
+      fiwareMap['raw4_0']				= 'raw4_0';
+      fiwareMap['raw10_0']			= 'raw10_0';
+      fiwareMap['tps']			= 'tps';
+    }
+    if (sensorServiceName=='sps30_hour') {
+      fiwareMap['pm1']					= 'pm1';
+      fiwareMap['pm1_min']					= 'pm1_min';
+      fiwareMap['pm1_max']					= 'pm1_max';
+      fiwareMap['pm25']					= 'pm25';
+      fiwareMap['pm25_min']					= 'pm25_min';
+      fiwareMap['pm25_max']					= 'pm25_max';
+      fiwareMap['pm4']					= 'pm4';
+      fiwareMap['pm4_min']					= 'pm4_min';
+      fiwareMap['pm4_max']					= 'pm4_max';
+      fiwareMap['pm10']					= 'pm10';
+      fiwareMap['pm10_min']					= 'pm10_min';
+      fiwareMap['pm10_max']					= 'pm10_max';
+      fiwareMap['raw0_5']				= 'raw0_5';
+      fiwareMap['raw0_5_min']				= 'raw0_5_min';
+      fiwareMap['raw0_5_max']				= 'raw0_5_max';
+      fiwareMap['raw1_0']				= 'raw1_0';
+      fiwareMap['raw1_0_min']				= 'raw1_0_min';
+      fiwareMap['raw1_0_max']				= 'raw1_0_max';
+      fiwareMap['raw2_5']				= 'raw2_5';
+      fiwareMap['raw2_5_min']				= 'raw2_5_min';
+      fiwareMap['raw2_5_max']				= 'raw2_5_max';
+      fiwareMap['raw4_0']				= 'raw4_0';
+      fiwareMap['raw4_0_min']				= 'raw4_0_min';
+      fiwareMap['raw4_0_max']				= 'raw4_0_max';
+      fiwareMap['raw10_0']			= 'raw10_0';
+      fiwareMap['raw10_0_min']			= 'raw10_0_min';
+      fiwareMap['raw10_0_max']			= 'raw10_0_max';
+      fiwareMap['tps']			= 'tps';
+      fiwareMap['tps_min']			= 'tps_min';
+      fiwareMap['tps_max']			= 'tps_max';
+    }
+    if (sensorServiceName=='ips7100') {
+      fiwareMap['pm01']					= 'pm01';
+      fiwareMap['pm03']					= 'pm03';
+      fiwareMap['pm05']					= 'pm05';
+      fiwareMap['pm1']					= 'pm1';
+      fiwareMap['pm25']					= 'pm25';
+      fiwareMap['pm5']					= 'pm5';
+      fiwareMap['pm10']					= 'pm10';
+      fiwareMap['raw0_1']				= 'raw0_1';
+      fiwareMap['raw0_3']				= 'raw0_3';
+      fiwareMap['raw0_5']				= 'raw0_5';
+      fiwareMap['raw1_0']				= 'raw1_0';
+      fiwareMap['raw2_5']				= 'raw2_5';
+      fiwareMap['raw5_0']				= 'raw5_0';
+      fiwareMap['raw10_0']			= 'raw10_0';
+    }
+    if (sensorServiceName=='ips7100_hour') {
+      fiwareMap['pm01']					= 'pm01';
+      fiwareMap['pm01_min']					= 'pm01_min';
+      fiwareMap['pm01_max']					= 'pm01_max';
+      fiwareMap['pm03']					= 'pm03';
+      fiwareMap['pm03_min']					= 'pm03_min';
+      fiwareMap['pm03_max']					= 'pm03_max';
+      fiwareMap['pm05']					= 'pm05';
+      fiwareMap['pm05_min']					= 'pm05_min';
+      fiwareMap['pm05_max']					= 'pm05_max';
+      fiwareMap['pm1']					= 'pm1';
+      fiwareMap['pm1_min']					= 'pm1_min';
+      fiwareMap['pm1_max']					= 'pm1_max';
+      fiwareMap['pm25']					= 'pm25';
+      fiwareMap['pm25_min']					= 'pm25_min';
+      fiwareMap['pm25_max']					= 'pm25_max';
+      fiwareMap['pm5']					= 'pm5';
+      fiwareMap['pm5_min']					= 'pm5_min';
+      fiwareMap['pm5_max']					= 'pm5_max';
+      fiwareMap['pm10']					= 'pm10';
+      fiwareMap['pm10_min']					= 'pm10_min';
+      fiwareMap['pm10_max']					= 'pm10_max';
+      fiwareMap['raw0_1']				= 'raw0_1';
+      fiwareMap['raw0_1_min']				= 'raw0_1_min';
+      fiwareMap['raw0_1_max']				= 'raw0_1_max';
+      fiwareMap['raw0_3']				= 'raw0_3';
+      fiwareMap['raw0_3_min']				= 'raw0_3_min';
+      fiwareMap['raw0_3_max']				= 'raw0_3_max';
+      fiwareMap['raw0_5']				= 'raw0_5';
+      fiwareMap['raw0_5_min']				= 'raw0_5_min';
+      fiwareMap['raw0_5_max']				= 'raw0_5_max';
+      fiwareMap['raw1_0']				= 'raw1_0';
+      fiwareMap['raw1_0_min']				= 'raw1_0_min';
+      fiwareMap['raw1_0_max']				= 'raw1_0_max';
+      fiwareMap['raw2_5']				= 'raw2_5';
+      fiwareMap['raw2_5_min']				= 'raw2_5_min';
+      fiwareMap['raw2_5_max']				= 'raw2_5_max';
+      fiwareMap['raw5_0']				= 'raw5_0';
+      fiwareMap['raw5_0_min']				= 'raw5_0_min';
+      fiwareMap['raw5_0_max']				= 'raw5_0_max';
+      fiwareMap['raw10_0']			= 'raw10_0';
+      fiwareMap['raw10_0_min']			= 'raw10_0_min';
+      fiwareMap['raw10_0_max']			= 'raw10_0_max';
+    }
+  //}
 
 	for (var i = 0;i<_categories.length;i++) {
 		var _category				= _categories[i];
