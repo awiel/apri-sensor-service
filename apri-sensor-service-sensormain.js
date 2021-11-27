@@ -398,6 +398,22 @@ app.get('/'+sensorServiceName+'/v1/m', function(req, res) {
       fiwareMap['raw10_0_min']			= 'raw10_0_min';
       fiwareMap['raw10_0_max']			= 'raw10_0_max';
     }
+    if (sensorServiceName=='scd30') {
+    	fiwareMap['temperature']	= 'temperature';
+    	fiwareMap['rHum']					= 'rHum';
+      fiwareMap['co2']					= 'co2';
+    }
+    if (sensorServiceName=='scd30_hour') {
+    	fiwareMap['temperature']	= 'temperature';
+      fiwareMap['temperature_min']	= 'temperature_min';
+      fiwareMap['temperature_max']	= 'temperature_max';
+    	fiwareMap['rHum']					= 'rHum';
+      fiwareMap['rHum_min']					= 'rHum_min';
+      fiwareMap['rHum_max']					= 'rHum_max';
+      fiwareMap['co2']					= 'co2';
+      fiwareMap['co2_min']					= 'co2_min';
+      fiwareMap['co2_max']					= 'co2_max';
+    }
   //}
 
 	for (var i = 0;i<_categories.length;i++) {
