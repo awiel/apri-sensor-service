@@ -34,6 +34,8 @@ systemctl stop SCAPE604-apri-sensor-service-ips7100.service
 systemctl stop SCAPE604-apri-sensor-service-ips7100-hour.service
 systemctl stop SCAPE604-apri-sensor-service-sps30.service
 systemctl stop SCAPE604-apri-sensor-service-sps30-hour.service
+systemctl stop SCAPE604-apri-sensor-service-scd30.service
+systemctl stop SCAPE604-apri-sensor-service-scd30-hour.service
 #systemctl stop SCAPE604-openiod-fiware-connect-josene.service
 
 systemctl stop SCAPE604-apri-sensor-service-caire.service
