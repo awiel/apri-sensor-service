@@ -7,7 +7,6 @@
 */
 // test:
 // http://localhost:5050/apri-sensor-service/v1/getSelectionData/?fiwareService=aprisensor_in&fiwareServicePath=/pmsa003&foiOps=SCNM5CCF7F2F62F3:SCNM5CCF7F2F62F3_alias,pm25:pm25_alias&dateFrom=2019-03-03T22:55:55.000Z&dateTo=2019-03-04T22:55:55.999Z
-// http://localhost:5050/apri-sensor-service/v1/getSelectionData/?fiwareService=aprisensor_in&fiwareServicePath=/pmsa003&foiOps=SCNM5CCF7F2F62F3:SCNM5CCF7F2F62F3_alias,pm25:pm25_alias&latest=true
 "use strict";
 
 var moduleName 		= 'apri-sensor-service-sensorselect';
@@ -33,6 +32,7 @@ var express 						= require('express');
 var bodyParser 					= require('body-parser');
 //var fs 								  = require('fs');
 const winston = require('winston')
+
 
 var _systemCode 					= apriSensorServiceConfig.getSystemCode();
 var _systemFolderParent		= apriSensorServiceConfig.getSystemFolderParent();
@@ -62,7 +62,10 @@ var logDir = function(object){
 }
 log(winston.level)
 
+
+
 var app = express();
+
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -82,6 +85,8 @@ var errorMessages = {
 	, NOFOIOPS 			: { "message": 'Observable properties missing'		, "returnCode": 501 }
 }
 
+
+
 app.all('/favicon.ico', function(req, res) {
 	res.contentType('text/plain');
 	res.send('');
@@ -95,6 +100,8 @@ app.get('/'+_systemCode+'/apri-sensor-service/testservice', function(req, res ) 
  	res.send(result);
 
 });
+
+
 
 app.all('/*', function(req, res, next) {
 	log("app.all/: " + req.url + " ; systemCode: " + _systemCode );
@@ -174,6 +181,7 @@ app.get('/apri-sensor-service/v1/getSelectionData', function(req, res) {
 		}
 		selection.ops.push(_op);
 	}
+
 	params.dateFrom = '';
 	if (_query.dateFrom != undefined) {
 		if (_query.dateFrom.substr(19,1)==' ') {   //1899-12-31T00:00:00 00:00  -> 1899-12-31T00:00:00+00:00
@@ -197,31 +205,13 @@ app.get('/apri-sensor-service/v1/getSelectionData', function(req, res) {
 	params.dateOrPeriod = 'dateObserved';
 	if (_query.aggregate != undefined && _query.aggregate=='true') {
 		params.aggregate = _query.aggregate;
-		if (_query.aggregateLevel==undefined) params.aggregateLevel=60  // 60=hour
-		else params.aggregateLevel = _query.aggregateLevel
 		params.dateOrPeriod = 'period';
 //		log('Aggregate: '+params.aggregate);
 	}
 
-	params.limit = 1000;
-	if (_query.limit != undefined) {
-		params.limit = _query.limit;
-	}
-	params.sort = ''
 	params.latest = 'false';
 	if (_query.latest != undefined && _query.latest=='true') {
-		params.limit=1
 		params.latest = _query.latest;
-		params.sort = 'desc'
-	}
-	params.first = 'false';
-	if (_query.first != undefined && _query.first=='true') {
-		params.limit=1
-		params.first = _query.first;
-		params.sort = 'asc'
-	}
-	if (_query.sort != undefined ) {
-		params.sort = _query.sort;
 	}
 
 
@@ -282,7 +272,6 @@ var retrieveData 	= function(params, res) {
 						seperator = ',';
 					}
 					//console.dir(thisParams.selection);
-					//console.dir(urlParamsAttrs)
 					var options = {};
 					options.key							= thisParams.key;
 					options.foiId						= thisParams.selection.foiId;
@@ -290,16 +279,13 @@ var retrieveData 	= function(params, res) {
 					options.ops							= thisParams.selection.ops;
 					options.urlParamsAttrs 	= urlParamsAttrs;
 					options.format 					= thisParams.format;
-					options.limit						= thisParams.limit;
+					options.limit						= 1000;
 					options.dateFrom 				= thisParams.dateFrom;
 					options.dateFromDate		= new Date(options.dateFrom);
 					options.dateTo 					= thisParams.dateTo;
 					options.dateToDate			= new Date(options.dateTo);
 					options.aggregate				= thisParams.aggregate;
-					options.aggregateLevel	= thisParams.aggregateLevel;
 					options.latest				= thisParams.latest;
-					options.first				= thisParams.first;
-					options.sort				= thisParams.sort;
 					options.fiwareService 	= thisParams.fiwareService;
 					options.fiwareServicePath = thisParams.fiwareServicePath;
 					options.protocol				= _serviceTarget.protocol;
@@ -338,48 +324,28 @@ var callAxios = function(options,res) {
 	var _options 	= options;
 	var _res			= res;
 	var urlParams					= _options.urlParamsAttrs+","+options.key+",dateObserved";
+	urlParams							= urlParams+"&limit="+_options.limit+"&q="+options.key+"=='"+_options.foiId+"'";
+	urlParams							= urlParams + ";dateObserved=='"+_options.dateFrom+"'..'"+_options.dateTo+"'";
 
 	var url = '';
-	//console.dir(_options)
 	if (options.aggregate=='true') {
-		urlParams							= urlParams+"&limit="+_options.limit+"&q="+options.key+"=='"+_options.foiId+"'";
-		urlParams	= urlParams + ";dateObserved=='"+_options.dateFrom+"'..'"+_options.dateTo+"'";
-		url = _options.protocol2+'://'+ _options.host2 +':'+_options.port2+ _options.prefixPath2 + urlParams+ '&aggregate=true'+'&aggregateLevel='+options.aggregateLevel
-	} else if (options.latest=='true') {
-		urlParams							= urlParams+"&limit="+_options.limit+"&q="+options.key+"=='"+_options.foiId+"'";
-		url = _options.protocol2+'://'+ _options.host2 +':'+_options.port2+ _options.prefixPath2 + urlParams+ '&latest=true';
-	} else if (options.first=='true') {
-		urlParams							= urlParams+"&limit="+_options.limit+"&q="+options.key+"=='"+_options.foiId+"'";
-		url = _options.protocol2+'://'+ _options.host2 +':'+_options.port2+ _options.prefixPath2 + urlParams+ ";dateObserved=='"+_options.dateFrom+"'..'"+_options.dateTo+"'"+ '&first=true';
-	}	else {
-		//console.log('sort: '+options.sort)
-		if (options.sort != undefined) {
-			if (options.sort==''|options.sort=='desc'|options.sort=='asc') {
-
-			} else {
-				urlParams+="&orderBy="+options.sort
-			}
-		}
-		urlParams							= urlParams+"&limit="+_options.limit+"&q="+options.key+"=='"+_options.foiId+"'";
-		urlParams	= urlParams + ";dateObserved=='"+_options.dateFrom+"'..'"+_options.dateTo+"'";
+		url = _options.protocol2+'://'+ _options.host2 +':'+_options.port2+ _options.prefixPath2 + urlParams+ '&aggregate=true';
+	} else {
 		url = _options.protocol+'://'+ _options.host +':'+_options.port+ _options.prefixPath + urlParams;
 	}
+	log(url);
 	var headers = {
 		 "Fiware-Service": _options.fiwareService?_options.fiwareService:_serviceTarget.FiwareService
 			, "Fiware-ServicePath": _options.fiwareServicePath?_options.fiwareServicePath:_serviceTarget.FiwareServicePath
-			, "Accept": "application/json"
 	};
-	//console.dir(headers);
-  console.log(url)
+//	console.dir(headers);
+
 	axios.get(url,{ headers: headers })
 	.then(response => {
 		log("Records: "+response.data.length);
 		if (options.format == 'json') {
-
-
 		} else { // csv output
 			var rec = '';
-			console.dir(response.data[1].atmosphericPressure)
 			for (var i=0;i<response.data.length;i++) {
 				rec = response.data[i];
 				//console.dir(rec);
@@ -430,10 +396,8 @@ var callAxios = function(options,res) {
 
 		// more after limit?
 		if (options.format == 'json') {
-			// todo more to get after limit?
-			console.log('apri-sensor-service-sensorselect send result back to requester: '+response.data.length)
-			_res.contentType('application/json');
-			_res.send(response.data);
+			res.contentType('application/json');
+			res.send(response.data);
 		} else {
 			if ( response.data.length>0 & response.data.length>=_options.limit ) { // not all data retrieved
 				//log(lastDateDate);
