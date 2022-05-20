@@ -4,21 +4,20 @@
   "description": "",
   "main": "apri-sensor-service.js",
   "dependencies": {
-    "axios": ">=0.21.1",
+    "axios": "^0.27.2",
     "express": "^4.17.1",
     "https": "^1.0.0",
     "mongodb": "^3.5.0",
     "request": "^2.88.2",
     "winston": "^3.3.3"
   },
-  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/awiel/apri-sensor-service.git"
-    ,"urlold": "awiel@37.97.134.165:/opt/git/SCAPE604/apri-sensor-service"
+    "url": "https://github.com/awiel/apri-sensor-service.git",
+    "urlold": "awiel@37.97.134.165:/opt/git/SCAPE604/apri-sensor-service"
   },
   "author": "André van der Wiel (https://www.scapeler.com/)",
   "license": "ISC"

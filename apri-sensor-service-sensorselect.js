@@ -391,7 +391,7 @@ var callAxios = function(options,res) {
 						//console.log('y'+rec[op.opId]+'x');
 						//console.dir(rec[op.opId]);
 						if (rec[op.opId]!=undefined) {
-							if(rec[op.opId]!= 'NA' & rec[op.opId].value!= 'NA') {
+							if(rec[op.opId]!= 'NA' && rec[op.opId].value!= 'NA') {
 								var _value = rec[op.opId];
 								if (_value.value) {
 									_value = _value.value;
@@ -405,7 +405,7 @@ var callAxios = function(options,res) {
 					for (var j=0;j<_options.ops.length;j++) {
 						var opRow = _options.ops[j];
 						if (rec[opRow.opId]!=undefined ) {
-							if(rec[opRow.opId]!= 'NA' & rec[opRow.opId].value!= 'NA' ) {
+							if(rec[opRow.opId]!= 'NA' && rec[opRow.opId].value!= 'NA' ) {
 								valuesInd = true;
 								var _value = rec[opRow.opId];
 								if (_value.value) {
@@ -435,7 +435,7 @@ var callAxios = function(options,res) {
 			_res.contentType('application/json');
 			_res.send(response.data);
 		} else {
-			if ( response.data.length>0 & response.data.length>=_options.limit ) { // not all data retrieved
+			if ( response.data.length>0 && response.data.length>=_options.limit ) { // not all data retrieved
 				//log(lastDateDate);
 				//log(_options.dateToDate);
 				var _lastRecord = response.data[response.data.length-1];
@@ -445,8 +445,10 @@ var callAxios = function(options,res) {
 					lastDate = _lastRecord._id.period;
 				} else lastDate = _lastRecord.dateObserved;
 				var lastDateDate = new Date(lastDate);
-				_options.dateFromDate = new Date(lastDateDate.getTime()+1);
-				_options.dateFrom			= _options.dateFromDate.toISOString();
+			//	console.log(_lastRecord.dateObserved)
+				_options.dateFromDate = new Date(lastDateDate.getTime()+1-(lastDateDate.getTimezoneOffset() * 60000));
+				_options.dateFrom			= _options.dateFromDate.toISOString().substring(0,19);
+			//	console.log(_options)
 				callAxios(_options,_res);
 			} else _res.end();
 		}
