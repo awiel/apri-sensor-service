@@ -439,16 +439,41 @@ var callAxios = function(options,res) {
 				//log(lastDateDate);
 				//log(_options.dateToDate);
 				var _lastRecord = response.data[response.data.length-1];
-				var lastDate;
+				var lastDate
+				var lastDateDate
 				// period in case of aggregation
 				if (_lastRecord._id != undefined && _lastRecord._id.period != undefined) {
 					lastDate = _lastRecord._id.period;
-				} else lastDate = _lastRecord.dateObserved;
-				var lastDateDate = new Date(lastDate);
-			//	console.log(_lastRecord.dateObserved)
-				_options.dateFromDate = new Date(lastDateDate.getTime()+1-(lastDateDate.getTimezoneOffset() * 60000));
-				_options.dateFrom			= _options.dateFromDate.toISOString().substring(0,19);
-			//	console.log(_options)
+				} else {
+					console.log(_lastRecord.dateObserved.substring(23,24))
+					if (_lastRecord.dateObserved.length == 19) {
+						// eg KNMI data
+						_lastRecord.dateObserved+='.000Z'
+					}
+//					if (_lastRecord.dateObserved.substring(23,24)=='Z') {
+						//lastDate = _lastRecord.dateObserved.substring(0,23)
+						lastDate = _lastRecord.dateObserved
+						lastDateDate = new Date(lastDate);
+						_options.dateFromDate = new Date(lastDateDate.getTime()+1)
+						_options.dateFrom			= _options.dateFromDate.toISOString()
+//						console.log('Z ' + lastDate)
+//					} else {
+//						lastDate = _lastRecord.dateObserved
+//						lastDateDate = new Date(lastDate);
+//						_options.dateFromDate = new Date(lastDateDate.getTime()+1-(lastDateDate.getTimezoneOffset() * 60000))
+//						_options.dateFrom			= _options.dateFromDate.toISOString()
+//					}
+				}
+				console.log(_lastRecord.dateObserved)
+//				if (_lastRecord.dateObserved.substring(23,1)=='Z') {
+//					_options.dateFromDate = new Date(lastDateDate.getTime()+1)
+//				} else {
+//					_options.dateFromDate = new Date(lastDateDate.getTime()+1-(lastDateDate.getTimezoneOffset() * 60000))
+//				}
+				//_options.dateFrom			= _options.dateFromDate.toISOString().substring(0,19);
+//				_options.dateFrom			= _options.dateFromDate.toISOString()
+
+				console.log(_options)
 				callAxios(_options,_res);
 			} else _res.end();
 		}
