@@ -127,6 +127,14 @@ app.get('/'+sensorServiceName+'/v1/m', function(req, res) {
 
 	var fiwareMap	= {};
 	fiwareMap.unknown_obs 		= {};
+	fiwareMap['irradiance']	= 'irradiance';
+	fiwareMap['raw']	= 'raw';
+	fiwareMap['amplified']	= 'amplified';
+	fiwareMap['sensor']	= 'sensor';
+	fiwareMap['offset']	= 'offset';
+	fiwareMap['Vfactor']	= 'Vfactor';
+	fiwareMap['s']	= 's';
+
 //	fiwareMap['pm1']					= 'pm1';
 //	fiwareMap['pm25']					= 'pm25';
 
