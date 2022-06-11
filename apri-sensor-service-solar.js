@@ -135,9 +135,6 @@ app.get('/'+sensorServiceName+'/v1/m', function(req, res) {
 	fiwareMap['Vfactor']	= 'Vfactor';
 	fiwareMap['s']	= 's';
 
-//	fiwareMap['pm1']					= 'pm1';
-//	fiwareMap['pm25']					= 'pm25';
-
 	for (var i = 0;i<_categories.length;i++) {
 		var _category				= _categories[i];
 		var _categoryKeyValue		= _category.split(':');
