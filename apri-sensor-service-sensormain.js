@@ -414,6 +414,38 @@ app.get('/'+sensorServiceName+'/v1/m', function(req, res) {
       fiwareMap['co2_min']					= 'co2_min';
       fiwareMap['co2_max']					= 'co2_max';
     }
+    if (sensorServiceName=='solar') {
+      fiwareMap['irradiance']	= 'irradiance';
+    	fiwareMap['raw']	= 'raw';
+    	fiwareMap['amplified']	= 'amplified';
+    	fiwareMap['sensor']	= 'sensor';
+    	fiwareMap['offset']	= 'offset';
+    	fiwareMap['Vfactor']	= 'Vfactor';
+    	fiwareMap['s']	= 's';
+    }
+    if (sensorServiceName=='solar_hour') {
+      fiwareMap['irradiance']	= 'irradiance';
+    	fiwareMap['raw']	= 'raw';
+    	fiwareMap['amplified']	= 'amplified';
+    	fiwareMap['sensor']	= 'sensor';
+    	fiwareMap['offset']	= 'offset';
+    	fiwareMap['Vfactor']	= 'Vfactor';
+    	fiwareMap['s']	= 's';
+      fiwareMap['irradiance']	= 'irradiance';
+    	fiwareMap['raw_min']	= 'raw_min';
+    	fiwareMap['amplified_min']	= 'amplified_min';
+    	fiwareMap['sensor_min']	= 'sensor_min';
+    	fiwareMap['offset_min']	= 'offset_min';
+    	fiwareMap['Vfactor_min']	= 'Vfactor_min';
+    	fiwareMap['s_min']	= 's_min';
+      fiwareMap['irradiance_max']	= 'irradiance_max';
+    	fiwareMap['raw_max']	= 'raw_max';
+    	fiwareMap['amplified_max']	= 'amplified_max';
+    	fiwareMap['sensor_max']	= 'sensor_max';
+    	fiwareMap['offset_max']	= 'offset_max';
+    	fiwareMap['Vfactor_max']	= 'Vfactor_max';
+    	fiwareMap['s_max']	= 's_max';
+    }
   //}
 
 	for (var i = 0;i<_categories.length;i++) {
