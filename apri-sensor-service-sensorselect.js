@@ -8,6 +8,10 @@
 // test:
 // http://localhost:5050/apri-sensor-service/v1/getSelectionData/?fiwareService=aprisensor_in&fiwareServicePath=/pmsa003&foiOps=SCNM5CCF7F2F62F3:SCNM5CCF7F2F62F3_alias,pm25:pm25_alias&dateFrom=2019-03-03T22:55:55.000Z&dateTo=2019-03-04T22:55:55.999Z
 // http://localhost:5050/apri-sensor-service/v1/getSelectionData/?fiwareService=aprisensor_in&fiwareServicePath=/pmsa003&foiOps=SCNM5CCF7F2F62F3:SCNM5CCF7F2F62F3_alias,pm25:pm25_alias&latest=true
+// prod:
+// geojson:
+// https://aprisensor-in.openiod.org/apri-sensor-service/v1/getSelectionData/?fiwareService=aprisensor_in_202208&fiwareServicePath=/sps30&foiOps=SCRP0000000049a54ee1,pm25,gpsLat,gpsLon&format=geojson
+
 "use strict";
 
 var moduleName 		= 'apri-sensor-service-sensorselect';
@@ -26,6 +30,7 @@ var self = this;
 //const https							= require('https');
 var axios 							= require('axios');
 var express 						= require('express');
+var cors = require('cors')
 //var cookieParser 			= require('cookie-parser');
 //var session 					= require('express-session');
 //var uid 							= require('uid-safe');
@@ -63,6 +68,7 @@ var logDir = function(object){
 log(winston.level)
 
 var app = express();
+app.use(cors())
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
