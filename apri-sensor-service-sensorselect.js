@@ -399,7 +399,7 @@ var callAxios = function(options,res) {
 
 					geojsonRecOut.geometry={}
 					geojsonRecOut.geometry.type='Point'
-					geojsonRecOut.geometry.coordinates=[ geojsonRecIn['gpsLat'],geojsonRecIn['gpsLon'] ]
+					geojsonRecOut.geometry.coordinates=[ geojsonRecIn['gpsLon'],geojsonRecIn['gpsLat'] ]
 
 					geojsonRecOut.properties.sensorId=_options.foiIdAlias
 					var _dateOrPeriod = geojsonRecIn.dateObserved?geojsonRecIn.dateObserved:geojsonRecIn._id.period; // period in case of aggregation;
