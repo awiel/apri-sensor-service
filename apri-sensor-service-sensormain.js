@@ -305,6 +305,20 @@ app.get('/'+sensorServiceName+'/v1/m', function(req, res) {
       fiwareMap['raw4_0']				= 'raw4_0';
       fiwareMap['raw10_0']			= 'raw10_0';
       fiwareMap['tps']			= 'tps';
+      fiwareMap['gpsMode']			= 'gpsMode';
+      // not numeric fiwareMap['gpsTime']			= 'gpsTime';
+      fiwareMap['gpsEpt']			= 'gpsEpt';
+      fiwareMap['gpsLat']			= 'gpsLat';
+      fiwareMap['gpsLon']			= 'gpsLon';
+      fiwareMap['gpsAlt']			= 'gpsAlt';
+      fiwareMap['gpsEpx']			= 'gpsEpx';
+      fiwareMap['gpsEpy']			= 'gpsEpy';
+      fiwareMap['gpsEpv']			= 'gpsEpv';
+      fiwareMap['gpsTrack']		= 'gpsTrack';
+      fiwareMap['gpsSpeed']		= 'gpsSpeed';
+      fiwareMap['gpsClimb']		= 'gpsClimb';
+      fiwareMap['gpsEps']			= 'gpsEps';
+      fiwareMap['gpsEpc']			= 'gpsEpc';
     }
     if (sensorServiceName=='sps30_hour') {
       fiwareMap['pm1']					= 'pm1';
