@@ -249,6 +249,12 @@ app.get('/apri-sensor-service/v1/getSelectionData', function(req, res) {
 				res.write(params.key+';'+params.dateOrPeriod+';count;sensorType;sensorValue\n');
 			}
 		}
+		if (params.format == 'geojson') {
+		//	res.writeHead(200, {
+		//    'Content-Type': 'application/geo+json',
+		//    'Transfer-Encoding': 'chunked'
+		//  });
+		}
 		retrieveData(params, res);
 	} else {
 		res.send('[])'); // nothing asked, empty array returned.
@@ -374,12 +380,57 @@ var callAxios = function(options,res) {
 	axios.get(url,{ headers: headers })
 	.then(response => {
 		log("Records: "+response.data.length);
+		if (options.format == 'geojson') {
+			var geojsonOutput=[]
+			var geojsonRecIn = {};
+			for (var i=0;i<response.data.length;i++) {
+				geojsonRecIn = response.data[i];
+				// GPS must be available for geojson output
+				if (geojsonRecIn['gpsLat']!=undefined) {
+					var geojsonRecOut={}
+					geojsonRecOut.type='Feature'
+					geojsonRecOut.properties={}
+
+					geojsonRecOut.geometry={}
+					geojsonRecOut.geometry.type='Point'
+					geojsonRecOut.geometry.coordinates=[ geojsonRecIn['gpsLat'],geojsonRecIn['gpsLon'] ]
+
+					geojsonRecOut.properties.sensorId=_options.foiIdAlias
+					var _dateOrPeriod = geojsonRecIn.dateObserved?geojsonRecIn.dateObserved:geojsonRecIn._id.period; // period in case of aggregation;
+					geojsonRecOut.properties.date=_dateOrPeriod
+
+		//			var csvrec = '"'+_options.foiIdAlias+'";"'+_dateOrPeriod+'";'+rec.count;
+					for (var j=0;j<_options.ops.length;j++) {
+						var op = _options.ops[j];
+						if (geojsonRecIn[op.opId]!=undefined) {
+							if(geojsonRecIn[op.opId]!= 'NA' && geojsonRecIn[op.opId].value!= 'NA') {
+								var _value = geojsonRecIn[op.opId];
+								if (_value.value) {
+									_value = _value.value;
+								}
+								geojsonRecOut.properties[op.opIdAlias]=_value
+							}
+						}
+					}
+					geojsonOutput.push(geojsonRecOut)
+				}
+			}
+			_res.writeHead(200, {
+			  'Content-Type': 'application/geo+json',
+			  'Transfer-Encoding': 'chunked'
+			});
+			console.dir(geojsonOutput);
+			//_res.contentType('application/geo+json');
+			_res.write(JSON.stringify(geojsonOutput) )
+			_res.end();
+			return
+		}
 		if (options.format == 'json') {
 
 
 		} else { // csv output
 			var rec = '';
-			console.dir(response.data[1].atmosphericPressure)
+			//console.dir(response.data[1].atmosphericPressure)
 			for (var i=0;i<response.data.length;i++) {
 				rec = response.data[i];
 				//console.dir(rec);
