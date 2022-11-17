@@ -55,7 +55,18 @@ systemctl start SCAPE604-apri-sensor-service-scd30
 #mv /opt/SCAPE604/log/SCAPE604-apri-sensor-service-caire-hour.log /opt/SCAPE604/log/SCAPE604-apri-sensor-service-caire-hour-log2.log
 #systemctl start SCAPE604-apri-sensor-service-caire
 
+systemctl stop SCAPE604-apri-sensor-service-solar
+mv /opt/SCAPE604/log/SCAPE604-apri-sensor-service-solar.log /opt/SCAPE604/log/SCAPE604-apri-sensor-service-solar-log2.log
+#mv /opt/SCAPE604/log/SCAPE604-apri-sensor-service-solar-hour.log /opt/SCAPE604/log/SCAPE604-apri-sensor-service-solar-hour-log2.log
+systemctl start SCAPE604-apri-sensor-service-solar
+
+systemctl stop SCAPE604-apri-sensor-service-bam1020
+mv /opt/SCAPE604/log/SCAPE604-apri-sensor-service-bam1020.log /opt/SCAPE604/log/SCAPE604-apri-sensor-service-bam1020-log2.log
+#mv /opt/SCAPE604/log/SCAPE604-apri-sensor-service-bam1020-hour.log /opt/SCAPE604/log/SCAPE604-apri-sensor-service-bam1020-hour-log2.log
+systemctl start SCAPE604-apri-sensor-service-bam1020
+
 systemctl stop SCAPE604-apri-sensor-service-sensorselect
 mv /opt/SCAPE604/log/SCAPE604-apri-sensor-service-sensorselect.log /opt/SCAPE604/log/SCAPE604-apri-sensor-service-sensorselect-log2.log
+mv /opt/SCAPE604/log/apri-sensor-service-sensorselect_5050.log /opt/SCAPE604/log/apri-sensor-service-sensorselect_5050-log2.log
 systemctl start SCAPE604-apri-sensor-service-sensorselect
 
