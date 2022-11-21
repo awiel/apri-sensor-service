@@ -476,6 +476,15 @@ app.get('/' + sensorServiceName + '/v1/m', function (req, res) {
 		fiwareMap['pm25_min'] = 'pm25_min';
 		fiwareMap['pm25_max'] = 'pm25_max';
 	}
+
+	if (sensorServiceName == 'radiationd') {
+		fiwareMap['rad'] = 'rad';
+	}
+	if (sensorServiceName == 'radiationd_hour') {
+		fiwareMap['rad'] = 'rad';
+		fiwareMap['rad_min'] = 'rad_min';
+		fiwareMap['rad_max'] = 'rad_max';
+	}
 	//}
 
 	for (var i = 0; i < _categories.length; i++) {
