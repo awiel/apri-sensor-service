@@ -154,17 +154,17 @@ app.get('/' + sensorServiceName + '/v1/m', function (req, res) {
 
 
 	// add yearmonth to project/servicename
-	if (_serviceTarget.FiwareService.substring(-5) == '_hour') {
-		if (fiwareObject.dateObserved.substring(0, 10) < '2021-05-01') {
+	if (_serviceTarget.FiwareService.substr(-5) == '_hour') {
+		if (fiwareObject.dateObserved.substr(0, 10) < '2021-05-01') {
 			console.log(_serviceTarget.FiwareService)
 		} else {
-			console.log(_serviceTarget.FiwareService + fiwareObject.projectTarget + '_' + fiwareObject.dateObserved.substring(0, 4) + fiwareObject.dateObserved.substring(5, 2))
+			console.log(_serviceTarget.FiwareService + fiwareObject.projectTarget + '_' + fiwareObject.dateObserved.substr(0, 4) + fiwareObject.dateObserved.substr(5, 2))
 			fiwareObject.projectTarget = fiwareObject.projectTarget + '_' +
-				fiwareObject.dateObserved.substring(0, 4) + fiwareObject.dateObserved.substring(5, 2)
+				fiwareObject.dateObserved.substr(0, 4) + fiwareObject.dateObserved.substr(5, 2)
 		}
 	} else {
 		fiwareObject.projectTarget = fiwareObject.projectTarget + '_' +
-			fiwareObject.dateObserved.substring(0, 4) + fiwareObject.dateObserved.substring(5, 2)
+			fiwareObject.dateObserved.substr(0, 4) + fiwareObject.dateObserved.substr(5, 2)
 	}
 
 	logDir(fiwareObject);
@@ -502,8 +502,8 @@ app.get('/' + sensorServiceName + '/v1/m', function (req, res) {
 
 		//if (_categoryKeyValue.length>2) {
 		var pos = _category.indexOf(':')
-		var _categoryKey = _category.substring(0, pos)
-		var _categoryValue = _category.substring(pos + 1)
+		var _categoryKey = _category.substr(0, pos)
+		var _categoryValue = _category.substr(pos + 1)
 		//console.log('Debug ######## ' + _categoryKey +' ' + _categoryValue)
 
 		var _categoryId = _categoryKey
