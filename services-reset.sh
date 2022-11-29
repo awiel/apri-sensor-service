@@ -65,6 +65,10 @@ mv /opt/SCAPE604/log/SCAPE604-apri-sensor-service-bam1020.log /opt/SCAPE604/log/
 #mv /opt/SCAPE604/log/SCAPE604-apri-sensor-service-bam1020-hour.log /opt/SCAPE604/log/SCAPE604-apri-sensor-service-bam1020-hour-log2.log
 systemctl start SCAPE604-apri-sensor-service-bam1020
 
+systemctl stop SCAPE604-apri-sensor-service-pmsa003nm
+mv /opt/SCAPE604/log/SCAPE604-apri-sensor-service-pmsa003nm.log /opt/SCAPE604/log/SCAPE604-apri-sensor-service-pmsa003nm-log2.log
+systemctl start SCAPE604-apri-sensor-service-pmsa003nm
+
 systemctl stop SCAPE604-apri-sensor-service-sensorselect
 mv /opt/SCAPE604/log/SCAPE604-apri-sensor-service-sensorselect.log /opt/SCAPE604/log/SCAPE604-apri-sensor-service-sensorselect-log2.log
 mv /opt/SCAPE604/log/apri-sensor-service-sensorselect_5050.log /opt/SCAPE604/log/apri-sensor-service-sensorselect_5050-log2.log
