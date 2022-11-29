@@ -142,7 +142,8 @@ app.get('/' + sensorServiceName + '/v1/m', function (req, res) {
 	var fiwareObject = {};
 	fiwareObject.id = _foi + "_" + calType + "_" + dateObserved.toISOString();
 	fiwareObject.sensorId = _foi;
-	if (sensorServiceName == 'pmsa003nm') fiwareObject.projectTarget = '_NM';
+	fiwareObject.subSystemId = '';
+	if (sensorServiceName == 'pmsa003nm') fiwareObject.subSystemId = 'NM';
 	if (projectTarget[_foi] != undefined) fiwareObject.projectTarget = '_' + projectTarget[_foi]
 	else fiwareObject.projectTarget = ''
 	fiwareObject.type = "AirQualityObserved";  // default
@@ -630,7 +631,7 @@ var sendFiwareData = function (data, target, res) {
 	var headers = {
 		//'Content-Type': 				'application/json',
 		//'Content-Length': 			_data.length,
-		'Fiware-Service': _target.FiwareService + _data.projectTarget,
+		'Fiware-Service': _target.FiwareService + _data.subSystemId + _data.projectTarget,
 		'Fiware-ServicePath': _target.FiwareServicePath
 	}
 
