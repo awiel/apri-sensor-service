@@ -142,6 +142,7 @@ app.get('/' + sensorServiceName + '/v1/m', function (req, res) {
 	var fiwareObject = {};
 	fiwareObject.id = _foi + "_" + calType + "_" + dateObserved.toISOString();
 	fiwareObject.sensorId = _foi;
+	if (sensorServiceName == 'pmsa003nm') fiwareObject.projectTarget = '_NM';
 	if (projectTarget[_foi] != undefined) fiwareObject.projectTarget = '_' + projectTarget[_foi]
 	else fiwareObject.projectTarget = ''
 	fiwareObject.type = "AirQualityObserved";  // default
@@ -152,17 +153,17 @@ app.get('/' + sensorServiceName + '/v1/m', function (req, res) {
 
 
 	// add yearmonth to project/servicename
-	if (_serviceTarget.FiwareService.substr(-5) == '_hour') {
-		if (fiwareObject.dateObserved.substr(0, 10) < '2021-05-01') {
+	if (_serviceTarget.FiwareService.substring(-5) == '_hour') {
+		if (fiwareObject.dateObserved.substring(0, 10) < '2021-05-01') {
 			console.log(_serviceTarget.FiwareService)
 		} else {
-			console.log(_serviceTarget.FiwareService + fiwareObject.projectTarget + '_' + fiwareObject.dateObserved.substr(0, 4) + fiwareObject.dateObserved.substr(5, 2))
+			console.log(_serviceTarget.FiwareService + fiwareObject.projectTarget + '_' + fiwareObject.dateObserved.substring(0, 4) + fiwareObject.dateObserved.substring(5, 2))
 			fiwareObject.projectTarget = fiwareObject.projectTarget + '_' +
-				fiwareObject.dateObserved.substr(0, 4) + fiwareObject.dateObserved.substr(5, 2)
+				fiwareObject.dateObserved.substring(0, 4) + fiwareObject.dateObserved.substring(5, 2)
 		}
 	} else {
 		fiwareObject.projectTarget = fiwareObject.projectTarget + '_' +
-			fiwareObject.dateObserved.substr(0, 4) + fiwareObject.dateObserved.substr(5, 2)
+			fiwareObject.dateObserved.substring(0, 4) + fiwareObject.dateObserved.substring(5, 2)
 	}
 
 	logDir(fiwareObject);
@@ -485,6 +486,13 @@ app.get('/' + sensorServiceName + '/v1/m', function (req, res) {
 		fiwareMap['rad_min'] = 'rad_min';
 		fiwareMap['rad_max'] = 'rad_max';
 	}
+	if (sensorServiceName == 'pmsa003nm') {
+		fiwareMap['pm25cal'] = 'pm25cal';
+		fiwareMap['pm25'] = 'pm25';
+		fiwareMap['temperature'] = 'temperature';
+		fiwareMap['rHum'] = 'rHum';
+		fiwareMap['pressure'] = 'pressure';
+	}
 	//}
 
 	for (var i = 0; i < _categories.length; i++) {
@@ -493,8 +501,8 @@ app.get('/' + sensorServiceName + '/v1/m', function (req, res) {
 
 		//if (_categoryKeyValue.length>2) {
 		var pos = _category.indexOf(':')
-		var _categoryKey = _category.substr(0, pos)
-		var _categoryValue = _category.substr(pos + 1)
+		var _categoryKey = _category.substring(0, pos)
+		var _categoryValue = _category.substring(pos + 1)
 		//console.log('Debug ######## ' + _categoryKey +' ' + _categoryValue)
 
 		var _categoryId = _categoryKey
