@@ -110,9 +110,9 @@ app.get('/' + sensorServiceName + '/v1/m', function (req, res) {
 	} else {
 		_foi = req.query.foi;
 	}
-	log(_foi);
+	//log(_foi);
 
-	logDir(_query);
+	//logDir(_query);
 
 	var dateReceived = new Date();
 	var dateObserved;
@@ -167,7 +167,7 @@ app.get('/' + sensorServiceName + '/v1/m', function (req, res) {
 			fiwareObject.dateObserved.substr(0, 4) + fiwareObject.dateObserved.substr(5, 2)
 	}
 
-	logDir(fiwareObject);
+	//logDir(fiwareObject);
 
 	var _inputObservation = _query.observation;
 	var _categories = _inputObservation.split(',');
@@ -641,7 +641,7 @@ var sendFiwareData = function (data, target, res) {
 		data: _data,
 		config: { headers: headers }
 	}
-	console.log(axiosParams);
+	//console.log(axiosParams);
 	//	console.log(headers2);
 	axios.post(url, _data, { 'headers': headers })
 		.then(function (response) {
