@@ -58,8 +58,18 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 var projectTarget = {
 	'SCRP000000008b6eb7a5': 'purm'
-	//,'SCRP000000002006f3cd':'NLNB'
-	//,'SCRP000000009f9f226c':'RIVM'
+	,'SCRP000000009e652147':'sh'  // test CO2 sensor
+	,'SCRP000000009730402a':'sh'  // Almere
+	,'SCRP000000007d199115':'sh'  // Schoorl
+	,'SCRP00000000afd8eca3':'sh'  // Aalten 
+	,'SCRP000000000d1a69b1':'provGR' // Winschoten 2 provincie Groningen
+	,'SCRP000000009d9bfc64':'provGR' // Winschoten 1 provincie Groningen
+	,'SCRP00000000b90b0d72':'provDR' // Assen 1 provincie Drenthe 
+	,'SCRP000000001695843b':'provDR' // Assen 2 provincie Drenthe 
+	,'SCRP00000000ae100c03':'provDR' // Wilhelminaoord provincie Drenthe 
+	,'SCRP00000000f2fe0eed':'provFR' // Leeuwarden provincie Friesland 
+	,'SCRP00000000402f83a4':'provFR' // Rinsumageest provincie Friesland  
+	,'SCRP00000000ff477352':'provFR' // Wijnjewoude provincie Friesland  
 	//,'default':'2021'
 }
 
