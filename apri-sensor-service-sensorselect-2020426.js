@@ -21,7 +21,6 @@ var self = this;
 // **********************************************************************************
 
 // add module specific requires
-//var request 					= require('request');
 //const https							= require('https');
 var axios 							= require('axios');
 var express 						= require('express');
