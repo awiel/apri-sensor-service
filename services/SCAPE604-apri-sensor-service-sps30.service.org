@@ -1,5 +1,5 @@
 [Unit]
-Desription=SCAPE604-apri-sensor-service-sps30 - start or restart service, respawn
+Description=SCAPE604-apri-sensor-service-sps30 - start or restart service, respawn
 After=network.target
 [Service]
 ExecStart=/opt/SCAPE604/apri-sensor-service/apri-sensor-service-sps30.sh /opt/SCAPE604/log/SCAPE604-apri-sensor-service-sps30.log
