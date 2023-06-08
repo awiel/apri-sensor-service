@@ -62,14 +62,14 @@ var projectTarget = {
 	,'SCRP000000009730402a':'sh'  // Almere
 	,'SCRP000000007d199115':'sh'  // Schoorl
 	,'SCRP00000000afd8eca3':'sh'  // Aalten 
-	,'SCRP000000000d1a69b1':'provGR' // Winschoten 2 provincie Groningen
-	,'SCRP000000009d9bfc64':'provGR' // Winschoten 1 provincie Groningen
-	,'SCRP00000000b90b0d72':'provDR' // Assen 1 provincie Drenthe 
-	,'SCRP000000001695843b':'provDR' // Assen 2 provincie Drenthe 
-	,'SCRP00000000ae100c03':'provDR' // Wilhelminaoord provincie Drenthe 
-	,'SCRP00000000f2fe0eed':'provFR' // Leeuwarden provincie Friesland 
-	,'SCRP00000000402f83a4':'provFR' // Rinsumageest provincie Friesland  
-	,'SCRP00000000ff477352':'provFR' // Wijnjewoude provincie Friesland  
+	,'SCRP000000000d1a69b1':'provgr' // Winschoten 2 provincie Groningen
+	,'SCRP000000009d9bfc64':'provgr' // Winschoten 1 provincie Groningen
+	,'SCRP00000000b90b0d72':'provdr' // Assen 1 provincie Drenthe 
+	,'SCRP000000001695843b':'provdr' // Assen 2 provincie Drenthe 
+	,'SCRP00000000ae100c03':'provdr' // Wilhelminaoord provincie Drenthe 
+	,'SCRP00000000f2fe0eed':'provfr' // Leeuwarden provincie Friesland 
+	,'SCRP00000000402f83a4':'provfr' // Rinsumageest provincie Friesland  
+	,'SCRP00000000ff477352':'provfr' // Wijnjewoude provincie Friesland  
 	//,'default':'2021'
 }
 
@@ -503,6 +503,14 @@ app.get('/' + sensorServiceName + '/v1/m', function (req, res) {
 		fiwareMap['temperature'] = 'temperature';
 		fiwareMap['rHum'] = 'rHum';
 		fiwareMap['pressure'] = 'pressure';
+	}
+	if (sensorServiceName == 'nextpm') {
+		fiwareMap['part1'] = 'part1';
+		fiwareMap['part25'] = 'part25';
+		fiwareMap['part10'] = 'part10';
+		fiwareMap['pm1'] = 'pm1';
+		fiwareMap['pm25'] = 'pm25';
+		fiwareMap['pm10'] = 'pm10';
 	}
 	//}
 
