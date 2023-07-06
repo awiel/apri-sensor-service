@@ -533,7 +533,7 @@ app.get('/' + sensorServiceName + '/v1/m', function (req, res) {
 	//}
 
 
-	let observations = {}
+	let observation = {}
 	for (var i = 0; i < _categories.length; i++) {
 		var _category = _categories[i];
 		//var _categoryKeyValue		= _category.split(':');
@@ -557,10 +557,10 @@ app.get('/' + sensorServiceName + '/v1/m', function (req, res) {
 			//_fiWareCategoryId = _fiWareCategoryId;
 			//fiwareObject.unknown_obs[_fiWareCategoryId] = _categoryKeyValue[1];
 			fiwareObject[_fiWareCategoryId] = _categoryValue;
-			observations[_fiWareCategoryId] = _categoryResult;
+			observation[_fiWareCategoryId] = _categoryResult;
 		}
 	}
-	apriSensorObject.observations = observations
+	apriSensorObject.observation = observation
 
 	// send to fiware Orion service
 	sendFiwareData(fiwareObject, _serviceTarget, res);
