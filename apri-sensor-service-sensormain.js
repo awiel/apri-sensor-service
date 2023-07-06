@@ -552,7 +552,7 @@ app.get('/' + sensorServiceName + '/v1/m', function (req, res) {
 		if (fiwareMap[_fiWareCategoryId]) {
 			_fiWareCategoryId = fiwareMap[_fiWareCategoryId];
 			fiwareObject[_fiWareCategoryId] = _categoryResult;
-			observations[_fiWareCategoryId] = _categoryResult;
+			observation[_fiWareCategoryId] = _categoryResult;
 		} else {
 			//_fiWareCategoryId = _fiWareCategoryId;
 			//fiwareObject.unknown_obs[_fiWareCategoryId] = _categoryKeyValue[1];
