@@ -46,14 +46,14 @@ var _systemListenPort = apriSensorServiceConfig.getSystemListenPort();
 var _systemParameter = apriSensorServiceConfig.getConfigParameter();
 var _serviceTarget = apriSensorServiceConfig.getConfigServiceTarget();
 
-PUBLIC_API_VERSION = "v1"
-PUBLIC_PRODUCTION = "false"
-PUBLIC_ORIGIN = "http://localhost:5174"
-PUBLIC_APRISENSOR_URL_PROD = "http://localhost:3000"
-PUBLIC_APRISENSOR_URL_TESTxx = "http://localhost:5174"
-PUBLIC_APRISENSOR_URL_TESTx = "https://aprisensor-api-v1.openiod.org:3100"
-PUBLIC_APRISENSOR_URL_TEST = "https://aprisensor-api-v1.openiod.org"
-ORIGIN = "https://dataportaal.openiod.org:3000"
+let PUBLIC_API_VERSION = "v1"
+let PUBLIC_PRODUCTION = "false"
+let PUBLIC_ORIGIN = "http://localhost:5174"
+let PUBLIC_APRISENSOR_URL_PROD = "http://localhost:3000"
+let PUBLIC_APRISENSOR_URL_TESTxx = "http://localhost:5174"
+let PUBLIC_APRISENSOR_URL_TESTx = "https://aprisensor-api-v1.openiod.org:3100"
+let PUBLIC_APRISENSOR_URL_TEST = "https://aprisensor-api-v1.openiod.org"
+let ORIGIN = "https://dataportaal.openiod.org:3000"
 
 var app = express();
 
