@@ -616,10 +616,11 @@ var sendApriSensorData = function (data ) {
 		}
 	};
 
+
 	var formBody = [];
 	for (var property in data) {
 		var encodedKey = encodeURIComponent(property);
-		var encodedValue = encodeURIComponent(postObject[property]);
+		var encodedValue = encodeURIComponent(data[property]);
 		formBody.push(encodedKey + "=" + encodedValue);
 	}
 	var formBodyStr = formBody.join("&");
