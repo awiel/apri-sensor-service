@@ -171,6 +171,14 @@ app.get('/' + sensorServiceName + '/v1/m', function (req, res) {
 	fiwareObject.dateReceived = dateReceived.toISOString();
 	fiwareObject.dateObserved = dateObserved.toISOString();
 
+	var apriSensorObject = {};
+	apriSensorObject.sensorId = _foi
+	apriSensorObject.dateObserved = dateObserved.toISOString()
+	//if (sensorServiceName == 'pmsa003nm') fiwareObject.subSystemId = 'NM';
+	if (projectTarget[_foi] != undefined) apriSensorObject.dbGroup = projectTarget[_foi]
+	else apriSensorObject.dbGroup = ''
+	apriSensorObject.dateReceived = dateReceived.toISOString();
+	apriSensorObject.dateObserved = dateObserved.toISOString();
 
 	// add yearmonth to project/servicename
 	if (_serviceTarget.FiwareService.substr(-5) == '_hour') {
@@ -523,6 +531,8 @@ app.get('/' + sensorServiceName + '/v1/m', function (req, res) {
 	}
 	//}
 
+	
+	let observations = {}
 	for (var i = 0; i < _categories.length; i++) {
 		var _category = _categories[i];
 		//var _categoryKeyValue		= _category.split(':');
@@ -541,18 +551,22 @@ app.get('/' + sensorServiceName + '/v1/m', function (req, res) {
 		if (fiwareMap[_fiWareCategoryId]) {
 			_fiWareCategoryId = fiwareMap[_fiWareCategoryId];
 			fiwareObject[_fiWareCategoryId] = _categoryResult;
+			observations[_fiWareCategoryId] = _categoryResult;
 		} else {
 			//_fiWareCategoryId = _fiWareCategoryId;
 			//fiwareObject.unknown_obs[_fiWareCategoryId] = _categoryKeyValue[1];
 			fiwareObject[_fiWareCategoryId] = _categoryValue;
+			observations[_fiWareCategoryId] = _categoryResult;
 		}
 	}
+	apriSensorObject[sensorServiceName]=observations
+
 	// send to fiware Orion service
 	sendFiwareData(fiwareObject, _serviceTarget, res);
 
 	// send to OpenIoD / ApriSensor service
 	if (fiwareObject.sensorId == 'SCRP000000008b6eb7a5') {
-		sendApriSensorData(fiwareObject);
+		sendApriSensorData(apriSensorObject);
 	}
 });
 
@@ -598,7 +612,7 @@ app.get('/*', function (req, res) {
 });
 
 
-var sendApriSensorData = function (data ) {
+var sendApriSensorData = function (data) {
 
 	var urlEndpoint = '';
 	if (PUBLIC_PRODUCTION == 'false') {
@@ -616,22 +630,22 @@ var sendApriSensorData = function (data ) {
 		}
 	};
 
-/*
-	var formBody = [];
-	for (var property in data) {
-		var encodedKey = encodeURIComponent(property);
-		var encodedValue = encodeURIComponent(data[property]);
-		formBody.push(encodedKey + "=" + encodedValue);
-	}
-	var formBodyStr = formBody.join("&");
-*/
+	/*
+		var formBody = [];
+		for (var property in data) {
+			var encodedKey = encodeURIComponent(property);
+			var encodedValue = encodeURIComponent(data[property]);
+			formBody.push(encodedKey + "=" + encodedValue);
+		}
+		var formBodyStr = formBody.join("&");
+	*/
 	var init = {
 		method: 'POST',
 		headers: {
 			accept: 'application/json',
 			'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
 		},
-//		body: JSON.stringify(formBodyStr)
+		//		body: JSON.stringify(formBodyStr)
 		body: JSON.stringify(data)
 	};
 
