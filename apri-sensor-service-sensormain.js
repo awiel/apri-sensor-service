@@ -175,8 +175,8 @@ app.get('/' + sensorServiceName + '/v1/m', function (req, res) {
 	apriSensorObject.sensorId = _foi
 	apriSensorObject.dateObserved = dateObserved.toISOString()
 	//if (sensorServiceName == 'pmsa003nm') fiwareObject.subSystemId = 'NM';
-	if (projectTarget[_foi] != undefined) apriSensorObject.dbGroup = projectTarget[_foi]
-	else apriSensorObject.dbGroup = ''
+	//if (projectTarget[_foi] != undefined) apriSensorObject.dbGroup = projectTarget[_foi]
+	//else apriSensorObject.dbGroup = ''
 	apriSensorObject.dateReceived = dateReceived.toISOString();
 	apriSensorObject.dateObserved = dateObserved.toISOString();
 	apriSensorObject.sensorType = sensorServiceName
