@@ -632,7 +632,7 @@ var sendApriSensorData = function (data ) {
 			'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
 		},
 //		body: JSON.stringify(formBodyStr)
-		body: data
+		body: JSON.stringify(data)
 	};
 
 	fetch(urlEndpoint, init)
