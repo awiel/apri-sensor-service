@@ -549,7 +549,7 @@ app.get('/' + sensorServiceName + '/v1/m', function (req, res) {
 	}
 	// send to fiware Orion service
 	sendFiwareData(fiwareObject, _serviceTarget, res);
-	
+
 	// send to OpenIoD / ApriSensor service
 	if (fiwareObject.sensorId == 'SCRP000000008b6eb7a5') {
 		sendApriSensorData(fiwareObject);
@@ -618,8 +618,8 @@ var sendApriSensorData = function (data ) {
 
 	var formBody = [];
 	for (var property in data) {
-		var encodedKey: string = encodeURIComponent(property);
-		var encodedValue: string = encodeURIComponent(postObject[property]);
+		var encodedKey = encodeURIComponent(property);
+		var encodedValue = encodeURIComponent(postObject[property]);
 		formBody.push(encodedKey + "=" + encodedValue);
 	}
 	var formBodyStr = formBody.join("&");
