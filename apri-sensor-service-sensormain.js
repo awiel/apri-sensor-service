@@ -46,6 +46,15 @@ var _systemListenPort = apriSensorServiceConfig.getSystemListenPort();
 var _systemParameter = apriSensorServiceConfig.getConfigParameter();
 var _serviceTarget = apriSensorServiceConfig.getConfigServiceTarget();
 
+PUBLIC_API_VERSION = "v1"
+PUBLIC_PRODUCTION = "false"
+PUBLIC_ORIGIN = "http://localhost:5174"
+PUBLIC_APRISENSOR_URL_PROD = "http://localhost:3000"
+PUBLIC_APRISENSOR_URL_TESTxx = "http://localhost:5174"
+PUBLIC_APRISENSOR_URL_TESTx = "https://aprisensor-api-v1.openiod.org:3100"
+PUBLIC_APRISENSOR_URL_TEST = "https://aprisensor-api-v1.openiod.org"
+ORIGIN = "https://dataportaal.openiod.org:3000"
+
 var app = express();
 
 var sensorServiceName = argv.sensor;
@@ -58,18 +67,18 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 var projectTarget = {
 	'SCRP000000008b6eb7a5': 'purm'
-	,'SCRP000000009e652147':'sh'  // test CO2 sensor
-	,'SCRP000000009730402a':'sh'  // Almere
-	,'SCRP000000007d199115':'sh'  // Schoorl
-	,'SCRP00000000afd8eca3':'sh'  // Aalten 
-	,'SCRP000000000d1a69b1':'provgr' // Winschoten 2 provincie Groningen
-	,'SCRP000000009d9bfc64':'provgr' // Winschoten 1 provincie Groningen
-	,'SCRP00000000b90b0d72':'provdr' // Assen 1 provincie Drenthe 
-	,'SCRP000000001695843b':'provdr' // Assen 2 provincie Drenthe 
-	,'SCRP00000000ae100c03':'provdr' // Wilhelminaoord provincie Drenthe 
-	,'SCRP00000000f2fe0eed':'provfr' // Leeuwarden provincie Friesland 
-	,'SCRP00000000402f83a4':'provfr' // Rinsumageest provincie Friesland  
-	,'SCRP00000000ff477352':'provfr' // Wijnjewoude provincie Friesland  
+	, 'SCRP000000009e652147': 'sh'  // test CO2 sensor
+	, 'SCRP000000009730402a': 'sh'  // Almere
+	, 'SCRP000000007d199115': 'sh'  // Schoorl
+	, 'SCRP00000000afd8eca3': 'sh'  // Aalten 
+	, 'SCRP000000000d1a69b1': 'provgr' // Winschoten 2 provincie Groningen
+	, 'SCRP000000009d9bfc64': 'provgr' // Winschoten 1 provincie Groningen
+	, 'SCRP00000000b90b0d72': 'provdr' // Assen 1 provincie Drenthe 
+	, 'SCRP000000001695843b': 'provdr' // Assen 2 provincie Drenthe 
+	, 'SCRP00000000ae100c03': 'provdr' // Wilhelminaoord provincie Drenthe 
+	, 'SCRP00000000f2fe0eed': 'provfr' // Leeuwarden provincie Friesland 
+	, 'SCRP00000000402f83a4': 'provfr' // Rinsumageest provincie Friesland  
+	, 'SCRP00000000ff477352': 'provfr' // Wijnjewoude provincie Friesland  
 	//,'default':'2021'
 }
 
@@ -538,7 +547,13 @@ app.get('/' + sensorServiceName + '/v1/m', function (req, res) {
 			fiwareObject[_fiWareCategoryId] = _categoryValue;
 		}
 	}
+	// send to fiware Orion service
 	sendFiwareData(fiwareObject, _serviceTarget, res);
+	
+	// send to OpenIoD / ApriSensor service
+	if (fiwareObject.sensorId == 'SCRP000000008b6eb7a5') {
+		sendApriSensorData(fiwareObject);
+	}
 });
 
 
@@ -581,6 +596,46 @@ app.get('/*', function (req, res) {
 	res.send('');
 	return;
 });
+
+
+var sendApriSensorData = function (data ) {
+
+	var urlEndpoint = '';
+	if (PUBLIC_PRODUCTION == 'false') {
+		urlEndpoint = PUBLIC_APRISENSOR_URL_TEST;
+	} else {
+		urlEndpoint = PUBLIC_APRISENSOR_URL_PROD;
+	}
+	urlEndpoint = urlEndpoint + '/' + PUBLIC_API_VERSION + '/observations'
+
+	var init = {
+		method: 'POST',
+		headers: {
+			accept: 'application/json',
+			'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+		}
+	};
+
+	var formBody = [];
+	for (var property in data) {
+		var encodedKey: string = encodeURIComponent(property);
+		var encodedValue: string = encodeURIComponent(postObject[property]);
+		formBody.push(encodedKey + "=" + encodedValue);
+	}
+	var formBodyStr = formBody.join("&");
+
+	var init = {
+		method: 'POST',
+		headers: {
+			accept: 'application/json',
+			'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+		},
+		body: JSON.stringify(formBodyStr)
+	};
+
+	fetch(urlEndpoint, init)
+	//return await ;
+};
 
 var sendFiwareData = function (data, target, res) {
 	//var _data = JSON.stringify(data);
