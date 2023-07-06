@@ -616,7 +616,7 @@ var sendApriSensorData = function (data ) {
 		}
 	};
 
-
+/*
 	var formBody = [];
 	for (var property in data) {
 		var encodedKey = encodeURIComponent(property);
@@ -624,14 +624,15 @@ var sendApriSensorData = function (data ) {
 		formBody.push(encodedKey + "=" + encodedValue);
 	}
 	var formBodyStr = formBody.join("&");
-
+*/
 	var init = {
 		method: 'POST',
 		headers: {
 			accept: 'application/json',
 			'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
 		},
-		body: JSON.stringify(formBodyStr)
+//		body: JSON.stringify(formBodyStr)
+		body: data
 	};
 
 	fetch(urlEndpoint, init)
