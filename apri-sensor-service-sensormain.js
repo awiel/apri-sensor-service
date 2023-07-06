@@ -179,6 +179,7 @@ app.get('/' + sensorServiceName + '/v1/m', function (req, res) {
 	else apriSensorObject.dbGroup = ''
 	apriSensorObject.dateReceived = dateReceived.toISOString();
 	apriSensorObject.dateObserved = dateObserved.toISOString();
+	apriSensorObject.sensorType = sensorServiceName
 
 	// add yearmonth to project/servicename
 	if (_serviceTarget.FiwareService.substr(-5) == '_hour') {
@@ -531,7 +532,7 @@ app.get('/' + sensorServiceName + '/v1/m', function (req, res) {
 	}
 	//}
 
-	
+
 	let observations = {}
 	for (var i = 0; i < _categories.length; i++) {
 		var _category = _categories[i];
@@ -559,7 +560,7 @@ app.get('/' + sensorServiceName + '/v1/m', function (req, res) {
 			observations[_fiWareCategoryId] = _categoryResult;
 		}
 	}
-	apriSensorObject[sensorServiceName]=observations
+	apriSensorObject.observations = observations
 
 	// send to fiware Orion service
 	sendFiwareData(fiwareObject, _serviceTarget, res);
