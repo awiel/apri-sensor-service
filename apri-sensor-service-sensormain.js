@@ -566,9 +566,9 @@ app.get('/' + sensorServiceName + '/v1/m', function (req, res) {
 	sendFiwareData(fiwareObject, _serviceTarget, res);
 
 	// send to OpenIoD / ApriSensor service
-	if (fiwareObject.sensorId == 'SCRP000000008b6eb7a5') {
-		sendApriSensorData(apriSensorObject);
-	}
+	//if (fiwareObject.sensorId == 'SCRP000000008b6eb7a5') {
+	sendApriSensorData(apriSensorObject);
+	//}
 });
 
 
