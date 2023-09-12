@@ -140,6 +140,8 @@ app.get('/'+sensorServiceName+'/v1/m', function(req, res) {
 	var fiwareMap	= {};
 	fiwareMap.unknown_obs 		= {};
 	fiwareMap['part']	= 'part';
+	fiwareMap['lat']	= 'lat';
+	fiwareMap['lon']	= 'lon';
 
 	for (var i = 0;i<_categories.length;i++) {
 		var _category				= _categories[i];
