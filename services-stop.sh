@@ -1,13 +1,8 @@
 
-#systemctl stop SCAPE604-apri-sensor-service-pmsa003
-#systemctl stop SCAPE604-apri-sensor-service-sps30
-#systemctl stop SCAPE604-apri-sensor-service-ds18b20
-#systemctl stop SCAPE604-apri-sensor-service-bme680
-
-
 #systemctl stop SCAPE604-apri-sensor-service-arduinobin.service
 systemctl stop SCAPE604-apri-sensor-service-ds18b20.service
 systemctl stop SCAPE604-apri-sensor-service-ds18b20-hour.service
+systemctl stop SCAPE604-apri-sensor-service-pms7003.service
 systemctl stop SCAPE604-apri-sensor-service-pmsa003.service
 systemctl stop SCAPE604-apri-sensor-service-pmsa003-hour.service
 systemctl stop SCAPE604-apri-sensor-service-pmsa003-wsaqi.service

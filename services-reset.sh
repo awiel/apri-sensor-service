@@ -10,6 +10,12 @@ mv /opt/SCAPE604/log/SCAPE604-apri-sensor-service-pmsa003.log /opt/SCAPE604/log/
 #mv /opt/SCAPE604/log/SCAPE604-apri-sensor-service-pmsa003-wsaqi.log /opt/SCAPE604/log/SCAPE604-apri-sensor-service-pmsa003-wsaqi-log2.log
 systemctl start SCAPE604-apri-sensor-service-pmsa003
 
+systemctl stop SCAPE604-apri-sensor-service-pms7003
+mv /opt/SCAPE604/log/SCAPE604-apri-sensor-service-pms7003.log /opt/SCAPE604/log/SCAPE604-apri-sensor-service-pms7003-log2.log
+#mv /opt/SCAPE604/log/SCAPE604-apri-sensor-service-pms7003-hour.log /opt/SCAPE604/log/SCAPE604-apri-sensor-service-pms7003-hour-log2.log
+#mv /opt/SCAPE604/log/SCAPE604-apri-sensor-service-pms7003-wsaqi.log /opt/SCAPE604/log/SCAPE604-apri-sensor-service-pms7003-wsaqi-log2.log
+systemctl start SCAPE604-apri-sensor-service-pms7003
+
 systemctl stop SCAPE604-apri-sensor-service-tsi3007
 mv /opt/SCAPE604/log/SCAPE604-apri-sensor-service-tsi3007.log /opt/SCAPE604/log/SCAPE604-apri-sensor-service-tsi3007-log2.log
 #mv /opt/SCAPE604/log/SCAPE604-apri-sensor-service-tsi3007-hour.log /opt/SCAPE604/log/SCAPE604-apri-sensor-service-tsi3007-hour-log2.log
