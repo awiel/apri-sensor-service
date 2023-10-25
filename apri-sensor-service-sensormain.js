@@ -232,6 +232,20 @@ app.get('/' + sensorServiceName + '/v1/m', function (req, res) {
 		fiwareMap['raw5_0'] = 'raw5_0';
 		fiwareMap['raw10_0'] = 'raw10_0';
 	}
+	if (sensorServiceName == 'pms7003') {
+		fiwareMap['pm1'] = 'pm1';
+		fiwareMap['pm25'] = 'pm25';
+		fiwareMap['pm10'] = 'pm10';
+		fiwareMap['pm1amb'] = 'pm1amb';
+		fiwareMap['pm25amb'] = 'pm25amb';
+		fiwareMap['pm10amb'] = 'pm10amb';
+		fiwareMap['raw0_3'] = 'raw0_3';
+		fiwareMap['raw0_5'] = 'raw0_5';
+		fiwareMap['raw1_0'] = 'raw1_0';
+		fiwareMap['raw2_5'] = 'raw2_5';
+		fiwareMap['raw5_0'] = 'raw5_0';
+		fiwareMap['raw10_0'] = 'raw10_0';
+	}
 	if (sensorServiceName == 'pmsa003_hour') {
 		fiwareMap['count'] = 'count';
 		fiwareMap['pm1'] = 'pm1';
