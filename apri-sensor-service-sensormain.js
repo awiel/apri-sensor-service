@@ -641,13 +641,13 @@ var sendApriSensorData = function (data) {
 	}
 	urlEndpoint = urlEndpoint + '/' + PUBLIC_API_VERSION + '/observations'
 
-	var init = {
-		method: 'POST',
-		headers: {
-			accept: 'application/json',
-			'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
-		}
-	};
+	//var init = {
+	//	method: 'POST',
+	//	headers: {
+	//		accept: 'application/json',
+	//		'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+	//	}
+	//};
 
 	/*
 		var formBody = [];
@@ -683,23 +683,6 @@ var sendApriSensorData2 = function (data, res) {
 	}
 	urlEndpoint = urlEndpoint + '/' + PUBLIC_API_VERSION + '/observations'
 
-	var init = {
-		method: 'POST',
-		headers: {
-			accept: 'application/json',
-			'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
-		}
-	};
-
-	/*
-		var formBody = [];
-		for (var property in data) {
-			var encodedKey = encodeURIComponent(property);
-			var encodedValue = encodeURIComponent(data[property]);
-			formBody.push(encodedKey + "=" + encodedValue);
-		}
-		var formBodyStr = formBody.join("&");
-	*/
 	var init = {
 		method: 'POST',
 		headers: {
