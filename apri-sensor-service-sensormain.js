@@ -697,7 +697,11 @@ var sendApriSensorData2 = function (data, res) {
 		.then(function (response) {
 			logDir(response.status)
 			var result = {}
-			result.status = response.status
+			if (response.status == 200) {
+				result.status = 201 // ApriSensor expects 201 when ok
+			} else {
+				result.status = response.status
+			}
 			result.statusDesc = response.statusDesc
 			result.statusData = response.data
 			_res.contentType('application/json')
