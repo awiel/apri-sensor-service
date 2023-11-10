@@ -75,6 +75,10 @@ systemctl stop SCAPE604-apri-sensor-service-pmsa003nm
 mv /opt/SCAPE604/log/SCAPE604-apri-sensor-service-pmsa003nm.log /opt/SCAPE604/log/SCAPE604-apri-sensor-service-pmsa003nm-log2.log
 systemctl start SCAPE604-apri-sensor-service-pmsa003nm
 
+systemctl stop SCAPE604-apri-sensor-service-nextpm
+mv /opt/SCAPE604/log/SCAPE604-apri-sensor-service-nextpm.log /opt/SCAPE604/log/SCAPE604-apri-sensor-service-nextpm-log2.log
+systemctl start SCAPE604-apri-sensor-service-nextpm
+
 systemctl stop SCAPE604-apri-sensor-service-sensorselect
 mv /opt/SCAPE604/log/SCAPE604-apri-sensor-service-sensorselect.log /opt/SCAPE604/log/SCAPE604-apri-sensor-service-sensorselect-log2.log
 mv /opt/SCAPE604/log/apri-sensor-service-sensorselect_5050.log /opt/SCAPE604/log/apri-sensor-service-sensorselect_5050-log2.log

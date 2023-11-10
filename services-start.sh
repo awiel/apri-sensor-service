@@ -37,6 +37,8 @@ mv /opt/SCAPE604/log/SCAPE604-apri-sensor-service-scd30.log /opt/SCAPE604/log/SC
 #mv /opt/SCAPE604/log/SCAPE604-apri-sensor-service-caire.log /opt/SCAPE604/log/SCAPE604-apri-sensor-service-caire-log2.log
 #mv /opt/SCAPE604/log/SCAPE604-apri-sensor-service-caire-hour.log /opt/SCAPE604/log/SCAPE604-apri-sensor-service-caire-hour-log2.log
 
+mv /opt/SCAPE604/log/SCAPE604-apri-sensor-service-nextpm.log /opt/SCAPE604/log/SCAPE604-apri-sensor-service-nextpm-log2.log
+
 
 #systemctl start SCAPE604-apri-sensor-service-arduinobin.service
 systemctl start SCAPE604-apri-sensor-service-ds18b20.service
@@ -72,8 +74,10 @@ systemctl start SCAPE604-apri-sensor-service-scd30.service
 systemctl start SCAPE604-apri-sensor-service-scd30-hour.service
 #systemctl start SCAPE604-openiod-fiware-connect-josene.service
 
-systemctl start SCAPE604-apri-sensor-service-caire.service
-systemctl start SCAPE604-apri-sensor-service-caire-hour.service
+#systemctl start SCAPE604-apri-sensor-service-caire.service
+#systemctl start SCAPE604-apri-sensor-service-caire-hour.service
 #systemctl start SCAPE604-openiod-fiware-connect-server-knmi.service
 
 #systemctl start SCAPE604-openiod-fiware-connect-ttn-arbaminch.service
+
+systemctl start SCAPE604-apri-sensor-service-nextpm.service

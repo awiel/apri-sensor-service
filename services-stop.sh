@@ -38,3 +38,6 @@ systemctl stop SCAPE604-apri-sensor-service-caire-hour.service
 #systemctl stop SCAPE604-openiod-fiware-connect-server-knmi.service
 
 #systemctl stop SCAPE604-openiod-fiware-connect-ttn-arbaminch.service
+
+systemctl stop SCAPE604-apri-sensor-service-nextpm.service
+
