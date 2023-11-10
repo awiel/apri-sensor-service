@@ -577,12 +577,16 @@ app.get('/' + sensorServiceName + '/v1/m', function (req, res) {
 	apriSensorObject.observation = observation
 
 	// send to fiware Orion service
-	sendFiwareData(fiwareObject, _serviceTarget, res);
+	if (fiwareObject.sensorId != 'SCRP000000008b6eb7a5') {
+		sendFiwareData(fiwareObject, _serviceTarget, res);
+	}
 
 	// send to OpenIoD / ApriSensor service
-	//if (fiwareObject.sensorId == 'SCRP000000008b6eb7a5') {
-	sendApriSensorData(apriSensorObject);
-	//}
+	if (fiwareObject.sensorId != 'SCRP000000008b6eb7a5') {
+		sendApriSensorData(apriSensorObject);
+	} else {
+		sendApriSensorData2(apriSensorObject, res);
+	}
 });
 
 
@@ -667,6 +671,87 @@ var sendApriSensorData = function (data) {
 	fetch(urlEndpoint, init)
 	//return await ;
 };
+
+var sendApriSensorData2 = function (data, res) {
+	var _res = res;
+
+	var urlEndpoint = '';
+	if (PUBLIC_PRODUCTION == 'false') {
+		urlEndpoint = PUBLIC_APRISENSOR_URL_TEST;
+	} else {
+		urlEndpoint = PUBLIC_APRISENSOR_URL_PROD;
+	}
+	urlEndpoint = urlEndpoint + '/' + PUBLIC_API_VERSION + '/observations'
+
+	var init = {
+		method: 'POST',
+		headers: {
+			accept: 'application/json',
+			'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+		}
+	};
+
+	/*
+		var formBody = [];
+		for (var property in data) {
+			var encodedKey = encodeURIComponent(property);
+			var encodedValue = encodeURIComponent(data[property]);
+			formBody.push(encodedKey + "=" + encodedValue);
+		}
+		var formBodyStr = formBody.join("&");
+	*/
+	var init = {
+		method: 'POST',
+		headers: {
+			accept: 'application/json',
+			'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+		},
+		//		body: JSON.stringify(formBodyStr)
+		body: JSON.stringify(data)
+	};
+
+	fetch(urlEndpoint, init)
+		.then(function (response) {
+			logDir(response.status)
+			var result = {}
+			result.status = response.status
+			result.statusDesc = response.statusDesc
+			result.statusData = response.data
+			_res.contentType('application/json')
+			_res.send(result);
+		})
+		.catch(function (error) {
+			var result = {};
+			if (error.response) {
+				logDir(error.response.status)
+				logDir(error.response.statusTekst)
+				logDir(error.response.data)
+				result.status = error.response.status
+				result.statusDesc = error.response.statusDesc
+				result.statusData = error.response.data
+				// The request was made and the server responded with a status code
+				// that falls out of the range of 2xx
+				//      console.log(error.response.data);
+				//      console.log(error.response.status);
+				//      console.log(error.response.headers);
+			} else if (error.request) {
+				result.request = error.request;
+				// The request was made but no response was received
+				// `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+				// http.ClientRequest in node.js
+				console.log('Error request: ' + error.request);
+			} else {
+				// Something happened in setting up the request that triggered an Error
+				console.log('Error message', error.message);
+				result.message = error.message;
+			}
+
+			_res.contentType('application/json');
+			logDir(result)
+			_res.send(result);
+		})
+}
+
 
 var sendFiwareData = function (data, target, res) {
 	//var _data = JSON.stringify(data);
