@@ -909,7 +909,7 @@ var sendFiwareData = function (data, target, res) {
 			}
 
 			_res.contentType('application/json');
-			logDir(result)
+			//logDir(result)
 			_res.send(result);
 			//			 'serviceStatus': error.response.status,
 			//			 'serviceStatusTekst': error.response.statusTekst,
