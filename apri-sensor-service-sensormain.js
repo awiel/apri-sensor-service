@@ -891,8 +891,9 @@ var sendFiwareData = function (data, target, res) {
 					url: url,
 					data: _data,
 					headers: headers,
-					status: error.response.status,
-					error: error
+					status: error.response?.data?.status,
+					statusData: error.response?.data?.statusData,
+					error: error.response?.data?.statusData?.description
 				}
 				var fileName = _data.sensorId + "#" + _data.dateObserved.substr(0, 10)
 				try {
