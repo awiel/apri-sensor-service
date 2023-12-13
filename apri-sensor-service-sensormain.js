@@ -38,6 +38,7 @@ var self = this;
 var axios = require('axios');
 var express = require('express');
 var bodyParser = require('body-parser');
+const fs = require('node:fs');
 
 var _systemCode = apriSensorServiceConfig.getSystemCode();
 var _systemFolderParent = apriSensorServiceConfig.getSystemFolderParent();
@@ -64,6 +65,8 @@ var sensorServiceName = argv.sensor;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+
+var messagesPath = _systemFolderParent+"/apri-sensor-service-messages"
 
 var projectTarget = {
 	'SCRP000000008b6eb7a5': 'purm'
@@ -831,6 +834,20 @@ var sendFiwareData = function (data, target, res) {
 			result.statusData = response.data
 			_res.contentType('application/json')
 			_res.send(result);
+
+			var message = {
+				url: url,
+				data: _data,
+				headers: headers,
+				status: response.status
+			}
+			var fileName = _data.sensorId + "#" + _data.dateObserved.substr(0, 10)
+			try {
+				fs.appendFileSync(messagesPath+"/fiware/"+fileName, JSON.stringify(message));
+				// file written successfully
+			  } catch (err) {
+				console.error(err);
+			  }
 		})
 		.catch(function (error) {
 			var result = {};
@@ -859,6 +876,21 @@ var sendFiwareData = function (data, target, res) {
 				result.message = error.message;
 			}
 			//    console.log(error.config);
+
+			var message = {
+				url: url,
+				data: _data,
+				headers: headers,
+				status: response.status,
+				error:error
+			}
+			var fileName = _data.sensorId + "#" + _data.dateObserved.substr(0, 10)
+			try {
+				fs.appendFileSync(messagesPath+"/fiware/"+fileName, JSON.stringify(message));
+				// file written successfully
+			  } catch (err) {
+				console.error(err);
+			  }
 
 
 			_res.contentType('application/json');
