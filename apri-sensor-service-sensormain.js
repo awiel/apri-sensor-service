@@ -836,7 +836,7 @@ var sendFiwareData = function (data, target, res) {
 			_res.send(result);
 
 			if (response.status != 201) {
-				if (_data.sensorId == "SCRP0000000006bbfc5f") {
+				//if (_data.sensorId == "SCRP0000000006bbfc5f") {
 
 				var message = {
 					url: url,
@@ -852,7 +852,7 @@ var sendFiwareData = function (data, target, res) {
 					console.error(err);
 				}
 
-				}
+				//}
 
 			}
 		})
@@ -886,22 +886,22 @@ var sendFiwareData = function (data, target, res) {
 
 			//if (response.status != 201) {
 
-				if (_data.sensorId == "SCRP0000000006bbfc5f") {
-				var message = {
-					url: url,
-					data: _data,
-					headers: headers,
-					status: response.status,
-					error: error
-				}
-				var fileName = _data.sensorId + "#" + _data.dateObserved.substr(0, 10)
-				try {
-					fs.appendFileSync(messagesPath + "/fiware/" + fileName, JSON.stringify(message));
-					// file written successfully
-				} catch (err) {
-					console.error(err);
-				}
-				}
+			//if (_data.sensorId == "SCRP0000000006bbfc5f") {
+			var message = {
+				url: url,
+				data: _data,
+				headers: headers,
+				status: error.response.status,
+				error: error
+			}
+			var fileName = _data.sensorId + "#" + _data.dateObserved.substr(0, 10)
+			try {
+				fs.appendFileSync(messagesPath + "/fiware/" + fileName, JSON.stringify(message));
+				// file written successfully
+			} catch (err) {
+				console.error(err);
+			}
+			//}
 			//}
 			_res.contentType('application/json');
 			logDir(result)
