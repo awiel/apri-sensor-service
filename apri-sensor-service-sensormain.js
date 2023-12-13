@@ -884,19 +884,19 @@ var sendFiwareData = function (data, target, res) {
 			}
 			//    console.log(error.config);
 
-			if (error.response?.data?.status == 422 && error.response?.data?.statusData?.description == "Already Exists") {
+			if (error.response?.status == 422 && error.response?.data?.description == "Already Exists") {
+				console.log('422 no problem')
 			} else {
 				console.log('fiware catch')
-				console.log(url)
+				//console.log(url)
 				console.log(error)
 				//if (_data.sensorId == "SCRP0000000006bbfc5f") {
 				var message = {
 					url: url,
 					data: _data,
 					headers: headers,
-					status: error.response?.data?.status,
-					statusData: error.response?.data?.statusData,
-					error: error.response?.data?.statusData?.description
+					status: error.response?.status,
+					statusData: error.response?.data
 				}
 				var fileName = _data.sensorId + "#" + _data.dateObserved.substr(0, 10)
 				try {
