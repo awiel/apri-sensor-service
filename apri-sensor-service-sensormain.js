@@ -885,6 +885,7 @@ var sendFiwareData = function (data, target, res) {
 			//    console.log(error.config);
 
 			if (error.response?.data?.status == 422 && error.response?.data?.statusData?.description == "Already Exists") {
+			} else {
 
 				//if (_data.sensorId == "SCRP0000000006bbfc5f") {
 				var message = {
