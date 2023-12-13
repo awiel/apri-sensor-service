@@ -884,25 +884,26 @@ var sendFiwareData = function (data, target, res) {
 			}
 			//    console.log(error.config);
 
-			//if (response.status != 201) {
+			if (error.response?.data?.status == 422 && error.response?.data?.statusData?.description == "Already Exists") {
 
-			//if (_data.sensorId == "SCRP0000000006bbfc5f") {
-			var message = {
-				url: url,
-				data: _data,
-				headers: headers,
-				status: error.response.status,
-				error: error
+				//if (_data.sensorId == "SCRP0000000006bbfc5f") {
+				var message = {
+					url: url,
+					data: _data,
+					headers: headers,
+					status: error.response.status,
+					error: error
+				}
+				var fileName = _data.sensorId + "#" + _data.dateObserved.substr(0, 10)
+				try {
+					fs.appendFileSync(messagesPath + "/fiware/" + fileName, JSON.stringify(message));
+					// file written successfully
+				} catch (err) {
+					console.error(err);
+				}
+				//}
 			}
-			var fileName = _data.sensorId + "#" + _data.dateObserved.substr(0, 10)
-			try {
-				fs.appendFileSync(messagesPath + "/fiware/" + fileName, JSON.stringify(message));
-				// file written successfully
-			} catch (err) {
-				console.error(err);
-			}
-			//}
-			//}
+
 			_res.contentType('application/json');
 			logDir(result)
 			_res.send(result);
