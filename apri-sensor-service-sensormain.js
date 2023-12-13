@@ -580,18 +580,18 @@ app.get('/' + sensorServiceName + '/v1/m', function (req, res) {
 	apriSensorObject.observation = observation
 
 	// send to fiware Orion service
-	if (fiwareObject.sensorId != 'SCRP000000008b6eb7a5') {
-		sendFiwareData(fiwareObject, _serviceTarget, res);
-	} else {
+//	if (fiwareObject.sensorId != 'SCRP000000008b6eb7a5') {
+//		sendFiwareData(fiwareObject, _serviceTarget, res);
+//	} else {
 		sendFiwareData2(fiwareObject, _serviceTarget);
-	}
+//	}
 
 	// send to OpenIoD / ApriSensor service
-	if (fiwareObject.sensorId != 'SCRP000000008b6eb7a5') {
-		sendApriSensorData(apriSensorObject);
-	} else {
+//	if (fiwareObject.sensorId != 'SCRP000000008b6eb7a5') {
+//		sendApriSensorData(apriSensorObject);
+//	} else {
 		sendApriSensorData2(apriSensorObject, res);
-	}
+//	}
 });
 
 
