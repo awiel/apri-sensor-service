@@ -836,7 +836,7 @@ var sendFiwareData = function (data, target, res) {
 			_res.send(result);
 
 			if (response.status != 201) {
-				//if (_data.sensorId == "SCRP0000000006bbfc5f") {
+				if (_data.sensorId == "SCRP0000000006bbfc5f") {
 
 				var message = {
 					url: url,
@@ -852,7 +852,7 @@ var sendFiwareData = function (data, target, res) {
 					console.error(err);
 				}
 
-				//}
+				}
 
 			}
 		})
@@ -884,9 +884,9 @@ var sendFiwareData = function (data, target, res) {
 			}
 			//    console.log(error.config);
 
-			if (response.status != 201) {
+			//if (response.status != 201) {
 
-				//if (_data.sensorId == "SCRP0000000006bbfc5f") {
+				if (_data.sensorId == "SCRP0000000006bbfc5f") {
 				var message = {
 					url: url,
 					data: _data,
@@ -901,8 +901,8 @@ var sendFiwareData = function (data, target, res) {
 				} catch (err) {
 					console.error(err);
 				}
-				//}
-			}
+				}
+			//}
 			_res.contentType('application/json');
 			logDir(result)
 			_res.send(result);
