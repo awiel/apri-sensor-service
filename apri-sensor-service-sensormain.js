@@ -846,7 +846,7 @@ var sendFiwareData = function (data, target, res) {
 				}
 				var fileName = _data.sensorId + "#" + _data.dateObserved.substr(0, 10)
 				try {
-					fs.appendFileSync(messagesPath + "/fiware/" + fileName, JSON.stringify(message));
+					fs.appendFileSync(messagesPath + "/fiware/" + fileName, JSON.stringify(message)+"\n");
 					// file written successfully
 				} catch (err) {
 					console.error(err);
@@ -886,7 +886,9 @@ var sendFiwareData = function (data, target, res) {
 
 			if (error.response?.data?.status == 422 && error.response?.data?.statusData?.description == "Already Exists") {
 			} else {
-
+				console.log('fiware catch')
+				console.log(url)
+				console.log(error)
 				//if (_data.sensorId == "SCRP0000000006bbfc5f") {
 				var message = {
 					url: url,
@@ -898,7 +900,7 @@ var sendFiwareData = function (data, target, res) {
 				}
 				var fileName = _data.sensorId + "#" + _data.dateObserved.substr(0, 10)
 				try {
-					fs.appendFileSync(messagesPath + "/fiware/" + fileName, JSON.stringify(message));
+					fs.appendFileSync(messagesPath + "/fiware/" + fileName, JSON.stringify(message)+"\n");
 					// file written successfully
 				} catch (err) {
 					console.error(err);
