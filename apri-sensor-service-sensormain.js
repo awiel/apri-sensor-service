@@ -5,6 +5,9 @@
 **
 **
 */
+/**
+ * curl "https://orion.openiod.org:443/v2/entities?options=keyValues" -X POST -H "Content-Type: application/json" -H "Fiware-Service: aprisensor_in_202312" -H "Fiware-ServicePath: /pmsa003" -d '{"id":"SCRP00000000d367dbcd_N_2023-12-14T18:41:41.950Z","sensorId":"SCRP00000000d367dbcd","subSystemId":"","projectTarget":"_202312","type":"AirQualityObserved","calType":"N","dateReceived":"2023-12-14T18:44:03.643Z","dateObserved":"2023-12-14T18:41:41.950Z","pm1":0.29,"pm25":0.29,"pm10":0.46,"pm1amb":0.29,"pm25amb":0.29,"pm10amb":0.46,"raw0_3":263.5,"raw0_5":73.17,"raw1_0":2.92,"raw2_5":0.42,"raw5_0":0,"raw10_0":0}'
+ */
 
 "use strict";
 
