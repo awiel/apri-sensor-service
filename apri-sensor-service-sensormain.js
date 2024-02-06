@@ -184,7 +184,6 @@ app.get('/' + sensorServiceName + '/v1/m', function (req, res) {
 	//if (projectTarget[_foi] != undefined) apriSensorObject.dbGroup = projectTarget[_foi]
 	//else apriSensorObject.dbGroup = ''
 	apriSensorObject.dateReceived = dateReceived.toISOString();
-	apriSensorObject.dateObserved = dateObserved.toISOString();
 	apriSensorObject.sensorType = sensorServiceName
 
 	// add yearmonth to project/servicename
@@ -582,12 +581,14 @@ app.get('/' + sensorServiceName + '/v1/m', function (req, res) {
 	}
 	apriSensorObject.observation = observation
 
+/* Op 2024-02-06 21:40 is de fiware uitgezet 	
 	// send to fiware Orion service
 //	if (fiwareObject.sensorId != 'SCRP000000008b6eb7a5') {
 //		sendFiwareData(fiwareObject, _serviceTarget, res);
 //	} else {
 		sendFiwareData2(fiwareObject, _serviceTarget);
 //	}
+*/
 
 	// send to OpenIoD / ApriSensor service
 //	if (fiwareObject.sensorId != 'SCRP000000008b6eb7a5') {
