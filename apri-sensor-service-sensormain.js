@@ -724,25 +724,27 @@ var sendApriSensorData2 = function (data, res) {
 			if (data.sensorId == "SCRP000000008b6eb7a5") {
 				await response.json()
 					.then((data) => {
+						let result = {}
 						result.test = 'then data '
-						// console.log(data.value.sensorId)
+						// console.log(data.value.sensorId,'/',response.stat)
 						if (data.status == undefined && data.ok == 1) {
 							result.test = 'then data ifthen'
 							result.status = 201 // ApriSensor expects 201 when ok
 						} else {
-							result.test = 'then data ifelse'
+							result.test = 'then data ifelse ' + data.status +'/'+ data.message +'/'+ response.status
 							result.status = data.status
+							result.responseStatus = response.status
 							result.message = data.message
 							result.code = data.message  // (old) sensorkit expacts code
 						}
 						_res.contentType('application/json')
-						_res.send(result);
+						_res.send(JSON.stringify(result));
 					})
 					.catch((error) => {
 						console.error('fetch response error', error)
 						result.status = 401
 						_res.contentType('application/json')
-						_res.send(result);
+						_res.send(JSON.stringify(result));
 					});
 			} else {
 				if (response.status == 200) {
