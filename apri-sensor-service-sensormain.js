@@ -726,7 +726,9 @@ var sendApriSensorData2 = function (data, res) {
 						if (data.status == 200) {
 							result.status = 201 // ApriSensor expects 201 when ok
 						} else {
-							result = data.status
+							result.status = data.status
+							result.message = data.message
+							result.code = data.message  // (old) sensorkit expacts code
 						}
 						_res.contentType('application/json')
 						_res.send(result);
