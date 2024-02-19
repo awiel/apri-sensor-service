@@ -724,7 +724,7 @@ var sendApriSensorData2 = function (data, res) {
 			if (data.sensorId == "SCRP000000008b6eb7a5") {
 				await response.json()
 					.then((data) => {
-						console.log(data)
+						// console.log(data.value.sensorId)
 						if (data.status == undefined && data.ok == 1) {
 							result.status = 201 // ApriSensor expects 201 when ok
 						} else {
