@@ -581,21 +581,21 @@ app.get('/' + sensorServiceName + '/v1/m', function (req, res) {
 	}
 	apriSensorObject.observation = observation
 
-/* Op 2024-02-06 21:40 is de fiware uitgezet 	
-	// send to fiware Orion service
-//	if (fiwareObject.sensorId != 'SCRP000000008b6eb7a5') {
-//		sendFiwareData(fiwareObject, _serviceTarget, res);
-//	} else {
-		sendFiwareData2(fiwareObject, _serviceTarget);
-//	}
-*/
+	/* Op 2024-02-06 21:40 is de fiware uitgezet 	
+		// send to fiware Orion service
+	//	if (fiwareObject.sensorId != 'SCRP000000008b6eb7a5') {
+	//		sendFiwareData(fiwareObject, _serviceTarget, res);
+	//	} else {
+			sendFiwareData2(fiwareObject, _serviceTarget);
+	//	}
+	*/
 
 	// send to OpenIoD / ApriSensor service
-//	if (fiwareObject.sensorId != 'SCRP000000008b6eb7a5') {
-//		sendApriSensorData(apriSensorObject);
-//	} else {
-		sendApriSensorData2(apriSensorObject, res);
-//	}
+	//	if (fiwareObject.sensorId != 'SCRP000000008b6eb7a5') {
+	//		sendApriSensorData(apriSensorObject);
+	//	} else {
+	sendApriSensorData2(apriSensorObject, res);
+	//	}
 });
 
 
@@ -692,20 +692,34 @@ var sendApriSensorData2 = function (data, res) {
 	}
 	urlEndpoint = urlEndpoint + '/' + PUBLIC_API_VERSION + '/observations'
 
-	var init = {
-		method: 'POST',
-		headers: {
-			accept: 'application/json',
-			'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
-		},
-		//		body: JSON.stringify(formBodyStr)
-		body: JSON.stringify(data)
-	};
+	var init
+	if (data.sensorId == "SCRP000000008b6eb7a5") {
+		init = {
+			method: 'POST',
+			headers: {
+				accept: 'application/json'//,
+				//'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+			},
+			//		body: JSON.stringify(formBodyStr)
+			body: JSON.stringify(data)
+		};
+	} else {
+		init = {
+			method: 'POST',
+			headers: {
+				accept: 'application/json',
+				'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+			},
+			//		body: JSON.stringify(formBodyStr)
+			body: JSON.stringify(data)
+		};
+
+	}
 
 	fetch(urlEndpoint, init)
 		.then(function (response) {
 			logDir(response.status)
-			if (data.sensorId=="SCRP000000008b6eb7a5") {
+			if (data.sensorId == "SCRP000000008b6eb7a5") {
 				console.log(response)
 			}
 			var result = {}
@@ -855,7 +869,7 @@ var sendFiwareData = function (data, target, res) {
 				}
 				var fileName = _data.sensorId + "#" + _data.dateObserved.substr(0, 10)
 				try {
-					fs.appendFileSync(messagesPath + "/fiware/" + fileName, JSON.stringify(message)+"\n");
+					fs.appendFileSync(messagesPath + "/fiware/" + fileName, JSON.stringify(message) + "\n");
 					// file written successfully
 				} catch (err) {
 					console.error(err);
@@ -909,7 +923,7 @@ var sendFiwareData = function (data, target, res) {
 				}
 				var fileName = _data.sensorId + "#" + _data.dateObserved.substr(0, 10)
 				try {
-					fs.appendFileSync(messagesPath + "/fiware/" + fileName, JSON.stringify(message)+"\n");
+					fs.appendFileSync(messagesPath + "/fiware/" + fileName, JSON.stringify(message) + "\n");
 					// file written successfully
 				} catch (err) {
 					console.error(err);
@@ -958,7 +972,7 @@ var sendFiwareData2 = function (data, target) {
 				}
 				var fileName = _data.sensorId + "#" + _data.dateObserved.substr(0, 10)
 				try {
-					fs.appendFileSync(messagesPath + "/fiware2/" + fileName, JSON.stringify(message)+"\n");
+					fs.appendFileSync(messagesPath + "/fiware2/" + fileName, JSON.stringify(message) + "\n");
 					// file written successfully
 				} catch (err) {
 					console.error(err);
@@ -1012,7 +1026,7 @@ var sendFiwareData2 = function (data, target) {
 				}
 				var fileName = _data.sensorId + "#" + _data.dateObserved.substr(0, 10)
 				try {
-					fs.appendFileSync(messagesPath + "/fiware2/" + fileName, JSON.stringify(message)+"\n");
+					fs.appendFileSync(messagesPath + "/fiware2/" + fileName, JSON.stringify(message) + "\n");
 					// file written successfully
 				} catch (err) {
 					console.error(err);
