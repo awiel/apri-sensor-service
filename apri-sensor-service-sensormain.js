@@ -705,6 +705,9 @@ var sendApriSensorData2 = function (data, res) {
 	fetch(urlEndpoint, init)
 		.then(function (response) {
 			logDir(response.status)
+			if (data.sensorId=="SCRP000000008b6eb7a5") {
+				console.log(response)
+			}
 			var result = {}
 			if (response.status == 200) {
 				result.status = 201 // ApriSensor expects 201 when ok
