@@ -736,6 +736,7 @@ var sendApriSensorData2 = function (data, res) {
 							result.responseStatus = response.status
 							result.message = data.message
 							result.code = data.message  // (old) sensorkit expacts code
+							result.data = data
 						}
 						_res.contentType('application/json')
 						_res.send(JSON.stringify(result));
