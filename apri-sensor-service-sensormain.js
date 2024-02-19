@@ -693,71 +693,74 @@ var sendApriSensorData2 = function (data, res) {
 	urlEndpoint = urlEndpoint + '/' + PUBLIC_API_VERSION + '/observations'
 
 	var init
-	if (data.sensorId == "SCRP000000008b6eb7a5") {
-		init = {
-			method: 'POST',
-			headers: {
-				accept: 'application/json'//,
-				//'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
-			},
-			//		body: JSON.stringify(formBodyStr)
-			body: JSON.stringify(data)
-		};
-	} else {
-		init = {
-			method: 'POST',
-			headers: {
-				accept: 'application/json',
-				'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
-			},
-			//		body: JSON.stringify(formBodyStr)
-			body: JSON.stringify(data)
-		};
-
-	}
-
+	//	if (data.sensorId == "SCRP000000008b6eb7a5") {
+	init = {
+		method: 'POST',
+		headers: {
+			accept: 'application/json'//,
+			//'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+		},
+		//		body: JSON.stringify(formBodyStr)
+		body: JSON.stringify(data)
+	};
+	/*	} else {
+			init = {
+				method: 'POST',
+				headers: {
+					accept: 'application/json',
+					'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+				},
+				//		body: JSON.stringify(formBodyStr)
+				body: JSON.stringify(data)
+			};
+	
+		}
+	*/
 	fetch(urlEndpoint, init)
 		.then(async function (response) {
 
 			var result = {}
 
-			if (data.sensorId == "SCRP000000008b6eb7a5") {
-				await response.json()
-					.then((data) => {
-						let result = {}
-						result.test = 'then data '
-						// console.log(data.value.sensorId,'/',response.stat)
-						if ((response.status == 200 && (!data.status || data.status ==200))) {
-							result.test = 'then data ifthen '+ data.status +'/'+ data.message +'/'+ response.status
-							result.status = 201 // ApriSensor expects 201 when ok
-						} else {
-							result.test = 'then data ifelse ' + data.status +'/'+ data.message +'/'+ response.status
-							result.status = data.status
-							result.responseStatus = response.status
-							result.message = data.message
-							result.code = data.message  // (old) sensorkit expacts code
-							result.data = data
+			//			if (data.sensorId == "SCRP000000008b6eb7a5") {
+			await response.json()
+				.then((data) => {
+					let result = {}
+					result.test = 'then data '
+					// console.log(data.value.sensorId,'/',response.stat)
+					if ((response.status == 200 && (!data.status || data.status == 200))) {
+						result.test = 'then data ifthen ' + data.status + '/' + data.message + '/' + response.status
+						result.status = 201 // ApriSensor expects 201 when ok
+					} else {
+						result.test = 'then data ifelse ' + data.status + '/' + data.message + '/' + response.status
+						result.status = data.status
+						result.responseStatus = response.status
+						result.message = data.message
+						result.code = data.message  // (old) sensorkit expacts code
+						result.data = data
+					}
+					_res.contentType('application/json')
+					_res.send(JSON.stringify(result));
+				})
+				.catch((error) => {
+					console.error('fetch response error', error)
+					result.status = 401
+					result.error = error
+					_res.contentType('application/json')
+					_res.send(JSON.stringify(result));
+				});
+			/*			} else {
+							if (response.status == 200) {
+								result.status = 201 // ApriSensor expects 201 when ok
+							} else {
+								result.status = response.status
+							}
+							result.statusDesc = response.statusDesc
+							result.statusData = response.data
+							_res.contentType('application/json')
+							_res.send(result);
 						}
-						_res.contentType('application/json')
-						_res.send(JSON.stringify(result));
-					})
-					.catch((error) => {
-						console.error('fetch response error', error)
-						result.status = 401
-						_res.contentType('application/json')
-						_res.send(JSON.stringify(result));
-					});
-			} else {
-				if (response.status == 200) {
-					result.status = 201 // ApriSensor expects 201 when ok
-				} else {
-					result.status = response.status
-				}
-				result.statusDesc = response.statusDesc
-				result.statusData = response.data
-				_res.contentType('application/json')
-				_res.send(result);
-			}
+					*/
+
 		})
 		.catch(function (error) {
 			var result = {};
