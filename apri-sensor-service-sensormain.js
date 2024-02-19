@@ -727,7 +727,7 @@ var sendApriSensorData2 = function (data, res) {
 						let result = {}
 						result.test = 'then data '
 						// console.log(data.value.sensorId,'/',response.stat)
-						if (data.status == undefined && data.ok == 1) {
+						if ((data.status == undefined || data.status == 200) && data.ok == 1) {
 							result.test = 'then data ifthen'
 							result.status = 201 // ApriSensor expects 201 when ok
 						} else {
