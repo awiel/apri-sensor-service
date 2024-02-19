@@ -724,10 +724,13 @@ var sendApriSensorData2 = function (data, res) {
 			if (data.sensorId == "SCRP000000008b6eb7a5") {
 				await response.json()
 					.then((data) => {
+						result.test = 'then data '
 						// console.log(data.value.sensorId)
 						if (data.status == undefined && data.ok == 1) {
+							result.test = 'then data ifthen'
 							result.status = 201 // ApriSensor expects 201 when ok
 						} else {
+							result.test = 'then data ifelse'
 							result.status = data.status
 							result.message = data.message
 							result.code = data.message  // (old) sensorkit expacts code
