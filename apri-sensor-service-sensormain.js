@@ -721,6 +721,11 @@ var sendApriSensorData2 = function (data, res) {
 			logDir(response.status)
 			if (data.sensorId == "SCRP000000008b6eb7a5") {
 				console.log(response)
+				response.json()
+				.then((result) => {
+					console.log(result)
+				})
+				.catch((error) => console.error('fetch response error',error));
 			}
 			var result = {}
 			if (response.status == 200) {
