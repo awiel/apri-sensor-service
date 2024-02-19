@@ -718,11 +718,13 @@ var sendApriSensorData2 = function (data, res) {
 
 	fetch(urlEndpoint, init)
 		.then(async function (response) {
+
 			var result = {}
+
 			if (data.sensorId == "SCRP000000008b6eb7a5") {
 				await response.json()
 					.then((data) => {
-						// console.log(data)
+						console.log(data)
 						if (data.status == 200) {
 							result.status = 201 // ApriSensor expects 201 when ok
 						} else {
