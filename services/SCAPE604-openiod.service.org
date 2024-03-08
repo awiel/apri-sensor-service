@@ -2,7 +2,7 @@
 Description=SCAPE604-openiod - start or restart openiod service, respawn
 After=network.target
 [Service]
-ExecStart=/opt/SCAPE604/openiod/openiod.sh /opt/SCAPE604/log/SCAPE604-openiod.log
+ExecStart=/opt/SCAPE604/openiod/openiod.sh /var/log/aprisensor/services/SCAPE604-openiod.log
 Restart=always
 
 [Install]
