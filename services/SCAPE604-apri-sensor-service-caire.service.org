@@ -1,9 +1,0 @@
-[Unit]
-Description=SCAPE604-apri-sensor-service-caire - start or restart apri-sensor-service-caire service, respawn
-After=network.target
-[Service]
-ExecStart=/opt/SCAPE604/apri-sensor-service/apri-sensor-service-caire.sh /opt/SCAPE604/log/SCAPE604-apri-sensor-service-caire.log
-Restart=always
-
-[Install]
-WantedBy=multi-user.target

@@ -549,6 +549,9 @@ app.get('/' + sensorServiceName + '/v1/m', function (req, res) {
 		fiwareMap['pm25'] = 'pm25';
 		fiwareMap['pm10'] = 'pm10';
 	}
+	if (sensorServiceName == 'tsi3007') {
+		fiwareMap['part'] = 'part';
+	}
 	//}
 
 
