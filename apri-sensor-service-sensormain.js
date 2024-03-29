@@ -38,7 +38,6 @@ var self = this;
 // **********************************************************************************
 
 // add module specific requires
-var axios = require('axios');
 var express = require('express');
 var bodyParser = require('body-parser');
 const fs = require('node:fs');
@@ -584,21 +583,7 @@ app.get('/' + sensorServiceName + '/v1/m', function (req, res) {
 	}
 	apriSensorObject.observation = observation
 
-	/* Op 2024-02-06 21:40 is de fiware uitgezet 	
-		// send to fiware Orion service
-	//	if (fiwareObject.sensorId != 'SCRP000000008b6eb7a5') {
-	//		sendFiwareData(fiwareObject, _serviceTarget, res);
-	//	} else {
-			sendFiwareData2(fiwareObject, _serviceTarget);
-	//	}
-	*/
-
-	// send to OpenIoD / ApriSensor service
-	//	if (fiwareObject.sensorId != 'SCRP000000008b6eb7a5') {
-	//		sendApriSensorData(apriSensorObject);
-	//	} else {
 	sendApriSensorData2(apriSensorObject, res);
-	//	}
 });
 
 
@@ -643,46 +628,6 @@ app.get('/*', function (req, res) {
 });
 
 
-var sendApriSensorData = function (data) {
-
-	var urlEndpoint = '';
-	if (PUBLIC_PRODUCTION == 'false') {
-		urlEndpoint = PUBLIC_APRISENSOR_URL_TEST;
-	} else {
-		urlEndpoint = PUBLIC_APRISENSOR_URL_PROD;
-	}
-	urlEndpoint = urlEndpoint + '/' + PUBLIC_API_VERSION + '/observations'
-
-	//var init = {
-	//	method: 'POST',
-	//	headers: {
-	//		accept: 'application/json',
-	//		'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
-	//	}
-	//};
-
-	/*
-		var formBody = [];
-		for (var property in data) {
-			var encodedKey = encodeURIComponent(property);
-			var encodedValue = encodeURIComponent(data[property]);
-			formBody.push(encodedKey + "=" + encodedValue);
-		}
-		var formBodyStr = formBody.join("&");
-	*/
-	var init = {
-		method: 'POST',
-		headers: {
-			accept: 'application/json',
-			'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
-		},
-		//		body: JSON.stringify(formBodyStr)
-		body: JSON.stringify(data)
-	};
-
-	fetch(urlEndpoint, init)
-	//return await ;
-};
 
 var sendApriSensorData2 = function (data, res) {
 	var _res = res;
@@ -706,19 +651,6 @@ var sendApriSensorData2 = function (data, res) {
 		//		body: JSON.stringify(formBodyStr)
 		body: JSON.stringify(data)
 	};
-	/*	} else {
-			init = {
-				method: 'POST',
-				headers: {
-					accept: 'application/json',
-					'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
-				},
-				//		body: JSON.stringify(formBodyStr)
-				body: JSON.stringify(data)
-			};
-	
-		}
-	*/
 	fetch(urlEndpoint, init)
 		.then(async function (response) {
 
@@ -751,18 +683,6 @@ var sendApriSensorData2 = function (data, res) {
 					_res.contentType('application/json')
 					_res.send(JSON.stringify(result));
 				});
-			/*			} else {
-							if (response.status == 200) {
-								result.status = 201 // ApriSensor expects 201 when ok
-							} else {
-								result.status = response.status
-							}
-							result.statusDesc = response.statusDesc
-							result.statusData = response.data
-							_res.contentType('application/json')
-							_res.send(result);
-						}
-					*/
 
 		})
 		.catch(function (error) {
@@ -796,281 +716,6 @@ var sendApriSensorData2 = function (data, res) {
 			_res.send(result);
 		})
 }
-
-
-var sendFiwareData = function (data, target, res) {
-	//var _data = JSON.stringify(data);
-	var _data = data;
-	var _res = res;
-	var _target = target;
-	//	var _url 	= _target.protocol +
-	//			_target.host +
-	//			_target.prefixPath'; //openiodUrl;
-
-	//log(data);
-	//	var json_obj = JSON.stringify(data);
-	//	log(_url);
-	//log(json_obj)
-	/*
-		var options = {
-			hostname: _target.host,
-			port: 		_target.port,
-			path: 		_target.prefixPath+_target.path,
-			method: 	_target.method,
-			headers: {
-					 'Content-Type': 				'application/json',
-					 'Content-Length': 			_data.length,
-					 'Fiware-Service': 			_target.FiwareService,
-					 'Fiware-ServicePath': 	_target.FiwareServicePath
-				 }
-		};
-	
-	  logDir(options);
-	
-		var result = {}
-		//console.log(options);
-		//console.log(_data);
-		var req = https.request(options, (res) => {
-			log('statusCode:' + res.statusCode);
-			//console.log('headers:', res.headers);
-			var result = {
-				statusCode: res.statusCode
-			}
-			_res.send('{"statusCode":"'+res.statusCode+'",""}');
-	
-			res.on('data', (d) => {
-	
-				process.stdout.write(d);
-				log(d);
-			});
-		});
-	
-		req.on('error', (e) => {
-			console.error(e);
-		});
-	
-		req.write(_data);
-		req.end();
-	
-	*/
-
-
-	var url = 'https://' + _target.host + ':' + _target.port + _target.prefixPath + _target.path
-	//	var headers = {
-	//		//'Content-Type': 				'application/json',
-	//		//'Content-Length': 			_data.length,
-	//		'Fiware-Service': 			_target.FiwareService,
-	//		'Fiware-ServicePath': 	_target.FiwareServicePath
-	//	}
-	var headers = {
-		//'Content-Type': 				'application/json',
-		//'Content-Length': 			_data.length,
-		'Fiware-Service': _target.FiwareService + _data.subSystemId + _data.projectTarget,
-		'Fiware-ServicePath': _target.FiwareServicePath
-	}
-
-	var axiosParams = {
-		url: url,
-		method: 'post',
-		data: _data,
-		config: { headers: headers }
-	}
-	//console.log(axiosParams);
-	//	console.log(headers2);
-	axios.post(url, _data, { 'headers': headers })
-		.then(function (response) {
-			//const jsonText = JSON.stringify(response);
-			//const objResponse = JSON.parse(jsonText);
-			//log('Response recieved');
-			logDir(response.status)
-			var result = {}
-			result.status = response.status,
-				result.statusDesc = response.statusDesc
-			result.statusData = response.data
-			_res.contentType('application/json')
-			_res.send(result);
-
-			if (response.status != 201) {
-				//if (_data.sensorId == "SCRP0000000006bbfc5f") {
-
-				var message = {
-					url: url,
-					data: _data,
-					headers: headers,
-					status: response.status
-				}
-				var fileName = _data.sensorId + "#" + _data.dateObserved.substr(0, 10)
-				try {
-					fs.appendFileSync(messagesPath + "/fiware/" + fileName, JSON.stringify(message) + "\n");
-					// file written successfully
-				} catch (err) {
-					console.error(err);
-				}
-
-				//}
-
-			}
-		})
-		.catch(function (error) {
-			var result = {};
-			if (error.response) {
-				// logDir(error.response);
-				logDir(error.response.status)
-				logDir(error.response.statusTekst)
-				logDir(error.response.data)
-				result.status = error.response.status
-				result.statusDesc = error.response.statusDesc
-				result.statusData = error.response.data
-				// The request was made and the server responded with a status code
-				// that falls out of the range of 2xx
-				//      console.log(error.response.data);
-				//      console.log(error.response.status);
-				//      console.log(error.response.headers);
-			} else if (error.request) {
-				result.request = error.request;
-				// The request was made but no response was received
-				// `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-				// http.ClientRequest in node.js
-				console.log('Error request: ' + error.request);
-			} else {
-				// Something happened in setting up the request that triggered an Error
-				console.log('Error message', error.message);
-				result.message = error.message;
-			}
-			//    console.log(error.config);
-
-			if (error.response?.status == 422 && error.response?.data?.description == "Already Exists") {
-				console.log('422 no problem')
-			} else {
-				console.log('fiware catch')
-				//console.log(url)
-				console.log(error)
-				//if (_data.sensorId == "SCRP0000000006bbfc5f") {
-				var message = {
-					url: url,
-					data: _data,
-					headers: headers,
-					status: error.response?.status,
-					statusData: error.response?.data
-				}
-				var fileName = _data.sensorId + "#" + _data.dateObserved.substr(0, 10)
-				try {
-					fs.appendFileSync(messagesPath + "/fiware/" + fileName, JSON.stringify(message) + "\n");
-					// file written successfully
-				} catch (err) {
-					console.error(err);
-				}
-				//}
-			}
-
-			_res.contentType('application/json');
-			//logDir(result)
-			_res.send(result);
-			//			 'serviceStatus': error.response.status,
-			//			 'serviceStatusTekst': error.response.statusTekst,
-			//			 'serviceStatusData': error.response.data
-			//	 	});
-			//_res.send(JSON.stringfy(error));
-		});
-};
-
-var sendFiwareData2 = function (data, target) {
-	//var _data = JSON.stringify(data);
-	var _data = data;
-	var _target = target;
-
-	var url = 'https://' + _target.host + ':' + _target.port + _target.prefixPath + _target.path
-	var headers = {
-		'Fiware-Service': _target.FiwareService + _data.subSystemId + _data.projectTarget,
-		'Fiware-ServicePath': _target.FiwareServicePath
-	}
-
-	axios.post(url, _data, { 'headers': headers })
-		.then(function (response) {
-			logDir(response.status)
-			var result = {}
-			result.status = response.status,
-				result.statusDesc = response.statusDesc
-			result.statusData = response.data
-
-			if (response.status != 201) {
-				//if (_data.sensorId == "SCRP0000000006bbfc5f") {
-
-				var message = {
-					url: url,
-					data: _data,
-					headers: headers,
-					status: response.status
-				}
-				var fileName = _data.sensorId + "#" + _data.dateObserved.substr(0, 10)
-				try {
-					fs.appendFileSync(messagesPath + "/fiware2/" + fileName, JSON.stringify(message) + "\n");
-					// file written successfully
-				} catch (err) {
-					console.error(err);
-				}
-
-				//}
-
-			}
-		})
-		.catch(function (error) {
-			var result = {};
-			if (error.response) {
-				// logDir(error.response);
-				logDir(error.response.status)
-				logDir(error.response.statusTekst)
-				logDir(error.response.data)
-				result.status = error.response.status
-				result.statusDesc = error.response.statusDesc
-				result.statusData = error.response.data
-				// The request was made and the server responded with a status code
-				// that falls out of the range of 2xx
-				//      console.log(error.response.data);
-				//      console.log(error.response.status);
-				//      console.log(error.response.headers);
-			} else if (error.request) {
-				result.request = error.request;
-				// The request was made but no response was received
-				// `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-				// http.ClientRequest in node.js
-				console.log('Error request: ' + error.request);
-			} else {
-				// Something happened in setting up the request that triggered an Error
-				console.log('Error message', error.message);
-				result.message = error.message;
-			}
-			//    console.log(error.config);
-
-			if (error.response?.status == 422 && error.response?.data?.description == "Already Exists") {
-				console.log('422 no problem')
-			} else {
-				console.log('fiware catch')
-				//console.log(url)
-				console.log(error)
-				//if (_data.sensorId == "SCRP0000000006bbfc5f") {
-				var message = {
-					url: url,
-					data: _data,
-					headers: headers,
-					status: error.response?.status,
-					statusData: error.response?.data
-				}
-				var fileName = _data.sensorId + "#" + _data.dateObserved.substr(0, 10)
-				try {
-					fs.appendFileSync(messagesPath + "/fiware2/" + fileName, JSON.stringify(message) + "\n");
-					// file written successfully
-				} catch (err) {
-					console.error(err);
-				}
-				//}
-			}
-
-			//_res.contentType('application/json');
-			//_res.send(result);
-		});
-};
-
 
 var errorResult = function (res, message) {
 	res.returncode = message.returnCode;
