@@ -1,5 +1,6 @@
 /*
 ** Module: apri-sensor-service-sensormain.js
+**  see apri-sensor-service-all for generic sensor data processing
 **   ApriSensorService sensormain
 **			inbox service for sensortype depending on first parameter
 **
@@ -40,7 +41,7 @@ var self = this;
 // add module specific requires
 var express = require('express');
 var bodyParser = require('body-parser');
-const fs = require('node:fs');
+// const fs = require('node:fs');
 
 var _systemCode = apriSensorServiceConfig.getSystemCode();
 var _systemFolderParent = apriSensorServiceConfig.getSystemFolderParent();

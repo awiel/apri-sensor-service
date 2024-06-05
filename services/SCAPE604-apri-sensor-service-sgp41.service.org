@@ -1,0 +1,9 @@
+[Unit]
+Description=SCAPE604-apri-sensor-service-sgp41 - start or restart service, respawn
+After=network.target
+[Service]
+ExecStart=/opt/SCAPE604/apri-sensor-service/apri-sensor-service-sgp41.sh /var/log/aprisensor/services/SCAPE604-apri-sensor-service-sgp41.log
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
